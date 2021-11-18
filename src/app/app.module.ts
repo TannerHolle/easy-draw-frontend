@@ -1,20 +1,35 @@
 import { BrowserModule } from '@angular/platform-browser';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import {
+  MatInputModule,
+  MatCardModule,
+  MatButtonModule,
+  MatToolbarModule
+} from '@angular/material';
+
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { CompanyComponent } from './company/company.component';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { HeaderComponent } from './header/header.component';
+import { CompanyCreateComponent } from './company/company-create/company-create.component';
+import { CompanyListComponent } from './company/company-list/company-list.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    CompanyComponent
+    HeaderComponent,
+    CompanyCreateComponent,
+    CompanyListComponent
   ],
   imports: [
     BrowserModule,
     FormsModule,
+    MatInputModule,
+    MatCardModule,
+    MatButtonModule,
+    MatToolbarModule,
     AppRoutingModule,
     BrowserAnimationsModule
   ],

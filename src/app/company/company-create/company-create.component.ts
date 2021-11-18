@@ -1,11 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 
 @Component({
-  selector: 'app-company',
-  templateUrl: './company.component.html',
-  styleUrls: ['./company.component.scss']
+  selector: 'app-company-create',
+  templateUrl: './company-create.component.html',
+  styleUrls: ['./company-create.component.scss']
 })
-export class CompanyComponent implements OnInit {
+export class CompanyCreateComponent implements OnInit {
+
   enteredValue = "";
   newCompany = "";
 
