@@ -6,7 +6,8 @@ import {
   MatInputModule,
   MatCardModule,
   MatButtonModule,
-  MatToolbarModule
+  MatToolbarModule,
+  MatExpansionModule
 } from '@angular/material';
 
 
@@ -21,7 +22,7 @@ import { CompanyListComponent } from './company/company-list/company-list.compon
     AppComponent,
     HeaderComponent,
     CompanyCreateComponent,
-    CompanyListComponent
+    CompanyListComponent,
   ],
   imports: [
     BrowserModule,
@@ -30,6 +31,7 @@ import { CompanyListComponent } from './company/company-list/company-list.compon
     MatCardModule,
     MatButtonModule,
     MatToolbarModule,
+    MatExpansionModule,
     AppRoutingModule,
     BrowserAnimationsModule
   ],

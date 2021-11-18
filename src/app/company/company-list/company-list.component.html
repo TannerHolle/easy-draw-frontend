@@ -1,3 +1,11 @@
-<p>
-  company-list works!
-</p>
+<mat-accordion multi="true" *ngIf="companies.length > 0">
+  <mat-expansion-panel *ngFor="let company of companies">
+    <mat-expansion-panel-header>
+      {{company.name}}
+    </mat-expansion-panel-header>
+    <p>Address: {{company.address}}</p>
+    <p>Tax ID: {{company.taxid}}</p>
+    <p>Notes: {{company.notes}}</p>
+  </mat-expansion-panel>
+</mat-accordion>
+<p class="info-text mat-body-1" *ngIf="companies.length==0">No companies added yet</p>

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, Output, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-company-create',
@@ -7,8 +7,13 @@ import { Component, OnInit } from '@angular/core';
 })
 export class CompanyCreateComponent implements OnInit {
 
-  enteredValue = "";
-  newCompany = "";
+  enteredName = "";
+  enteredAddress = "";
+  enteredTaxId = "";
+  enteredNotes = "";
+
+  @Output() companyCreated = new EventEmitter();
+
 
   constructor() { }
 
@@ -16,7 +21,14 @@ export class CompanyCreateComponent implements OnInit {
   }
 
   onAddCompany() {
-    this.newCompany = this.enteredValue;
-  }
+    const newCompany = {
+      Name: this.enteredName,
+      Address: this.enteredAddress,
+      TaxID: this.enteredTaxId,
+      Notes: this.enteredNotes
+    };
+
+    this.companyCreated.emit(newCompany)
+  };
 
 }

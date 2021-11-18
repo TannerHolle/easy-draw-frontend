@@ -1,6 +1,7 @@
 <app-header></app-header>
 <main>
-  <app-company-create></app-company-create>
+  <app-company-create (companyCreated)="onCompaniesAdded($event)"></app-company-create>
+  <app-company-list [companies]="storedCompanies"></app-company-list>
 </main>
 
 <router-outlet></router-outlet>

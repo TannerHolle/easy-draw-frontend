@@ -7,4 +7,9 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'easy-draw';
+  storedCompanies = [];
+
+  onCompaniesAdded(company) {
+    this.storedCompanies.push(company)
+  }
 }

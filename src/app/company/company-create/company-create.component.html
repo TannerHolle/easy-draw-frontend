@@ -1,15 +1,15 @@
 <mat-card>
   <mat-form-field class="example-full-width">
-    <textarea matInput placeholder="Company Name"></textarea>
+    <textarea matInput placeholder="Company Name" [(ngModel)]="enteredName"></textarea>
   </mat-form-field>
   <mat-form-field class="example-full-width">
-    <textarea matInput placeholder="Company Address"></textarea>
+    <textarea matInput placeholder="Company Address" [(ngModel)]="enteredAddress"></textarea>
   </mat-form-field>
   <mat-form-field class="example-full-width">
-    <textarea matInput placeholder="Tax ID#"></textarea>
+    <textarea matInput placeholder="Tax ID#" [(ngModel)]="enteredTaxId"></textarea>
   </mat-form-field>
   <mat-form-field>
-    <textarea matInput placeholder="Additional Company Notes" rows="6" [(ngModel)]="enteredValue"></textarea>
+    <textarea matInput placeholder="Additional Company Notes" rows="6" [(ngModel)]="enteredNotes"></textarea>
   </mat-form-field>
   <button
     mat-raised-button
@@ -17,4 +17,3 @@
     (click)="onAddCompany()">Save Company</button>
 </mat-card>
 
-<p>{{newCompany}}</p>
