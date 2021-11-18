@@ -1,19 +1,24 @@
 <mat-card>
-  <mat-form-field class="example-full-width">
-    <textarea matInput placeholder="Company Name" [(ngModel)]="enteredName"></textarea>
-  </mat-form-field>
-  <mat-form-field class="example-full-width">
-    <textarea matInput placeholder="Company Address" [(ngModel)]="enteredAddress"></textarea>
-  </mat-form-field>
-  <mat-form-field class="example-full-width">
-    <textarea matInput placeholder="Tax ID#" [(ngModel)]="enteredTaxId"></textarea>
-  </mat-form-field>
-  <mat-form-field>
-    <textarea matInput placeholder="Additional Company Notes" rows="6" [(ngModel)]="enteredNotes"></textarea>
-  </mat-form-field>
-  <button
-    mat-raised-button
-    color="primary"
-    (click)="onAddCompany()">Save Company</button>
+  <form (submit)="onAddCompany(companyForm)" #companyForm="ngForm">
+    <mat-form-field>
+      <input matInput placeholder="Company Name" name="Name" ngModel required #Name = 'ngModel'>
+      <mat-error *ngIf="Name.invalid">Please Enter a Company Name</mat-error>
+    </mat-form-field>
+    <mat-form-field>
+      <input matInput placeholder="Company Address" name="Address" ngModel required #Address= 'ngModel'>
+      <mat-error *ngIf="Address.invalid">Please Enter a Company Name</mat-error>
+    </mat-form-field>
+    <mat-form-field>
+      <input matInput placeholder="Tax ID#" name="TaxID" ngModel required #TaxID='ngModel'>
+      <mat-error *ngIf="TaxID.invalid">Please Enter a Company Name</mat-error>
+    </mat-form-field>
+    <mat-form-field>
+      <textarea matInput placeholder="Additional Company Notes" rows="6" name="Notes" ngModel></textarea>
+    </mat-form-field>
+    <button
+      mat-raised-button
+      color="primary"
+      type="submit">Save Company</button>
+  </form>
 </mat-card>
 

@@ -1,4 +1,5 @@
 import { Component, EventEmitter, Output, OnInit } from '@angular/core';
+import { NgForm } from '@angular/forms';
 
 import { Company } from '../company.model';
 
@@ -23,12 +24,15 @@ export class CompanyCreateComponent implements OnInit {
   ngOnInit() {
   }
 
-  onAddCompany() {
+  onAddCompany(form: NgForm) {
+    if (form.invalid) {
+      return;
+    }
     const newCompany: Company = {
-      Name: this.enteredName,
-      Address: this.enteredAddress,
-      TaxID: this.enteredTaxId,
-      Notes: this.enteredNotes
+      Name: form.value.Name,
+      Address: form.value.Address,
+      TaxID: form.value.TaxID,
+      Notes: form.value.Notes
     };
 
     this.companyCreated.emit(newCompany)
