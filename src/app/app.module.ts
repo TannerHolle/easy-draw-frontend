@@ -17,6 +17,7 @@ import { HeaderComponent } from './header/header.component';
 import { CompanyCreateComponent } from './company/company-create/company-create.component';
 import { CompanyListComponent } from './company/company-list/company-list.component';
 
+
 @NgModule({
   declarations: [
     AppComponent,
