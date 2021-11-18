@@ -1,4 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { Company } from '../company.model'
+
 
 @Component({
   selector: 'app-company-list',
@@ -12,7 +14,7 @@ export class CompanyListComponent implements OnInit {
   //   {name: "Ivory Homes", address: "589 tyler st", taxid: "6985", notes: ""},
   //   {name: "Edge Homes", address: "96336 deschutes ave", taxid: "3652", notes: ""},
   // ];
-  @Input() companies = [];
+  @Input() companies: Company[] = [];
 
   constructor() { }
 

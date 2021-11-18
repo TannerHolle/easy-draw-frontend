@@ -1,5 +1,8 @@
 import { Component, EventEmitter, Output, OnInit } from '@angular/core';
 
+import { Company } from '../company.model';
+
+
 @Component({
   selector: 'app-company-create',
   templateUrl: './company-create.component.html',
@@ -12,7 +15,7 @@ export class CompanyCreateComponent implements OnInit {
   enteredTaxId = "";
   enteredNotes = "";
 
-  @Output() companyCreated = new EventEmitter();
+  @Output() companyCreated = new EventEmitter<Company>();
 
 
   constructor() { }
@@ -21,7 +24,7 @@ export class CompanyCreateComponent implements OnInit {
   }
 
   onAddCompany() {
-    const newCompany = {
+    const newCompany: Company = {
       Name: this.enteredName,
       Address: this.enteredAddress,
       TaxID: this.enteredTaxId,

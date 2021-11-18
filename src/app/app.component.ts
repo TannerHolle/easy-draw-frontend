@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Company } from './company/company.model'
 
 @Component({
   selector: 'app-root',
@@ -6,8 +7,7 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  title = 'easy-draw';
-  storedCompanies = [];
+  storedCompanies: Company[] = [];
 
   onCompaniesAdded(company) {
     this.storedCompanies.push(company)

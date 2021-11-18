@@ -1,11 +1,11 @@
 <mat-accordion multi="true" *ngIf="companies.length > 0">
   <mat-expansion-panel *ngFor="let company of companies">
     <mat-expansion-panel-header>
-      {{company.name}}
+      {{company.Name}}
     </mat-expansion-panel-header>
-    <p>Address: {{company.address}}</p>
-    <p>Tax ID: {{company.taxid}}</p>
-    <p>Notes: {{company.notes}}</p>
+    <p>Address: {{company.Address}}</p>
+    <p>Tax ID: {{company.TaxID}}</p>
+    <p>Notes: {{company.Notes}}</p>
   </mat-expansion-panel>
 </mat-accordion>
 <p class="info-text mat-body-1" *ngIf="companies.length==0">No companies added yet</p>
