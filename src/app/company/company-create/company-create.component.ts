@@ -1,7 +1,7 @@
-import { Component, EventEmitter, Output, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 
-import { Company } from '../company.model';
+import { CompanyService } from '../post.service';
 
 
 @Component({
@@ -11,31 +11,19 @@ import { Company } from '../company.model';
 })
 export class CompanyCreateComponent implements OnInit {
 
-  enteredName = "";
-  enteredAddress = "";
-  enteredTaxId = "";
-  enteredNotes = "";
-
-  @Output() companyCreated = new EventEmitter<Company>();
 
 
-  constructor() { }
-
+  constructor(public companyService: CompanyService) { }
   ngOnInit() {
+
   }
 
   onAddCompany(form: NgForm) {
     if (form.invalid) {
       return;
     }
-    const newCompany: Company = {
-      Name: form.value.Name,
-      Address: form.value.Address,
-      TaxID: form.value.TaxID,
-      Notes: form.value.Notes
-    };
-
-    this.companyCreated.emit(newCompany)
+    this.companyService.addCompanies(form.value.Name, form.value.Address, form.value.TaxID, form.value.Notes)
+    form.resetForm();
   };
 
 }

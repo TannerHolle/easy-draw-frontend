@@ -6,6 +6,10 @@
     <p>Address: {{company.Address}}</p>
     <p>Tax ID: {{company.TaxID}}</p>
     <p>Notes: {{company.Notes}}</p>
+    <mat-action-row>
+      <button mat-button color="primary">EDIT</button>
+      <button mat-button color="warning">DELETE</button>
+    </mat-action-row>
   </mat-expansion-panel>
 </mat-accordion>
 <p class="info-text mat-body-1" *ngIf="companies.length==0">No companies added yet</p>
