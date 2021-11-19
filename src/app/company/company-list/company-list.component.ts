@@ -1,7 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { Company } from '../company.model'
-import { CompanyService } from '../post.service';
+import { CompanyService } from '../company.service';
 
 
 
@@ -17,14 +17,15 @@ export class CompanyListComponent implements OnInit, OnDestroy {
   //   {name: "Ivory Homes", address: "589 tyler st", taxid: "6985", notes: ""},
   //   {name: "Edge Homes", address: "96336 deschutes ave", taxid: "3652", notes: ""},
   // ];
+
   companies: Company[] = [];
   private companiesSub: Subscription;
 
   constructor(public companyService: CompanyService) { }
 
   ngOnInit() {
-    this.companies = this.companyService.getCompanies();
-    this.companyService.getCompanyUpdateListener()
+    this.companyService.getCompanies();
+    this.companiesSub = this.companyService.getCompanyUpdateListener()
       .subscribe((companies: Company[]) => {
         this.companies = companies;
     });
