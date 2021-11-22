@@ -22,7 +22,7 @@ export class ProjectListComponent implements OnInit {
   projects: Project[] = [];
   private projectsSub: Subscription;
 
-  displayedColumns: string[] = ['name', 'address', 'homeOwners', 'budget', 'phone', 'email', 'dive'];
+  displayedColumns: string[] = ['name', 'address', 'homeOwners', 'budget', 'phone', 'email'];
   dataSource = [];
 
   ngOnInit() {
