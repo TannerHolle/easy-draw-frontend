@@ -17,6 +17,8 @@ import { AppComponent } from './app.component';
 import { HeaderComponent } from './header/header.component';
 import { CompanyCreateComponent } from './company/company-create/company-create.component';
 import { CompanyListComponent } from './company/company-list/company-list.component';
+import { InvoiceCreateComponent } from './invoice/invoice-create/invoice-create.component';
+import { InvoiceListComponent } from './invoice/invoice-list/invoice-list.component';
 
 
 @NgModule({
@@ -25,6 +27,8 @@ import { CompanyListComponent } from './company/company-list/company-list.compon
     HeaderComponent,
     CompanyCreateComponent,
     CompanyListComponent,
+    InvoiceCreateComponent,
+    InvoiceListComponent,
   ],
   imports: [
     BrowserModule,

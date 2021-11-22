@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
-
 import { CompanyService } from '../company.service';
 
 
@@ -11,11 +10,8 @@ import { CompanyService } from '../company.service';
 })
 export class CompanyCreateComponent implements OnInit {
 
-
-
   constructor(public companyService: CompanyService) { }
   ngOnInit() {
-
   }
 
   onAddCompany(form: NgForm) {

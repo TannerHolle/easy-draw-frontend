@@ -37,4 +37,25 @@ app.get('/api/companies' , (req, res, next) => {
   });
 });
 
+app.post("/api/invoices", (req, res, next) => {
+  const invoice = req.body;
+  console.log(invoice);
+  res.status(201).json({
+    message: 'company added successfully'
+  });
+});
+
+app.get('/api/invoices' , (req, res, next) => {
+  const invoices = [
+    {id: "asdv231", company: "tanners Plumbing", companyAddress: "123 tanner st", project: "2541", category: "Plumbing", invoiceNum: "2541", invoiceAmt: "5232.00"},
+    {id: "dgn123", company: "tylers framing", companyAddress: "123 tyler st", project: "2541", category: "Framing", invoiceNum: "5212", invoiceAmt: "6532.00"},
+  ];
+  res.status(200).json({
+    message: 'invoices fetched Successfully',
+    invoices: invoices
+  });
+});
+
 module.exports = app
+
+// anhePHrVcNGba0L5
