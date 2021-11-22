@@ -2,7 +2,7 @@
   <form (submit)="onAddInvoice(invoiceForm)" #invoiceForm="ngForm">
     <mat-form-field>
       <input matInput placeholder="Company" name="company" ngModel required #company = 'ngModel'>
-      <mat-error *ngIf="companyAddress.invalid">Please Enter a Company Name</mat-error>
+      <mat-error *ngIf="company.invalid">Please Enter a Company Name</mat-error>
     </mat-form-field>
     <mat-form-field>
       <input matInput placeholder="Company Address" name="companyAddress" ngModel required #companyAddress='ngModel'>
@@ -13,8 +13,12 @@
       <mat-error *ngIf="project.invalid">Please Enter Project</mat-error>
     </mat-form-field>
     <mat-form-field>
-      <input matInput placeholder="Category" name="category" ngModel required #category = 'ngModel'>
-      <mat-error *ngIf="category.invalid">Please Enter Category</mat-error>
+      <mat-label>Category</mat-label>
+      <mat-select name="category" ngModel required #category = 'ngModel'>
+        <mat-option *ngFor="let category of categories" [value]="category">
+          {{category}}
+        </mat-option>
+      </mat-select>
     </mat-form-field>
     <mat-form-field>
       <input matInput placeholder="Inovice Number" name="invoiceNum" ngModel required #invoiceNum= 'ngModel'>

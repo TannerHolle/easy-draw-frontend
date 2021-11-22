@@ -11,6 +11,8 @@ import { InvoiceComponent } from '../invoice.component';
 })
 export class InvoiceCreateComponent implements OnInit {
 
+  categories = ["Plumbing", "Framing", "Concrete", "Interior", "Smoothing"]
+
   constructor(public invoiceService: InvoiceService, public invoiceComponent: InvoiceComponent) { }
   ngOnInit() {
   }

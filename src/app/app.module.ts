@@ -9,7 +9,10 @@ import {
   MatCardModule,
   MatButtonModule,
   MatToolbarModule,
-  MatExpansionModule
+  MatExpansionModule,
+  MatSelectModule,
+  MatTableModule,
+  MatIconModule
 } from '@angular/material';
 
 
@@ -22,6 +25,10 @@ import { InvoiceCreateComponent } from './invoice/invoice-create/invoice-create.
 import { InvoiceListComponent } from './invoice/invoice-list/invoice-list.component';
 import { InvoiceComponent } from './invoice/invoice.component';
 import { HomeComponent } from './home/home.component';
+import { ProjectComponent } from './project/project.component';
+import { ProjectListComponent } from './project/project-list/project-list.component';
+import { ProjectCreateComponent } from './project/project-create/project-create.component';
+import { ProjectBudgetComponent } from './project/project-budget/project-budget.component';
 
 
 @NgModule({
@@ -34,15 +41,22 @@ import { HomeComponent } from './home/home.component';
     InvoiceListComponent,
     InvoiceComponent,
     HomeComponent,
+    ProjectComponent,
+    ProjectListComponent,
+    ProjectCreateComponent,
+    ProjectBudgetComponent,
   ],
   imports: [
     BrowserModule,
     FormsModule,
     MatInputModule,
+    MatTableModule,
     MatCardModule,
     MatButtonModule,
+    MatIconModule,
     MatToolbarModule,
     MatExpansionModule,
+    MatSelectModule,
     AppRoutingModule,
     BrowserAnimationsModule,
     HttpClientModule

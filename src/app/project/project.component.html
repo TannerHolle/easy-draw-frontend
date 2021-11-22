@@ -1,0 +1,9 @@
+<main>
+  <a mat-raised-button class="add-project" (click)="createProject()">Add Project</a>
+  <div *ngIf="createProj == true">
+    <app-project-create></app-project-create>
+  </div>
+  <app-project-list></app-project-list>
+</main>
+
+<router-outlet></router-outlet>
