@@ -46,13 +46,26 @@ app.post("/api/invoices", (req, res, next) => {
 });
 
 app.get('/api/invoices' , (req, res, next) => {
-  const invoices = [
-    {id: "asdv231", company: "tanners Plumbing", companyAddress: "123 tanner st", project: "2541", category: "Plumbing", invoiceNum: "2541", invoiceAmt: "5232.00"},
-    {id: "dgn123", company: "tylers framing", companyAddress: "123 tyler st", project: "2541", category: "Framing", invoiceNum: "5212", invoiceAmt: "6532.00"},
-  ];
+  const invoices = require("/Users/tannerholle/Construction/easy-draw/src/assets/testInvoices.json");
   res.status(200).json({
     message: 'invoices fetched Successfully',
     invoices: invoices
+  });
+});
+
+app.post("/api/projects", (req, res, next) => {
+  const project = req.body;
+  console.log(project);
+  res.status(201).json({
+    message: 'project added successfully'
+  });
+});
+
+app.get('/api/projects' , (req, res, next) => {
+  const projects = require("/Users/tannerholle/Construction/easy-draw/src/assets/testProjects.json");
+  res.status(200).json({
+    message: 'invoices fetched Successfully',
+    projects: projects
   });
 });
 
