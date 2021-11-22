@@ -12,7 +12,9 @@ import { ProjectService } from './project.service';
 })
 export class ProjectComponent implements OnInit {
 
+  projectId = "";
   createProj = false;
+  projectBudget = false;
   projects: Project[] = [];
   private projectsSub: Subscription;
 
@@ -32,6 +34,8 @@ export class ProjectComponent implements OnInit {
 
   createProject() {
     this.createProj = true;
-   }
+  }
+
+
 
 }

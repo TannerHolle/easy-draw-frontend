@@ -20,7 +20,6 @@
 
 <div class="mat-elevation-z2">
   <table mat-table [dataSource]="projects">
-    <a>
 
     <!-- Position Column -->
     <ng-container matColumnDef="name">
@@ -58,9 +57,16 @@
       <td mat-cell *matCellDef="let element"> {{element.email}} </td>
     </ng-container>
 
+    <!-- Symbol Column -->
+    <ng-container matColumnDef="dive">
+      <th mat-header-cell *matHeaderCellDef> Explore </th>
+      <td mat-cell *matCellDef="let element"><a (click)="showBudget(element)"><mat-icon>front_hand</mat-icon></a></td>
+    </ng-container>
+
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-  </a>
+    <tr mat-row class="element-row"  *matRowDef="let row; columns: displayedColumns;" (click)="cellClicked(row)"></tr>
+
+
   </table>
 
 </div>

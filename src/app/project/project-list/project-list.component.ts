@@ -14,7 +14,7 @@ import { ProjectService } from '../project.service';
   styleUrls: ['./project-list.component.scss']
 })
 export class ProjectListComponent implements OnInit {
-  constructor(public projectService: ProjectService) { }
+  constructor(public projectService: ProjectService, public projectComponent: ProjectComponent) { }
 
 
 
@@ -22,7 +22,7 @@ export class ProjectListComponent implements OnInit {
   projects: Project[] = [];
   private projectsSub: Subscription;
 
-  displayedColumns: string[] = ['name', 'address', 'homeOwners', 'budget', 'phone', 'email'];
+  displayedColumns: string[] = ['name', 'address', 'homeOwners', 'budget', 'phone', 'email', 'dive'];
   dataSource = [];
 
   ngOnInit() {
@@ -42,9 +42,16 @@ export class ProjectListComponent implements OnInit {
     this.createProj = true;
   }
 
-  viewProject(row) {
-    // console.log(row)
-    // let route = '/project/project-budget';
-    // this.router.navigate([route], { queryParams: { id: contact.id } });
+
+  showBudget(row) {
+    this.projectComponent.projectId = row.id;
+    console.log(this.projectComponent.projectId)
+    this.projectComponent.projectBudget = true;
   }
+
+  cellClicked(element) {
+    this.projectComponent.projectId = element.id;
+    console.log(element.id);
+  }
+
 }
