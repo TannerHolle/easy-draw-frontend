@@ -1,17 +1,21 @@
-<mat-accordion multi="true" *ngIf="invoices.length > 0">
-  <mat-expansion-panel *ngFor="let invoice of invoices">
-    <mat-expansion-panel-header>
-      {{invoice.company}}
-    </mat-expansion-panel-header>
-    <p>Address: {{invoice.companyAddress}}</p>
-    <p>Project: {{invoice.project}}</p>
-    <p>Category: {{invoice.category}}</p>
-    <p>Inovice Number: {{invoice.invoiceNum}}</p>
-    <p>Invoice Amount: {{invoice.invoiceAmt}}</p>
-    <mat-action-row>
-      <button mat-button color="primary">EDIT</button>
-      <button mat-button color="warning">DELETE</button>
-    </mat-action-row>
-  </mat-expansion-panel>
-</mat-accordion>
-<p class="info-text mat-body-1" *ngIf="invoices.length==0">No companies added yet</p>
+<main>
+  <mat-accordion multi="true" *ngIf="invoices.length > 0">
+    <mat-expansion-panel *ngFor="let invoice of invoices">
+      <mat-expansion-panel-header>
+        {{invoice.company}}
+      </mat-expansion-panel-header>
+      <p>Address: {{invoice.companyAddress}}</p>
+      <p>Project: {{invoice.project}}</p>
+      <p>Category: {{invoice.category}}</p>
+      <p>Inovice Number: {{invoice.invoiceNum}}</p>
+      <p>Invoice Amount: {{invoice.invoiceAmt}}</p>
+      <mat-action-row>
+        <button mat-button color="primary">EDIT</button>
+        <button mat-button color="warning">DELETE</button>
+      </mat-action-row>
+    </mat-expansion-panel>
+  </mat-accordion>
+  <p class="info-text mat-body-1" *ngIf="invoices.length==0">No companies added yet</p>
+</main>
+
+<router-outlet></router-outlet>

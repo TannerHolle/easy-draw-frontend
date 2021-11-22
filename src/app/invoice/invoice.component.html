@@ -1,0 +1,9 @@
+<main>
+  <a mat-raised-button class="add-invoice" (click)="createInvoice()">Add Invoice</a>
+  <div *ngIf="createInv == true">
+    <app-invoice-create></app-invoice-create>
+  </div>
+  <app-invoice-list></app-invoice-list>
+</main>
+
+<router-outlet></router-outlet>

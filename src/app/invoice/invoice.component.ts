@@ -1,16 +1,16 @@
 import { Component, OnInit } from '@angular/core';
 
 import { Subscription } from 'rxjs';
-import { Invoice } from '../invoice.model'
-import { InvoiceService } from '../invoice.service';
+import { Invoice } from './invoice.model'
+import { InvoiceService } from './invoice.service';
 
 
 @Component({
-  selector: 'app-invoice-list',
-  templateUrl: './invoice-list.component.html',
-  styleUrls: ['./invoice-list.component.scss']
+  selector: 'app-invoice',
+  templateUrl: './invoice.component.html',
+  styleUrls: ['./invoice.component.scss']
 })
-export class InvoiceListComponent implements OnInit {
+export class InvoiceComponent implements OnInit {
 
   // invoices = [
   //   {name: "E Builders", address: "123 tanner st", taxid: "2541", notes: "This is the original Company"},
@@ -18,7 +18,7 @@ export class InvoiceListComponent implements OnInit {
   //   {name: "Edge Homes", address: "96336 deschutes ave", taxid: "3652", notes: ""},
   // ];
 
-  createInv: Boolean = false;
+  createInv = false;
   invoices: Invoice[] = [];
   private invoicesSub: Subscription;
 
@@ -38,6 +38,6 @@ export class InvoiceListComponent implements OnInit {
 
   createInvoice() {
     this.createInv = true;
-  }
+   }
 
 }

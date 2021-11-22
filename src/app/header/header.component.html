@@ -1,1 +1,8 @@
-<mat-toolbar color="primary">Easy Draw</mat-toolbar>
+<mat-toolbar color="primary" class="mat-elevation-z6">
+  <span>Easy Draw</span>
+  <div class="spacer"></div>
+  <a mat-button routerLink="/invoices">Invoices</a>
+  <a mat-button routerLink="/companies">Companies</a>
+  <a mat-raised-button color="accent">Sign Up</a>
+</mat-toolbar>
+<router-outlet></router-outlet>
