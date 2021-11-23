@@ -14,6 +14,7 @@ const routes: Routes = [
   {path: '', component: HomeComponent},
   {path: 'invoices', component: InvoiceComponent},
   {path: 'projects', component: ProjectComponent},
+  {path: 'projects/id', component: ProjectBudgetComponent},
   {path: 'budget', component: ProjectBudgetComponent},
   {path: 'companies', component: CompanyListComponent},
 ];

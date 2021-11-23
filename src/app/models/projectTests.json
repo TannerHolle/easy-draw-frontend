@@ -1,0 +1,57 @@
+[
+  {
+    "projectId": "123abc",
+    "name": "Johnsons Home",
+    "address": "123 sesame st",
+    "homeOwners": "Rick and Janet Johnson",
+    "phone": "801-541-5236",
+    "email": "Johnson@gmail.com",
+    "budget": 500000,
+    "invoices":[
+      {
+        "invoiceId": "963inv",
+        "company": "Kruger Plumbing",
+        "companyAddress": "7001 w 10th ave",
+        "category": "Plumbing",
+        "invoiceNum": "85s4d5v",
+        "invoiceAmt": "6300"
+      },
+      {
+        "invoiceId": "852inv",
+        "company": "Sunshine Framing",
+        "companyAddress": "8601 deschutes st",
+        "category": "Framing",
+        "invoiceNum": "65421ssd",
+        "invoiceAmt": "8600"
+      }
+    ]
+  },
+  {
+    "projectId": "456def",
+    "name": "Holle Home",
+    "address": "876 tanner ave",
+    "homeOwners": "Kat and Kirk Johnson",
+    "phone": "509-854*-9652",
+    "email": "Kirk@gmail.com",
+    "budget": 700000,
+    "invoices":[
+      {
+        "invoiceId": "963inv",
+        "company": "Kruger Plumbing",
+        "companyAddress": "7001 w 10th ave",
+        "category": "Plumbing",
+        "invoiceNum": "85s4d5v",
+        "invoiceAmt": "6300"
+      },
+      {
+        "invoiceId": "852inv",
+        "company": "Sunshine Framing",
+        "companyAddress": "8601 deschutes st",
+        "category": "Framing",
+        "invoiceNum": "65421ssd",
+        "invoiceAmt": "8600"
+      }
+    ]
+  }
+]
+

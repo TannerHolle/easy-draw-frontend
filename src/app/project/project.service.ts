@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Subject } from 'rxjs';
 
-import { Project } from './project.model';
+import { Project } from '../models/project.model';
 
 @Injectable({providedIn: 'root'})
 export class ProjectService {
@@ -26,9 +26,9 @@ export class ProjectService {
     return this.projectsUpdated.asObservable();
   }
 
-  addProjects(name: String, address: String, homeOwners: String, phone: String, email: String, budget: Number, draws: []) {
-    var newId = name + "" + address
-    const project: Project = {id: newId, name: name, address: address, homeOwners: homeOwners, phone: phone, email: email, budget: budget, draws: []};
+  addProjects(name: String, address: String, homeOwners: String, phone: String, email: String, budget: Number) {
+    var newId = address.replace(/\s/g, '');
+    const project: Project = {id: newId, name: name, address: address, homeOwners: homeOwners, phone: phone, email: email, budget: budget, invoices: []};
     this.http.post<{message: string}>("http://localhost:3000/api/projects", project)
       .subscribe((responseData) => {
         console.log(responseData);

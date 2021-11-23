@@ -18,6 +18,39 @@ app.use((req, res, next) => {
   next();
 });
 
+app.post("/api/projects", (req, res, next) => {
+  const project = req.body;
+  console.log(project);
+  res.status(201).json({
+    message: 'project added successfully'
+  });
+});
+
+app.get('/api/projects' , (req, res, next) => {
+  const projects = require("/Users/tannerholle/Construction/easy-draw/src/assets/testProjects.json");
+  res.status(200).json({
+    message: 'invoices fetched Successfully',
+    projects: projects
+  });
+});
+
+
+app.post("/api/invoices", (req, res, next) => {
+  const invoice = req.body;
+  console.log(invoice);
+  res.status(201).json({
+    message: 'company added successfully'
+  });
+});
+
+app.get('/api/invoices' , (req, res, next) => {
+  const invoices = require("/Users/tannerholle/Construction/easy-draw/src/assets/testInvoices.json");
+  res.status(200).json({
+    message: 'invoices fetched Successfully',
+    invoices: invoices
+  });
+});
+
 app.post("/api/companies", (req, res, next) => {
   const company = req.body;
   console.log(company);
@@ -37,37 +70,7 @@ app.get('/api/companies' , (req, res, next) => {
   });
 });
 
-app.post("/api/invoices", (req, res, next) => {
-  const invoice = req.body;
-  console.log(invoice);
-  res.status(201).json({
-    message: 'company added successfully'
-  });
-});
 
-app.get('/api/invoices' , (req, res, next) => {
-  const invoices = require("/Users/tannerholle/Construction/easy-draw/src/assets/testInvoices.json");
-  res.status(200).json({
-    message: 'invoices fetched Successfully',
-    invoices: invoices
-  });
-});
-
-app.post("/api/projects", (req, res, next) => {
-  const project = req.body;
-  console.log(project);
-  res.status(201).json({
-    message: 'project added successfully'
-  });
-});
-
-app.get('/api/projects' , (req, res, next) => {
-  const projects = require("/Users/tannerholle/Construction/easy-draw/src/assets/testProjects.json");
-  res.status(200).json({
-    message: 'invoices fetched Successfully',
-    projects: projects
-  });
-});
 
 module.exports = app
 

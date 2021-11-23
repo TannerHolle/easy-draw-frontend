@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Subject } from 'rxjs';
 
-import { Invoice } from './invoice.model';
+import { Invoice } from '../models/invoice.model';
 
 @Injectable({providedIn: 'root'})
 export class InvoiceService {
@@ -27,7 +27,10 @@ export class InvoiceService {
   }
 
   addInvoices(company: String, companyAddress: String, project: String, category: String, invoiceNum: String, invoiceAmt: String) {
-    const invoice: Invoice = {id: null, company: company, companyAddress: companyAddress, project: project, category: category, invoiceNum: invoiceNum, invoiceAmt: invoiceAmt};
+    //get the project with incoming project ID
+    //add invoice to that projects invoice array
+    console.log(project);
+    const invoice: Invoice = {invoiceId: null, company: company, companyAddress: companyAddress, category: category, invoiceNum: invoiceNum, invoiceAmt: invoiceAmt};
     this.http.post<{message: string}>("http://localhost:3000/api/invoices", invoice)
       .subscribe((responseData) => {
         console.log(responseData);
