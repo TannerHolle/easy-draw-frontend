@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
 import { Subscription } from 'rxjs';
-import { Project } from './project.model'
+import { Project } from '../models/project.model'
 import { ProjectService } from './project.service';
 
 
@@ -12,7 +12,7 @@ import { ProjectService } from './project.service';
 })
 export class ProjectComponent implements OnInit {
 
-  projectId = "";
+  projectInvoices = [];
   createProj = false;
   projectBudget = false;
   projects: Project[] = [];

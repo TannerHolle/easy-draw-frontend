@@ -58,11 +58,13 @@
     </ng-container>
 
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-    <tr mat-row class="element-row"  *matRowDef="let row; columns: displayedColumns;" (click)="cellClicked(row)"></tr>
+    <tr mat-row class="element-row"  *matRowDef="let row; columns: displayedColumns;" (click)="cellClicked(row)" [routerLink]="['/projects', row.projectId]"></tr>
 
 
   </table>
 
 </div>
-
+<!-- <a [routerLink]="['/detail']">
+  take me to budget
+</a> -->
 <router-outlet></router-outlet>

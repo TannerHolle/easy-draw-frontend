@@ -1,7 +1,7 @@
 export interface Invoice {
   id: String;
   company: String;
-  companyAddress: String;
+  address: String;
   project: String;
   category: String;
   invoiceNum: String;

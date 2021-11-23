@@ -10,9 +10,10 @@ import { ProjectService } from '../project.service';
 export class ProjectBudgetComponent implements OnInit, OnChanges {
 
   constructor(public projectService: ProjectService, public projectComponent: ProjectComponent) { }
-  projectId = this.projectComponent.projectId;
+  projectInvoices = [];
 
   ngOnInit() {
+    this.projectInvoices = this.projectComponent.projectInvoices;
   }
 
   ngOnChanges() {

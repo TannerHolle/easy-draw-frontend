@@ -21,7 +21,7 @@ export class InvoiceCreateComponent implements OnInit {
     if (form.invalid) {
       return;
     }
-    this.invoiceService.addInvoices(form.value.company, form.value.companyAddress, form.value.project, form.value.category, form.value.invoiceNum, form.value.invoiceAmt)
+    this.invoiceService.addInvoices(form.value.company, form.value.address, form.value.project, form.value.category, form.value.invoiceNum, form.value.invoiceAmt)
     form.resetForm();
     this.invoiceComponent.createInv = false;
   };

@@ -20,22 +20,34 @@ app.use((req, res, next) => {
 
 app.post("/api/projects", (req, res, next) => {
   const project = req.body;
-  console.log(project);
+  // console.log(project);
   res.status(201).json({
     message: 'project added successfully'
   });
 });
 
 app.get('/api/projects' , (req, res, next) => {
-  const projects = require("/Users/tannerholle/Construction/easy-draw/src/assets/testProjects.json");
+  const json = require("/Users/tannerholle/Construction/easy-draw/src/app/models/projectTests.json");
+  const projects = json.projects;
   res.status(200).json({
     message: 'invoices fetched Successfully',
     projects: projects
   });
 });
 
+app.get('/api/projects/:id/invoices' , (req, res, next) => {
+  const json = require("/Users/tannerholle/Construction/easy-draw/src/app/models/projectTests.json");
+  const projects = json.projects;
+  const invoices = projects.filter(obj => {
+    return obj.projectId === id;
+  });
+  res.status(200).json({
+    message: 'invoices fetched Successfully',
+    invoices: invoices
+  });
+});
 
-app.post("/api/invoices", (req, res, next) => {
+app.post("/api/:projectId/invoices/:invoiceId", (req, res, next) => {
   const invoice = req.body;
   console.log(invoice);
   res.status(201).json({

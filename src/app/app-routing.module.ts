@@ -9,14 +9,14 @@ import { InvoiceComponent } from './invoice/invoice.component';
 import { HomeComponent } from './home/home.component';
 import { ProjectComponent } from './project/project.component';
 import { ProjectBudgetComponent } from './project/project-budget/project-budget.component';
+import { ProjectDetailComponent } from './project/project-detail/project-detail.component';
 
 const routes: Routes = [
   {path: '', component: HomeComponent},
   {path: 'invoices', component: InvoiceComponent},
-  {path: 'projects', component: ProjectComponent},
-  {path: 'projects/id', component: ProjectBudgetComponent},
-  {path: 'budget', component: ProjectBudgetComponent},
   {path: 'companies', component: CompanyListComponent},
+  {path: 'projects/:id', component: ProjectDetailComponent},
+  {path: 'projects', component: ProjectComponent,},
 ];
 
 @NgModule({

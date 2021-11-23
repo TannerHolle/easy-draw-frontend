@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { MatPaginator, MatTableDataSource, MatSort} from '@angular/material';
+import { RouterModule, Router } from '@angular/router';
 
 import { Subscription } from 'rxjs';
-import { Project } from '../project.model'
+import { Project } from '../../models/project.model'
 import { ProjectComponent } from '../project.component';
 import { ProjectService } from '../project.service';
 
@@ -31,7 +32,6 @@ export class ProjectListComponent implements OnInit {
       .subscribe((projects: Project[]) => {
         this.projects = projects;
     });
-    // setTimeout(() => this.dataSource = this.projectService.projects);
   }
 
   ngOnDestroy() {
@@ -42,16 +42,11 @@ export class ProjectListComponent implements OnInit {
     this.createProj = true;
   }
 
-
-  showBudget(row) {
-    this.projectComponent.projectId = row.id;
-    console.log(this.projectComponent.projectId)
-    this.projectComponent.projectBudget = true;
-  }
-
   cellClicked(element) {
-    this.projectComponent.projectId = element.id;
-    console.log(element.id);
+    this.projectComponent.projectInvoices = element.inovices;
+    // console.log(element.invoices);
+    this.projectComponent.projectBudget = true;
+
   }
 
 }
