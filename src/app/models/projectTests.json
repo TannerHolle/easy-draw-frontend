@@ -75,22 +75,30 @@
         ],
         "categories": [
           {
+            "costCode": 1,
             "category":"Framing",
             "budget": 6000
           },
           {
+            "costCode": 2,
             "category":"Plumbing",
             "budget": 10000
           },
           {
+            "costCode": 3,
             "category":"Painting",
             "budget": 7500
+          },
+          {
+            "costCode": 4,
+            "category":"Electrical",
+            "budget": 12500
           }
         ]
       },
         {
           "projectId": "345def",
-          "name": "holle Home",
+          "name": "Holle Home",
           "address": "123 kramer st",
           "homeOwners": "KAt and Kirk holle",
           "phone": "801-541-5236",
@@ -129,6 +137,36 @@
             },
             {
               "name": "draw2",
+              "isOpen": false,
+              "invoices":[
+                {
+                  "invoiceId": "asdv231",
+                  "company": "Kramerica",
+                  "address": "7001 w 10th ave",
+                  "category": "Electrical",
+                  "invoiceNum": "85s4d5v",
+                  "invoiceAmt": 6300
+                },
+                {
+                  "invoiceId": "345ybsd",
+                  "company": "Sunshine Framing",
+                  "address": "8601 deschutes st",
+                  "category": "Framing",
+                  "invoiceNum": "65421ssd",
+                  "invoiceAmt": 8600
+                },
+                {
+                  "invoiceId": "564asd",
+                  "company": "Kruger Plumbing",
+                  "address": "7001 w 10th ave",
+                  "category": "Painting",
+                  "invoiceNum": "85s4d5v",
+                  "invoiceAmt": 6300
+                }
+              ]
+            },
+            {
+              "name": "draw3",
               "isOpen": true,
               "invoices":[
                 {
@@ -160,14 +198,17 @@
           ],
           "categories": [
             {
+              "costCode": 1,
               "category":"Framing",
               "budget": 6000
             },
             {
+              "costCode": 2,
               "category":"Plumbing",
               "budget": 10000
             },
             {
+              "costCode": 3,
               "category":"Electrical",
               "budget": 12500
             }

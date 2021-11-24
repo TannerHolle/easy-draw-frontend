@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
 import { Subscription } from 'rxjs';
-import { Invoice } from '../invoice.model'
+import { Invoice } from '../../models/invoice.model'
 import { InvoiceService } from '../invoice.service';
 
 

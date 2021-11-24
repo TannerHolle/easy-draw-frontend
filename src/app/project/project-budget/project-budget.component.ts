@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import {ActivatedRoute} from '@angular/router';
 import { ProjectService } from '../project.service';
@@ -13,43 +13,44 @@ import { CastExpr } from '@angular/compiler';
 export class ProjectBudgetComponent implements OnInit {
   id: string;
   budgetData = [];
+  projectName = '';
 
-
-  displayedColumns: string[] = ['category', 'budget', 'draw1', 'draw2', 'spent', 'over/under'];
+  columns = [];
+  displayedColumns: string[] = ['category', 'budget', 'draw1', 'draw2', 'spent', 'status'];
   dataSource = [];
+
+  @ViewChild('downloadTemplate') downloadTemplate: ElementRef;
 
 
   constructor(private route: ActivatedRoute, private http: HttpClient, public projectService: ProjectService) { }
 
   ngOnInit() {
     this.id = this.route.snapshot.paramMap.get('id');
-    this.budgetData = this.formatData()
-    console.log(this.budgetData)
-
-
-
+    this.budgetData = this.formatData();
+    this.projectName = this.getProject().name;
+    this.displayedColumns = Object.keys(this.budgetData[1])
+    console.log(this.displayedColumns)
   }
 
-  getDraws() {
+  getProject() {
     if (this.id != undefined) {
       const json = require("/Users/tannerholle/Construction/easy-draw/src/app/models/projectTests.json");
       const projects = json.projects;
-      const invoices = projects.filter(obj => {
+      const project = projects.filter(obj => {
         return obj.projectId === this.id;
       });
-      return invoices[0].draws;
-    };
+      return project[0];
+    }
+  }
+
+  getDraws() {
+    const project = this.getProject()
+    return project.draws;
   }
 
   getCategories() {
-    if (this.id != undefined) {
-      const json = require("/Users/tannerholle/Construction/easy-draw/src/app/models/projectTests.json");
-      const project = json.projects.filter(obj => {
-        return obj.projectId === this.id;
-      });
-      return project[0].categories;
-    };
-
+    const project = this.getProject()
+    return project.categories;
   }
 
   formatData() {
@@ -58,6 +59,7 @@ export class ProjectBudgetComponent implements OnInit {
     var projectDraws = this.getDraws()
     for (var c of projectCategories) {
       var categoryInfo = {}
+      categoryInfo["costCode"] = c.costCode;
       categoryInfo["category"] = c.category;
       categoryInfo["budget"] = c.budget;
       categoryInfo["spent"] = 0;
@@ -66,29 +68,31 @@ export class ProjectBudgetComponent implements OnInit {
           categoryInfo[draws.name] = 0;
         }
         for (var d of draws.invoices) {
-
           if (d.category == c.category) {
             categoryInfo[draws.name] = categoryInfo[draws.name] + d.invoiceAmt;
             categoryInfo["spent"] = categoryInfo["spent"] + d.invoiceAmt;
-
           }
         }
       }
-
       categoryInfo["status"] = categoryInfo["budget"] - categoryInfo["spent"];
-
-
-
       budgetArray.push(categoryInfo);
-
-
-
     }
     return budgetArray;
+  }
 
-
-
-
+  download() {
+    const items = this.budgetData
+    const replacer = (key, value) => value === null ? '' : value // specify how you want to handle null values here
+    const header = Object.keys(items[0])
+    const csv = [
+      header.join(','), // header row first
+      ...items.map(row => header.map(fieldName => JSON.stringify(row[fieldName], replacer)).join(','))
+    ].join('\r\n')
+    var hiddenElement = document.createElement('a');
+    hiddenElement.href = 'data:text/csv;charset=utf-8,' + encodeURI(csv);
+    hiddenElement.target = '_blank';
+    hiddenElement.download = this.getProject().name + '_budget.csv';
+    hiddenElement.click();
   }
 
 }
