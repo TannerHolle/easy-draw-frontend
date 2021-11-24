@@ -9,6 +9,7 @@ export interface Project {
   phone: String;
   email: String;
   budget: Number;
+  categories: [];
   invoices: [];
 }
 

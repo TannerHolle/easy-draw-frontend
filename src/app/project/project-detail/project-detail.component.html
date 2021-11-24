@@ -1,19 +1,36 @@
 
 <div  class="table-size">
+  <h2>{{project["name"]}}</h2>
   <mat-card>
     <div class="search-results-header">
       <div>
         <span class="plain-text">Invoices for: </span>
-        <span class="search-term-text">{{drawId}}</span><br>
+        <span class="search-term-text">{{drawIdCapital}}</span><br>
+      </div>
+      <div>
+        <span *ngFor="let d of draws; index as i;">
+          <button mat-raised-button [routerLink]="['/projects', id, 'draws', 'draw' + (i+1)]">Draw {{i+1}}</button>
+        </span>
+      </div>
+    </div>
+    <div class="search-results-header">
+      <div>
+        Draw Status: <span *ngIf="draw['isOpen'] == true">Open</span> <span *ngIf="draw['isOpen'] == false">Closed</span>
       </div>
       <div class="action-buttons">
         <mat-icon (click)="download()" matTooltip="Download search results" class="material-icons-outlined" style="font-size: 24px" matTooltipClass="tooltip">file_download</mat-icon>
       </div>
     </div>
-    <!-- <div>{{}}</div> -->
+
+    <br>
+    <!-- <div>
+      <mat-slide-toggle
+          [checked]="draw['isOpen'] == true ? true : false">
+      </mat-slide-toggle>
+    </div> -->
 
     <div class="mat-elevation-z2">
-    <table mat-table [dataSource]="draw.invoices">
+    <table mat-table [dataSource]="drawInvoices">
 
       <ng-container matColumnDef="company">
         <th mat-header-cell *matHeaderCellDef> Company </th>

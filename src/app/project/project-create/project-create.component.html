@@ -17,11 +17,11 @@
       <mat-error *ngIf="budget.invalid">Please Enter Budget</mat-error>
     </mat-form-field>
     <mat-form-field>
-      <input matInput placeholder="Phone Number" name="phone" ngModel required #phone='ngModel'>
+      <input matInput placeholder="Phone Number" name="phone" ngModel #phone='ngModel'>
       <mat-error *ngIf="phone.invalid">Please Enter Valid Phone Number</mat-error>
     </mat-form-field>
     <mat-form-field>
-      <input matInput placeholder="Email Address" name="email" ngModel required #email='ngModel'>
+      <input matInput placeholder="Email Address" name="email" ngModel #email='ngModel'>
       <mat-error *ngIf="email.invalid">Please Enter Valid Email</mat-error>
     </mat-form-field>
     <button

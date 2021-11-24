@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import {ActivatedRoute} from '@angular/router';
 import { ProjectService } from '../project.service';
 import { CastExpr } from '@angular/compiler';
+import { setupMaster } from 'cluster';
 
 
 @Component({
@@ -62,7 +63,7 @@ export class ProjectBudgetComponent implements OnInit {
       categoryInfo["costCode"] = c.costCode;
       categoryInfo["category"] = c.category;
       categoryInfo["budget"] = c.budget;
-      categoryInfo["spent"] = 0;
+      var spend = 0;
       for (var draws of projectDraws) {
         if (!categoryInfo.hasOwnProperty(draws.name)) {
           categoryInfo[draws.name] = 0;
@@ -70,10 +71,12 @@ export class ProjectBudgetComponent implements OnInit {
         for (var d of draws.invoices) {
           if (d.category == c.category) {
             categoryInfo[draws.name] = categoryInfo[draws.name] + d.invoiceAmt;
-            categoryInfo["spent"] = categoryInfo["spent"] + d.invoiceAmt;
+            spend = spend + d.invoiceAmt;
           }
         }
       }
+
+      categoryInfo["spent"] = spend;
       categoryInfo["status"] = categoryInfo["budget"] - categoryInfo["spent"];
       budgetArray.push(categoryInfo);
     }

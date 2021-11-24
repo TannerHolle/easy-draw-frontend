@@ -16,8 +16,11 @@ import { ProjectService } from '../project.service';
 export class ProjectDetailComponent implements OnInit {
   id: string;
   drawId: string;
-  drawInfo = {}
-  draw = [];
+  drawIdCapital: string;
+  draw = []
+  drawInvoices = [];
+  draws = [];
+  project = [];
 
 
   displayedColumns: string[] = ['company','category','address','amount','invoiceNum','amount'];
@@ -27,10 +30,15 @@ export class ProjectDetailComponent implements OnInit {
   constructor(private route: ActivatedRoute, private http: HttpClient, public projectService: ProjectService) { }
 
   ngOnInit() {
-    this.id = this.route.snapshot.paramMap.get('id');
-    this.drawId = this.route.snapshot.paramMap.get('draw');
-    this.draw = this.getdraw();
-
+    this.route.params.subscribe(routeParams => {
+      this.id = routeParams.id;
+      this.drawId = routeParams.drawid;
+      this.drawIdCapital = this.makePretty(this.drawId);
+      this.drawInvoices = this.getInvoicesOnDraw();
+      this.draw = this.getDraw();
+      this.draws = this.getDrawInfo();
+      this.project = this.getProject()
+    });
   }
 
   getProject() {
@@ -52,12 +60,21 @@ export class ProjectDetailComponent implements OnInit {
     return draw[0].invoices;
   }
 
-  getdraw() {
+  getDraw() {
     const project = this.getProject()
     const draw = project.draws.filter(obj => {
       return obj.name === this.drawId;
     });
     return draw[0];
+  }
+
+  getDrawInfo() {
+    return this.getProject().draws;
+  }
+
+  makePretty(str) {
+    var newStr = str.replace(/(.{4})/g, '$1 ');
+    return newStr.charAt(0).toUpperCase() + newStr.slice(1);
   }
 
   download() {

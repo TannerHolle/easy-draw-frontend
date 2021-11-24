@@ -12,7 +12,8 @@ import {
   MatExpansionModule,
   MatSelectModule,
   MatTableModule,
-  MatIconModule
+  MatIconModule,
+  MatSlideToggleModule
 } from '@angular/material';
 
 
@@ -59,6 +60,7 @@ import { ProjectBudgetComponent } from './project/project-budget/project-budget.
     MatButtonModule,
     MatIconModule,
     MatToolbarModule,
+    MatSlideToggleModule,
     MatExpansionModule,
     MatSelectModule,
     AppRoutingModule,
