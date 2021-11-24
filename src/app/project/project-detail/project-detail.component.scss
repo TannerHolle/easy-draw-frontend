@@ -6,3 +6,47 @@ table {
   width: 80%;
   margin: 1rem auto;
 }
+
+
+.material-icons, .material-icons-outlined{
+  cursor: pointer;
+  float: center;
+  margin: 3px;
+  font-size: 15px;
+}
+
+.comment-tooltip{
+  cursor: pointer;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.search-results-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  border-bottom: 1px solid #c6c6c6;
+  margin-bottom: 20px;
+  height: 40px;
+}
+
+span.plain-text {
+  font-family: 'Arial-BoldMT', 'Arial Bold', 'Arial', sans-serif;
+  font-weight: 700;
+  font-style: normal;
+  color: #AAAAAA;
+}
+span.search-term-text {
+  font-family: 'Arial-BoldMT', 'Arial Bold', 'Arial', sans-serif;
+  font-weight: 700;
+  font-style: normal;
+  font-size: 16px;
+  color: #000000;
+}
+
+.action-buttons {
+  display: flex;
+  align-items: center;
+}

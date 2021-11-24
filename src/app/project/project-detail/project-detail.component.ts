@@ -15,10 +15,12 @@ import { ProjectService } from '../project.service';
 })
 export class ProjectDetailComponent implements OnInit {
   id: string;
-  invoices: [];
+  drawId: string;
+  drawInfo = {}
+  draw = [];
 
 
-  displayedColumns: string[] = ['company','category','address','amount','invoiceNum'];
+  displayedColumns: string[] = ['company','category','address','amount','invoiceNum','amount'];
   dataSource = [];
 
 
@@ -26,16 +28,53 @@ export class ProjectDetailComponent implements OnInit {
 
   ngOnInit() {
     this.id = this.route.snapshot.paramMap.get('id');
+    this.drawId = this.route.snapshot.paramMap.get('draw');
+    this.draw = this.getdraw();
+
+  }
+
+  getProject() {
     if (this.id != undefined) {
       const json = require("/Users/tannerholle/Construction/easy-draw/src/app/models/projectTests.json");
       const projects = json.projects;
-      const invoices = projects.filter(obj => {
+      const project = projects.filter(obj => {
         return obj.projectId === this.id;
       });
-      this.invoices = invoices[0].invoices;
+      return project[0];
     }
+  }
 
-    //get invoices
+  getInvoicesOnDraw() {
+    const project = this.getProject()
+    const draw = project.draws.filter(obj => {
+      return obj.name === this.drawId;
+    });
+    return draw[0].invoices;
+  }
+
+  getdraw() {
+    const project = this.getProject()
+    const draw = project.draws.filter(obj => {
+      return obj.name === this.drawId;
+    });
+    return draw[0];
+  }
+
+  download() {
+    const items = this.getInvoicesOnDraw();
+
+
+    const replacer = (key, value) => value === null ? '' : value // specify how you want to handle null values here
+    const header = Object.keys(items[0])
+    const csv = [
+      header.join(','), // header row first
+      ...items.map(row => header.map(fieldName => JSON.stringify(row[fieldName], replacer)).join(','))
+    ].join('\r\n')
+    var hiddenElement = document.createElement('a');
+    hiddenElement.href = 'data:text/csv;charset=utf-8,' + encodeURI(csv);
+    hiddenElement.target = '_blank';
+    hiddenElement.download = this.getProject().name + '_invoices.csv';
+    hiddenElement.click();
   }
 
 }
