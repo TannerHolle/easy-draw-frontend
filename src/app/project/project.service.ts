@@ -28,7 +28,7 @@ export class ProjectService {
 
   addProjects(name: String, address: String, homeOwners: String, phone: String, email: String, budget: Number) {
     var newId = this.generateUID()
-    const project: Project = {projectId: newId, name: name, address: address, homeOwners: homeOwners, phone: phone, email: email, budget: budget, categories:[], invoices: []};
+    const project: Project = {projectId: newId, name: name, address: address, homeOwners: homeOwners, phone: phone, email: email, budget: budget, categories: [], draws: []};
     this.http.post<{message: string}>("http://localhost:3000/api/projects", project)
       .subscribe((responseData) => {
         // console.log(responseData);

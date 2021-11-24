@@ -17,8 +17,6 @@ import { ProjectService } from '../project.service';
 export class ProjectListComponent implements OnInit {
   constructor(public projectService: ProjectService, public projectComponent: ProjectComponent) { }
 
-
-
   createProj: Boolean = false;
   projects: Project[] = [];
   private projectsSub: Subscription;

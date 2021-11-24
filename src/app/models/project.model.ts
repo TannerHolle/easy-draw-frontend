@@ -1,4 +1,6 @@
 import { Invoice } from './invoice.model';
+import { Category } from './category.model';
+import { Draw } from './draw.model';
 
 
 export interface Project {
@@ -9,8 +11,8 @@ export interface Project {
   phone: String;
   email: String;
   budget: Number;
-  categories: [];
-  invoices: [];
+  categories: Category[];
+  draws: Draw[];
 }
 
 
