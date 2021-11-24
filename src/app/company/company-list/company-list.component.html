@@ -1,17 +1,18 @@
-<h1>This is the company html</h1>
+<div class='company-table'>
+  <mat-accordion multi="true" *ngIf="companies.length > 0">
+    <mat-expansion-panel *ngFor="let company of companies">
+      <mat-expansion-panel-header>
+        {{company.Name}}
+      </mat-expansion-panel-header>
+      <p>Address: {{company.Address}}</p>
+      <p>Tax ID: {{company.TaxID}}</p>
+      <p>Notes: {{company.Notes}}</p>
+      <mat-action-row>
+        <button mat-button color="primary">EDIT</button>
+        <button mat-button color="warning">DELETE</button>
+      </mat-action-row>
+    </mat-expansion-panel>
+  </mat-accordion>
+</div>
 
-<mat-accordion multi="true" *ngIf="companies.length > 0">
-  <mat-expansion-panel *ngFor="let company of companies">
-    <mat-expansion-panel-header>
-      {{company.Name}}
-    </mat-expansion-panel-header>
-    <p>Address: {{company.Address}}</p>
-    <p>Tax ID: {{company.TaxID}}</p>
-    <p>Notes: {{company.Notes}}</p>
-    <mat-action-row>
-      <button mat-button color="primary">EDIT</button>
-      <button mat-button color="warning">DELETE</button>
-    </mat-action-row>
-  </mat-expansion-panel>
-</mat-accordion>
 <p class="info-text mat-body-1" *ngIf="companies.length==0">No companies added yet</p>

@@ -28,8 +28,8 @@ import { HomeComponent } from './home/home.component';
 import { ProjectComponent } from './project/project.component';
 import { ProjectListComponent } from './project/project-list/project-list.component';
 import { ProjectCreateComponent } from './project/project-create/project-create.component';
-import { ProjectBudgetComponent } from './project/project-budget/project-budget.component';
 import { ProjectDetailComponent } from './project/project-detail/project-detail.component';
+import { CompanyComponent } from './company/company.component';
 
 
 @NgModule({
@@ -45,8 +45,8 @@ import { ProjectDetailComponent } from './project/project-detail/project-detail.
     ProjectComponent,
     ProjectListComponent,
     ProjectCreateComponent,
-    ProjectBudgetComponent,
     ProjectDetailComponent,
+    CompanyComponent,
   ],
   imports: [
     BrowserModule,
