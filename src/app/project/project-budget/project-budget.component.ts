@@ -35,7 +35,7 @@ export class ProjectBudgetComponent implements OnInit {
 
   getProject() {
     if (this.id != undefined) {
-      const json = require("/Users/tannerholle/Construction/easy-draw/src/app/models/projectTests.json");
+      const json = require("../../models/projectTests.json");
       const projects = json.projects;
       const project = projects.filter(obj => {
         return obj.projectId === this.id;

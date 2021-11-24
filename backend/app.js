@@ -27,7 +27,7 @@ app.post("/api/projects", (req, res, next) => {
 });
 
 app.get('/api/projects' , (req, res, next) => {
-  const json = require("/Users/tannerholle/Construction/easy-draw/src/app/models/projectTests.json");
+  const json = require("../src/app/models/projectTests.json");
   const projects = json.projects;
   res.status(200).json({
     message: 'invoices fetched Successfully',
@@ -36,7 +36,7 @@ app.get('/api/projects' , (req, res, next) => {
 });
 
 app.get('/api/projects/:id/invoices' , (req, res, next) => {
-  const json = require("/Users/tannerholle/Construction/easy-draw/src/app/models/projectTests.json");
+  const json = require("../src/app/models/projectTests.json");
   const projects = json.projects;
   const invoices = projects.filter(obj => {
     return obj.projectId === id;
@@ -56,7 +56,7 @@ app.post("/api/:projectId/invoices/:invoiceId", (req, res, next) => {
 });
 
 app.get('/api/invoices' , (req, res, next) => {
-  const invoices = require("/Users/tannerholle/Construction/easy-draw/src/assets/testInvoices.json");
+  const invoices = require("../src/assets/testInvoices.json");
   res.status(200).json({
     message: 'invoices fetched Successfully',
     invoices: invoices
