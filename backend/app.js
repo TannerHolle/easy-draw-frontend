@@ -49,7 +49,7 @@ app.get('/api/projects/:id/invoices' , (req, res, next) => {
 
 app.post("/api/:projectId/invoices/:invoiceId", (req, res, next) => {
   const invoice = req.body;
-  console.log(invoice);
+  //console.log(invoice);
   res.status(201).json({
     message: 'company added successfully'
   });
@@ -65,7 +65,7 @@ app.get('/api/invoices' , (req, res, next) => {
 
 app.post("/api/companies", (req, res, next) => {
   const company = req.body;
-  console.log(company);
+  // console.log(company);
   res.status(201).json({
     message: 'company added successfully'
   });

@@ -29,7 +29,6 @@ export class ProjectDetailComponent implements OnInit {
     if (this.id != undefined) {
       const json = require("/Users/tannerholle/Construction/easy-draw/src/app/models/projectTests.json");
       const projects = json.projects;
-      console.log(projects)
       const invoices = projects.filter(obj => {
         return obj.projectId === this.id;
       });

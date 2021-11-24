@@ -9,12 +9,13 @@ import { InvoiceComponent } from './invoice/invoice.component';
 import { HomeComponent } from './home/home.component';
 import { ProjectComponent } from './project/project.component';
 import { ProjectDetailComponent } from './project/project-detail/project-detail.component';
+import { ProjectBudgetComponent } from './project/project-budget/project-budget.component';
 
 const routes: Routes = [
   {path: '', component: HomeComponent},
   {path: 'invoices', component: InvoiceComponent},
   {path: 'companies', component: CompanyComponent},
-  {path: 'projects/:id', component: ProjectDetailComponent},
+  {path: 'projects/:id', component: ProjectBudgetComponent},
   {path: 'projects', component: ProjectComponent,},
 ];
 

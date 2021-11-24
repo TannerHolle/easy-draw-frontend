@@ -88,32 +88,90 @@
           }
         ]
       },
-      {
-        "projectId": "456def",
-        "name": "Holle Home",
-        "address": "876 tanner ave",
-        "homeOwners": "Kat and Kirk Johnson",
-        "phone": "509-854*-9652",
-        "email": "Kirk@gmail.com",
-        "budget": 700000,
-        "invoices":[
-          {
-            "invoiceId": "963inv",
-            "company": "Kruger Plumbing",
-            "address": "7001 w 10th ave",
-            "category": "Plumbing",
-            "invoiceNum": "85s4d5v",
-            "invoiceAmt": 6300
-          },
-          {
-            "invoiceId": "852inv",
-            "company": "Sunshine Framing",
-            "address": "8601 deschutes st",
-            "category": "Framing",
-            "invoiceNum": "65421ssd",
-            "invoiceAmt": 8600
-          }
-        ]
-      }
+        {
+          "projectId": "345def",
+          "name": "holle Home",
+          "address": "123 kramer st",
+          "homeOwners": "KAt and Kirk holle",
+          "phone": "801-541-5236",
+          "email": "holle@gmail.com",
+          "budget": 700000,
+          "draws": [
+            {
+              "name": "draw1",
+              "isOpen": false,
+              "invoices":[
+                {
+                  "invoiceId": "963inv",
+                  "company": "Kruger Plumbing",
+                  "address": "7001 w 10th ave",
+                  "category": "Painting",
+                  "invoiceNum": "85s4d5v",
+                  "invoiceAmt": 6300
+                },
+                {
+                  "invoiceId": "852inv",
+                  "company": "Sunshine Framing",
+                  "address": "8601 deschutes st",
+                  "category": "Framing",
+                  "invoiceNum": "65421ssd",
+                  "invoiceAmt": 8600
+                },
+                {
+                  "invoiceId": "963inv",
+                  "company": "Kruger Plumbing",
+                  "address": "7001 w 10th ave",
+                  "category": "Plumbing",
+                  "invoiceNum": "85s4d5v",
+                  "invoiceAmt": 6300
+                }
+              ]
+            },
+            {
+              "name": "draw2",
+              "isOpen": true,
+              "invoices":[
+                {
+                  "invoiceId": "asdv231",
+                  "company": "Kramerica",
+                  "address": "7001 w 10th ave",
+                  "category": "Electrical",
+                  "invoiceNum": "85s4d5v",
+                  "invoiceAmt": 6300
+                },
+                {
+                  "invoiceId": "345ybsd",
+                  "company": "Sunshine Framing",
+                  "address": "8601 deschutes st",
+                  "category": "Framing",
+                  "invoiceNum": "65421ssd",
+                  "invoiceAmt": 8600
+                },
+                {
+                  "invoiceId": "564asd",
+                  "company": "Kruger Plumbing",
+                  "address": "7001 w 10th ave",
+                  "category": "Painting",
+                  "invoiceNum": "85s4d5v",
+                  "invoiceAmt": 6300
+                }
+              ]
+            }
+          ],
+          "categories": [
+            {
+              "category":"Framing",
+              "budget": 6000
+            },
+            {
+              "category":"Plumbing",
+              "budget": 10000
+            },
+            {
+              "category":"Electrical",
+              "budget": 12500
+            }
+          ]
+        }
     ]
 }
