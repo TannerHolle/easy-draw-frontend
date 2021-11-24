@@ -1,4 +1,3 @@
-import { Invoice } from './invoice.model';
 import { Category } from './category.model';
 import { Draw } from './draw.model';
 
