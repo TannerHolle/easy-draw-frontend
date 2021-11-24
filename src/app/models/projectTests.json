@@ -1,6 +1,6 @@
 {
   "id": 1,
-  "name": "E Builders",
+  "constructionCompanyName": "E Builders",
   "projects":
     [
       {
@@ -22,7 +22,7 @@
                 "address": "7001 w 10th ave",
                 "category": "Plumbing",
                 "invoiceNum": "85s4d5v",
-                "invoiceAmt": "6300"
+                "invoiceAmt": 6300
               },
               {
                 "invoiceId": "852inv",
@@ -30,7 +30,7 @@
                 "address": "8601 deschutes st",
                 "category": "Framing",
                 "invoiceNum": "65421ssd",
-                "invoiceAmt": "8600"
+                "invoiceAmt": 8600
               },
               {
                 "invoiceId": "963inv",
@@ -38,7 +38,7 @@
                 "address": "7001 w 10th ave",
                 "category": "Plumbing",
                 "invoiceNum": "85s4d5v",
-                "invoiceAmt": "6300"
+                "invoiceAmt": 6300
               }
             ]
           },
@@ -52,7 +52,7 @@
                 "address": "7001 w 10th ave",
                 "category": "Plumbing",
                 "invoiceNum": "85s4d5v",
-                "invoiceAmt": "6300"
+                "invoiceAmt": 6300
               },
               {
                 "invoiceId": "345ybsd",
@@ -60,7 +60,7 @@
                 "address": "8601 deschutes st",
                 "category": "Framing",
                 "invoiceNum": "65421ssd",
-                "invoiceAmt": "8600"
+                "invoiceAmt": 8600
               },
               {
                 "invoiceId": "564asd",
@@ -68,7 +68,7 @@
                 "address": "7001 w 10th ave",
                 "category": "Painting",
                 "invoiceNum": "85s4d5v",
-                "invoiceAmt": "6300"
+                "invoiceAmt": 6300
               }
             ]
           }
@@ -103,7 +103,7 @@
             "address": "7001 w 10th ave",
             "category": "Plumbing",
             "invoiceNum": "85s4d5v",
-            "invoiceAmt": "6300"
+            "invoiceAmt": 6300
           },
           {
             "invoiceId": "852inv",
@@ -111,7 +111,7 @@
             "address": "8601 deschutes st",
             "category": "Framing",
             "invoiceNum": "65421ssd",
-            "invoiceAmt": "8600"
+            "invoiceAmt": 8600
           }
         ]
       }
