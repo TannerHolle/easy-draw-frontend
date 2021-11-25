@@ -1,6 +1,10 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const app = express();
+const { mongoose } = require('./db/mongoose');
+
+const { Project } = require('./db/models/project.model')
+const { Company } = require('./db/models/company.model')
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -17,6 +21,109 @@ app.use((req, res, next) => {
   );
   next();
 });
+
+app.get('/projects', (req, res) => {
+  Project.find({}).then((projects) => {
+    res.send(projects);
+  }).catch((e) => {
+    res.send(e);
+  });
+});
+
+app.post('/projects', (req, res) => {
+  let title = req.body.title;
+
+  let newProject = new Project({
+    title
+  });
+
+  newProject.save().then((projectDoc) => {
+    res.send(projectDoc);
+  });
+
+})
+
+//The next four api calls are for companies
+//This is an api call to get all companies in db
+app.get('/companies', (req, res) => {
+  Company.find({}).then((companies) => {
+    res.send(companies);
+  }).catch((e) => {
+    res.send(e);
+  });
+});
+
+//This is an api call to create a new company in db
+app.post('/companies', (req, res) => {
+  let body = req.body;
+
+  let newCompany = new Company({
+    Name: body.Name,
+    Address: body.Address,
+    TaxID: body.TaxID,
+    Notes: body.Notes
+  });
+
+  newCompany.save().then((companyDoc) => {
+    res.send(companyDoc);
+  });
+});
+
+//This is an api call to update a company in db
+app.post('/companies/:id', (req, res) => {
+  Company.findOneAndUpdate({ _id: req.params.id}, {
+    $set: req.body
+  }).then(() => {
+    res.sendStatus(200);
+  })
+});
+
+//This is an api call to delete a company in db
+app.delete('/companies/:id', (req, res) => {
+  Company.findOneAndRemove({
+    _id: req.params.id
+  }).then((removedCompany) => {
+    res.send(removedCompany)
+  });
+})
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+app.get('/projects', (req, res) => {
+  Project.find({}).then((projects) => {
+    res.send(projects);
+  }).catch((e) => {
+    res.send(e);
+  });
+});
+
+app.post('/projects', (req, res) => {
+  let title = req.body.title;
+
+  let newProject = new Project({
+    title
+  });
+
+  newProject.save().then((projectDoc) => {
+    res.send(projectDoc);
+  });
+
+})
+
 
 app.post("/api/projects", (req, res, next) => {
   const project = req.body;

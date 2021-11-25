@@ -18,7 +18,9 @@ export class CompanyCreateComponent implements OnInit {
     if (form.invalid) {
       return;
     }
-    this.companyService.addCompanies(form.value.Name, form.value.Address, form.value.TaxID, form.value.Notes)
+    this.companyService.createCompany(form.value.Name, form.value.Address, form.value.TaxID, form.value.Notes).subscribe((response: any) => {
+      console.log(response);
+    });
     form.resetForm();
   };
 

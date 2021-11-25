@@ -24,7 +24,9 @@ export class CompanyListComponent implements OnInit, OnDestroy {
   constructor(public companyService: CompanyService) { }
 
   ngOnInit() {
-    this.companyService.getCompanies();
+    this.companyService.getCompanies().subscribe((companies: any[]) => {
+      this.companies = companies;
+    });
     this.companiesSub = this.companyService.getCompanyUpdateListener()
       .subscribe((companies: Company[]) => {
         this.companies = companies;
@@ -33,6 +35,11 @@ export class CompanyListComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this.companiesSub.unsubscribe()
+  }
+
+  deleteCompany(companyID){
+    console.log(companyID);
+    this.companyService.deleteCompany(companyID);
   }
 
 }

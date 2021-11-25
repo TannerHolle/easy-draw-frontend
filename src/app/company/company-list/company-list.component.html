@@ -9,7 +9,7 @@
       <p>Notes: {{company.Notes}}</p>
       <mat-action-row>
         <button mat-button color="primary">EDIT</button>
-        <button mat-button color="warning">DELETE</button>
+        <button mat-button color="warning" (click)="deleteCompany(company['_id'])">DELETE</button>
       </mat-action-row>
     </mat-expansion-panel>
   </mat-accordion>
