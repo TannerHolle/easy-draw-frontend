@@ -2,6 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { Company } from '../company.model'
 import { CompanyService } from '../company.service';
+import { Router } from '@angular/router';
 
 
 
@@ -21,7 +22,7 @@ export class CompanyListComponent implements OnInit, OnDestroy {
   companies: Company[] = [];
   private companiesSub: Subscription;
 
-  constructor(public companyService: CompanyService) { }
+  constructor(public companyService: CompanyService, private router: Router) { }
 
   ngOnInit() {
     this.companyService.getCompanies().subscribe((companies: any[]) => {
@@ -38,8 +39,10 @@ export class CompanyListComponent implements OnInit, OnDestroy {
   }
 
   deleteCompany(companyID){
-    console.log(companyID);
-    this.companyService.deleteCompany(companyID);
+    this.companyService.deleteCompany(companyID).subscribe((res: any) => {
+      this.router.navigate(['home']);
+      console.log(res);
+    });
   }
 
 }

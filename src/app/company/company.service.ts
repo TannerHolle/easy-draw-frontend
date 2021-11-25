@@ -26,7 +26,7 @@ export class CompanyService {
   }
 
   deleteCompany(companyId) {
-    this.webReqService.delete(`companies/${companyId}`)
+    return this.webReqService.delete(`companies/${companyId}`)
   }
 
 
