@@ -4,7 +4,6 @@
   "projects":
     [
       {
-        "projectId": "123abc",
         "name": "Johnsons Home",
         "address": "123 sesame st",
         "homeOwners": "Rick and Janet Johnson",
@@ -97,7 +96,6 @@
         ]
       },
         {
-          "projectId": "345def",
           "name": "Holle Home",
           "address": "123 kramer st",
           "homeOwners": "KAt and Kirk holle",

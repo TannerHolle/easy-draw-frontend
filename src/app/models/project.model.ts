@@ -3,15 +3,15 @@ import { Draw } from './draw.model';
 
 
 export interface Project {
-  projectId: String;
-  name: String;
-  address: String;
-  homeOwners: String;
-  phone: String;
-  email: String;
-  budget: Number;
-  categories: Category[];
-  draws: Draw[];
+  _id: string;
+  name: string;
+  address: string;
+  homeOwners: string;
+  phone: string;
+  email: string;
+  budget: number;
+  categories: Array<any>;
+  draws: Array<any>;
 }
 
 

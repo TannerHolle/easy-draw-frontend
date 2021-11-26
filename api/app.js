@@ -22,6 +22,8 @@ app.use((req, res, next) => {
   next();
 });
 
+
+//get all the projects in the database
 app.get('/projects', (req, res) => {
   Project.find({}).then((projects) => {
     res.send(projects);
@@ -30,17 +32,52 @@ app.get('/projects', (req, res) => {
   });
 });
 
+//get info for one of the projects in the database
+app.get('/projects/:id', (req, res) => {
+  Project.find({"_id": req.params.id}).then((projects) => {
+    res.send(projects);
+  }).catch((e) => {
+    res.send(e);
+  });
+});
+
+//Create a new project in the database
 app.post('/projects', (req, res) => {
-  let title = req.body.title;
+  let body = req.body;
 
   let newProject = new Project({
-    title
+    name: body.name,
+    address: body.address,
+    homeOwners: body.homeOwners,
+    phone: body.phone,
+    email: body.email,
+    budget: body.budget,
+    categories: body.categories,
+    draws: body.draws
   });
+  console.log(newProject);
 
   newProject.save().then((projectDoc) => {
     res.send(projectDoc);
   });
+});
 
+//This is an api call to update a project in db
+app.post('/projects/:id', (req, res) => {
+  Project.findOneAndUpdate({ _id: req.params.id}, {
+    $set: req.body
+  }).then(() => {
+    res.sendStatus(200);
+  })
+});
+
+//This is an api call to delete a project in db
+app.delete('/projects/:id', (req, res) => {
+  Project.findOneAndRemove({
+    _id: req.params.id
+  }).then((removedProject) => {
+    res.send(removedProject)
+  });
 })
 
 //The next four api calls are for companies

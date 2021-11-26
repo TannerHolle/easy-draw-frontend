@@ -20,7 +20,9 @@ export class ProjectCreateComponent implements OnInit {
     if (form.invalid) {
       return;
     }
-    this.projectService.addProjects(form.value.name, form.value.address, form.value.homeOwners, form.value.phone, form.value.email, form.value.budget)
+    this.projectService.createProject(form.value.name, form.value.address, form.value.homeOwners, form.value.phone, form.value.email, form.value.budget).subscribe((response: any) => {
+      console.log(response);
+    });
     form.resetForm();
     this.projectComponent.createProj = false;
   };

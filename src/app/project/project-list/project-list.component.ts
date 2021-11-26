@@ -15,17 +15,23 @@ import { ProjectService } from '../project.service';
   styleUrls: ['./project-list.component.scss']
 })
 export class ProjectListComponent implements OnInit {
-  constructor(public projectService: ProjectService, public projectComponent: ProjectComponent) { }
+  constructor(public projectService: ProjectService, private router: Router, public projectComponent: ProjectComponent) { }
 
   createProj: Boolean = false;
   projects: Project[] = [];
   private projectsSub: Subscription;
 
-  displayedColumns: string[] = ['name', 'address', 'homeOwners', 'budget', 'phone', 'email'];
+  displayedColumns: string[] = ['name', 'address', 'homeOwners', 'budget', 'phone', 'email', '_id'];
   dataSource = [];
 
   ngOnInit() {
-    this.projectService.getProjects();
+    this.projectService.getProjects().subscribe((projects: any[]) => {
+      this.projects = projects;
+      this.projectService.projects = projects;
+    });
+    console.log(this.projects)
+
+
     this.projectsSub = this.projectService.getProjectUpdateListener()
       .subscribe((projects: Project[]) => {
         this.projects = projects;
@@ -42,9 +48,17 @@ export class ProjectListComponent implements OnInit {
 
   cellClicked(element) {
     this.projectComponent.projectInvoices = element.inovices;
-    // console.log(element.invoices);
     this.projectComponent.projectBudget = true;
+  }
 
+  deleteProject(projectId){
+    console.log("this is the id that will be delete" + projectId)
+    var result = confirm("Are you sure you want to delete this project? THIS CANNOT BE UNDONE");
+    if (result) {
+      this.projectService.deleteProject(projectId).subscribe((res: any) => {
+        this.router.navigate(['']);
+      });
+    }
   }
 
 }

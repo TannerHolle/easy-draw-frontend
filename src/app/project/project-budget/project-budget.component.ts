@@ -4,6 +4,9 @@ import {ActivatedRoute} from '@angular/router';
 import { ProjectService } from '../project.service';
 import { CastExpr } from '@angular/compiler';
 import { setupMaster } from 'cluster';
+import { Project } from '../../models/project.model'
+import { containsElement } from '@angular/animations/browser/src/render/shared';
+
 
 
 @Component({
@@ -15,6 +18,7 @@ export class ProjectBudgetComponent implements OnInit {
   id: string;
   budgetData = [];
   projectName = '';
+  project: Project[] = [];
 
   columns = [];
   displayedColumns: string[] = ['category', 'budget', 'draw1', 'draw2', 'spent', 'status'];
@@ -26,7 +30,11 @@ export class ProjectBudgetComponent implements OnInit {
   constructor(private route: ActivatedRoute, private http: HttpClient, public projectService: ProjectService) { }
 
   ngOnInit() {
+    console.log(this.projectService.projects)
     this.id = this.route.snapshot.paramMap.get('id');
+    this.projectService.getOneProject(this.id).subscribe((project: any[]) => {
+      this.project = project;
+    });
     this.budgetData = this.formatData();
     this.projectName = this.getProject().name;
     this.displayedColumns = Object.keys(this.budgetData[1])
@@ -35,10 +43,9 @@ export class ProjectBudgetComponent implements OnInit {
 
   getProject() {
     if (this.id != undefined) {
-      const json = require("../../models/projectTests.json");
-      const projects = json.projects;
-      const project = projects.filter(obj => {
-        return obj.projectId === this.id;
+      const json = this.projectService.projects;
+      const project = json.filter(obj => {
+        return obj._id === this.id;
       });
       return project[0];
     }
@@ -51,6 +58,7 @@ export class ProjectBudgetComponent implements OnInit {
 
   getCategories() {
     const project = this.getProject()
+    console.log(this.project);
     return project.categories;
   }
 

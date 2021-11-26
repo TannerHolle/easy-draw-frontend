@@ -30,30 +30,41 @@ export class CompanyService {
   }
 
 
-  getCompaniesDeprecated() {
-    this.http
-    .get<{ message: string, companies: Company[] }>(
-      "http://localhost:3000/companies"
-      )
-      .subscribe((companyData) => {
-        this.companies = companyData.companies;
-        this.companiesUpdated.next([...this.companies]);
-      });
-  }
+
+
+
+
+
+
+
+
+
+
+
+  // getCompaniesDeprecated() {
+  //   this.http
+  //   .get<{ message: string, companies: Company[] }>(
+  //     "http://localhost:3000/companies"
+  //     )
+  //     .subscribe((companyData) => {
+  //       this.companies = companyData.companies;
+  //       this.companiesUpdated.next([...this.companies]);
+  //     });
+  // }
 
   getCompanyUpdateListener() {
     return this.companiesUpdated.asObservable();
   }
 
-  addCompanies(Name: String, Address: String, TaxID: String, Notes: String) {
-    const company: Company = {id: null, Name: Name, Address: Address, TaxID: TaxID, Notes: Notes};
-    this.http.post<{message: string}>("http://localhost:3000/api/companies", company)
-      .subscribe((responseData) => {
-        console.log(responseData);
-        this.companies.push(company);
-        this.companiesUpdated.next([...this.companies]);
-      })
+  // addCompanies(Name: String, Address: String, TaxID: String, Notes: String) {
+  //   const company: Company = {id: null, Name: Name, Address: Address, TaxID: TaxID, Notes: Notes};
+  //   this.http.post<{message: string}>("http://localhost:3000/api/companies", company)
+  //     .subscribe((responseData) => {
+  //       console.log(responseData);
+  //       this.companies.push(company);
+  //       this.companiesUpdated.next([...this.companies]);
+  //     })
 
-  }
+  // }
 
 }

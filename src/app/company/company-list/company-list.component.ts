@@ -41,7 +41,6 @@ export class CompanyListComponent implements OnInit, OnDestroy {
   deleteCompany(companyID){
     this.companyService.deleteCompany(companyID).subscribe((res: any) => {
       this.router.navigate(['home']);
-      console.log(res);
     });
   }
 

@@ -37,16 +37,15 @@ export class ProjectDetailComponent implements OnInit {
       this.drawInvoices = this.getInvoicesOnDraw();
       this.draw = this.getDraw();
       this.draws = this.getDrawInfo();
-      this.project = this.getProject()
+      // this.project = this.getProject()
     });
   }
 
   getProject() {
     if (this.id != undefined) {
-      const json = require("../../models/projectTests.json");
-      const projects = json.projects;
-      const project = projects.filter(obj => {
-        return obj.projectId === this.id;
+      const json = this.projectService.projects;
+      const project = json.filter(obj => {
+        return obj._id === this.id;
       });
       return project[0];
     }
