@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { MatPaginator, MatTableDataSource, MatSort} from '@angular/material';
-import { RouterModule, Router } from '@angular/router';
+import { Router } from '@angular/router';
 
 import { Subscription } from 'rxjs';
 import { Project } from '../../models/project.model'

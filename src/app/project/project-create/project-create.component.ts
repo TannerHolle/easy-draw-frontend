@@ -2,6 +2,7 @@ import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { ProjectService } from '../project.service';
 import { ProjectComponent } from '../project.component';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-project-create',
@@ -10,9 +11,8 @@ import { ProjectComponent } from '../project.component';
 })
 export class ProjectCreateComponent implements OnInit {
 
-  @Output() projectCreated = new EventEmitter;
 
-  constructor(public projectService: ProjectService, public projectComponent: ProjectComponent) { }
+  constructor(public projectService: ProjectService, private router: Router, public projectComponent: ProjectComponent) { }
   ngOnInit() {
   }
 
@@ -21,9 +21,9 @@ export class ProjectCreateComponent implements OnInit {
       return;
     }
     this.projectService.createProject(form.value.name, form.value.address, form.value.homeOwners, form.value.phone, form.value.email, form.value.budget).subscribe((response: any) => {
+      this.router.navigate(['']);
       console.log(response);
     });
     form.resetForm();
-    this.projectComponent.createProj = false;
   };
 }

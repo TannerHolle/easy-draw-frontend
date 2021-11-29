@@ -2,7 +2,6 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
 import { CompanyComponent } from './company/company.component';
-import { InvoiceCreateComponent } from './invoice/invoice-create/invoice-create.component';
 import { ProjectComponent } from './project/project.component';
 import { ProjectDetailComponent } from './project/project-detail/project-detail.component';
 import { ProjectBudgetComponent } from './project/project-budget/project-budget.component';

@@ -10,10 +10,7 @@ import { Router } from '@angular/router';
   styleUrls: ['./project-invoices.component.scss']
 })
 export class ProjectInvoicesComponent implements OnInit {
-
   selectedValue: {};
-
-  categories = ["Plumbing", "Framing", "Concrete", "Interior", "Smoothing"]
 
   constructor(public invoiceService: InvoiceService, private router: Router, public projectService: ProjectService) { }
   ngOnInit() {

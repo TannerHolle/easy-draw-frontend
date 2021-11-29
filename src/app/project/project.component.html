@@ -3,9 +3,9 @@
   <!-- <a mat-raised-button class="add-project" (click)="createProject()">Add Project</a> -->
   <button mat-raised-button class="add-project" [routerLink]="['/project/create']">Add Project</button>
   <button mat-raised-button class="add-project" [routerLink]="['/project/invoices']">Add Invoice</button>
-  <div *ngIf="createProj == true">
+  <!-- <div *ngIf="createProj == true">
     <app-project-create></app-project-create>
-  </div>
+  </div> -->
   <app-project-list></app-project-list>
 </main>
 

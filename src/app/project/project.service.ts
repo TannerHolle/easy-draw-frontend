@@ -5,7 +5,6 @@ import { WebRequestService } from '../services/web-request.service';
 
 
 import { Project } from '../models/project.model';
-import { Invoice } from '../models/invoice.model';
 
 @Injectable({providedIn: 'root'})
 export class ProjectService {
@@ -92,16 +91,6 @@ export class ProjectService {
     return this.projectsUpdated.asObservable();
   }
 
-  // addProjects(name: String, address: String, homeOwners: String, phone: String, email: String, budget: Number) {
-  //   const project: Project = { name: name, address: address, homeOwners: homeOwners, phone: phone, email: email, budget: budget, categories: [], draws: []};
-  //   this.http.post<{message: string}>("http://localhost:3000/api/projects", project)
-  //     .subscribe((responseData) => {
-  //       // console.log(responseData);
-  //       this.projects.push(project);
-  //       this.projectsUpdated.next([...this.projects]);
-  //     });
-
-  // }
 
 }
 

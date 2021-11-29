@@ -13,7 +13,6 @@ import { ProjectService } from './project.service';
 export class ProjectComponent implements OnInit {
 
   projectInvoices = [];
-  createProj = false;
   projectBudget = false;
   projects: Project[] = [];
   private projectsSub: Subscription;
@@ -31,13 +30,4 @@ export class ProjectComponent implements OnInit {
   ngOnDestroy() {
     this.projectsSub.unsubscribe()
   }
-
-  createProject() {
-    this.createProj = true;
-  }
-
-
-
-
-
 }
