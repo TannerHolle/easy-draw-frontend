@@ -20,7 +20,8 @@ export class ProjectInvoicesComponent implements OnInit {
     if (form.invalid) {
       return;
     }
-    this.projectService.createInvoice(form.value.project, form.value.company, form.value.address, form.value.category, form.value.invoiceNum, form.value.invoiceAmt).subscribe((response: any) => {
+    var draw = this.getOpenDraw()
+    this.projectService.createInvoice(form.value.project, form.value.company, form.value.address, form.value.category, form.value.invoiceNum, form.value.invoiceAmt, draw).subscribe((response: any) => {
       this.router.navigate(['']);
       console.log(response);
     });
@@ -36,7 +37,16 @@ export class ProjectInvoicesComponent implements OnInit {
         return project[0]['categories'];
       }
     }
+  }
 
+  getOpenDraw() {
+    const project = this.projectService.projects.filter(obj => {
+      return obj._id === this.selectedValue['_id'];
+    });
+    const draw = project[0].draws.filter(obj => {
+      return obj.isOpen === true;
+    });
+    return draw[0].name;
   }
 
 

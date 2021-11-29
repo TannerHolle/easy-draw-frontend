@@ -1,8 +1,6 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
 import { Subject } from 'rxjs';
 import { WebRequestService } from '../services/web-request.service';
-
 
 import { Project } from '../models/project.model';
 
@@ -12,7 +10,7 @@ export class ProjectService {
   public categories: {} = [];
   private projectsUpdated = new Subject<Project[]>();
 
-  constructor(private http: HttpClient, private webReqService: WebRequestService) {}
+  constructor(private webReqService: WebRequestService) {}
 
   createProject(name: string, address: string, homeOwners: string, phone: string, email: string, budget: number) {
     return this.webReqService.post('projects', {
@@ -24,8 +22,8 @@ export class ProjectService {
       "budget": budget,
       "categories": [
         {
-          "costCode": 1,
-          "category": "default",
+          "costCode": "1",
+          "category": "misc",
           "budget": 0
         }
       ],
@@ -51,14 +49,15 @@ export class ProjectService {
     return this.webReqService.delete(`projects/${projectId}`)
   }
 
-  createInvoice(project: {}, company: String, address: String, category: String, invoiceNum: String, invoiceAmt: Number) {
+  createInvoice(project: {}, company: String, address: String, category: String, invoiceNum: String, invoiceAmt: Number, draw: String) {
     return this.webReqService.post('invoices', {
       "company": company,
       "address": address,
       "category": category,
       "invoiceNum": invoiceNum,
       "invoiceAmt": invoiceAmt,
-      "project": project
+      "project": project,
+      "draw": draw
     });
   }
 
@@ -79,13 +78,7 @@ export class ProjectService {
       "budget": budget,
       "projectId": id
     });
-
   }
-
-
-
-
-
 
 
   getProjectUpdateListener() {

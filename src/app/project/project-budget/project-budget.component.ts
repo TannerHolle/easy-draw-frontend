@@ -21,7 +21,7 @@ export class ProjectBudgetComponent implements OnInit {
   project: Project[] = [];
 
   columns = [];
-  displayedColumns: string[] = ['category', 'budget', 'draw1', 'draw2', 'spent', 'status'];
+  displayedColumns: string[] = [];
   dataSource = [];
 
   @ViewChild('downloadTemplate') downloadTemplate: ElementRef;
@@ -30,14 +30,14 @@ export class ProjectBudgetComponent implements OnInit {
   constructor(private route: ActivatedRoute, private http: HttpClient, public projectService: ProjectService) { }
 
   ngOnInit() {
-    debugger;
     this.id = this.route.snapshot.paramMap.get('id');
     this.projectService.getOneProject(this.id).subscribe((project: any[]) => {
       this.project = project;
     });
     this.budgetData = this.formatData();
     this.projectName = this.getProject().name;
-    this.displayedColumns = Object.keys(this.budgetData[1])
+    console.log(this.budgetData)
+    this.displayedColumns = Object.keys(this.budgetData[0])
   }
 
   getProject() {
@@ -61,6 +61,8 @@ export class ProjectBudgetComponent implements OnInit {
   }
 
   formatData() {
+    debugger;
+    console.log(this.project)
     var budgetArray = []
     var projectCategories = this.getCategories()
     var projectDraws = this.getDraws()

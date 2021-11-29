@@ -47,7 +47,6 @@ export class ProjectListComponent implements OnInit {
 
   cellClicked(element) {
     this.projectComponent.projectInvoices = element.inovices;
-    this.projectComponent.projectBudget = true;
   }
 
   deleteProject(projectId){

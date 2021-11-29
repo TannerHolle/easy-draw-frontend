@@ -13,7 +13,6 @@ import { ProjectService } from './project.service';
 export class ProjectComponent implements OnInit {
 
   projectInvoices = [];
-  projectBudget = false;
   projects: Project[] = [];
   private projectsSub: Subscription;
 

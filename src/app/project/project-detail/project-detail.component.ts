@@ -78,8 +78,6 @@ export class ProjectDetailComponent implements OnInit {
 
   download() {
     const items = this.getInvoicesOnDraw();
-
-
     const replacer = (key, value) => value === null ? '' : value // specify how you want to handle null values here
     const header = Object.keys(items[0])
     const csv = [

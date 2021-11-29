@@ -67,7 +67,7 @@ app.post('/invoices', (req, res) => {
     {
       "new": true,
       "arrayFilters": [
-        { "a.name": "draw1" },
+        { "a.name": body.draw },
       ]
     }).then(() => {
           res.sendStatus(200)
@@ -87,8 +87,10 @@ app.get('/projects', (req, res) => {
 //get info for one of the projects in the database
 app.get('/projects/:id', (req, res) => {
   Project.find({"_id": req.params.id}).then((projects) => {
+    console.log(projects)
     res.send(projects);
   }).catch((e) => {
+    console.log(e)
     res.send(e);
   });
 });
