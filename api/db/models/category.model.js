@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 
 const CateogrySchema = new mongoose.Schema({
-  costCode: Number,
+  costCode: String,
   category: String,
   budget: Number,
 })

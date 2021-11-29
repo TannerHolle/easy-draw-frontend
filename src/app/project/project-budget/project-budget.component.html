@@ -1,6 +1,7 @@
 
 <div class="table-size">
-  <button mat-raised-button class="add-project" (click)="this.onAddCategory()">Add Category</button>
+  <button mat-raised-button class="add-project" [routerLink]="['/project/category', id]">Add Category</button>
+
 
   <mat-card>
     <div class="search-results-header">

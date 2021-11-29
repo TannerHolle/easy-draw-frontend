@@ -1,0 +1,23 @@
+
+<main>
+  <mat-card>
+    <form (submit)="onAddCategory(categoryForm)" #categoryForm="ngForm">
+      <mat-form-field>
+        <input matInput placeholder="Category Name" name="category" ngModel required #category = 'ngModel'>
+        <mat-error *ngIf="category.invalid">Please Enter Valid Category</mat-error>
+      </mat-form-field>
+      <mat-form-field>
+        <input matInput placeholder="Cost Code" name="costCode" ngModel required #costCode='ngModel'>
+        <mat-error *ngIf="costCode.invalid">Please Enter Valid Cost Code</mat-error>
+      </mat-form-field>
+      <mat-form-field>
+        <input type="number" matInput placeholder="Category Budget" name="budget" ngModel required #budget='ngModel'>
+        <mat-error *ngIf="budget.invalid">Please Enter Valid Budget</mat-error>
+      </mat-form-field>
+      <button
+        mat-raised-button
+        color="primary"
+        type="submit">Save Category</button>
+    </form>
+  </mat-card>
+</main>

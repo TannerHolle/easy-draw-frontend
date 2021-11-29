@@ -72,11 +72,12 @@ export class ProjectService {
     }
   }
 
-  addCategory(){
+  addCategory(category: String, costCode: String, budget: Number, id: String){
     return this.webReqService.post('categories', {
-      "costCode": 9,
-      "category": "more Testing",
-      "budget": 20,
+      "costCode": costCode,
+      "category": category,
+      "budget": budget,
+      "projectId": id
     });
 
   }

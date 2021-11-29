@@ -30,7 +30,7 @@
         <mat-error *ngIf="invoiceNum.invalid">Please Enter Invoice Number</mat-error>
       </mat-form-field>
       <mat-form-field>
-        <input matInput placeholder="Invoice Amount" name="invoiceAmt" ngModel required #invoiceAmt='ngModel'>
+        <input type="number" matInput placeholder="Invoice Amount" name="invoiceAmt" ngModel required #invoiceAmt='ngModel'>
         <mat-error *ngIf="invoiceAmt.invalid">Please Enter Inovice Amount</mat-error>
       </mat-form-field>
       <button

@@ -34,6 +34,7 @@ import { ProjectDetailComponent } from './project/project-detail/project-detail.
 import { CompanyComponent } from './company/company.component';
 import { ProjectBudgetComponent } from './project/project-budget/project-budget.component';
 import { ProjectInvoicesComponent } from './project/project-invoices/project-invoices.component';
+import { ProjectCategoryComponent } from './project/project-category/project-category.component';
 
 
 @NgModule({
@@ -53,6 +54,7 @@ import { ProjectInvoicesComponent } from './project/project-invoices/project-inv
     CompanyComponent,
     ProjectBudgetComponent,
     ProjectInvoicesComponent,
+    ProjectCategoryComponent,
   ],
   imports: [
     BrowserModule,

@@ -35,7 +35,10 @@ app.post('/categories', (req, res) => {
     budget: body.budget,
   });
 
-  Project.findOneAndUpdate({ "_id": "61a48ab4521cc5ed5142e11c"},
+  console.log(newCategory);
+  console.log(body.projectId);
+
+  Project.findOneAndUpdate({ "_id": body.projectId},
     { $push: { "categories": newCategory } }).then(() => {
           res.sendStatus(200)
     });

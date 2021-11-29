@@ -30,7 +30,7 @@ export class ProjectBudgetComponent implements OnInit {
   constructor(private route: ActivatedRoute, private http: HttpClient, public projectService: ProjectService) { }
 
   ngOnInit() {
-    console.log(this.projectService.projects)
+    debugger;
     this.id = this.route.snapshot.paramMap.get('id');
     this.projectService.getOneProject(this.id).subscribe((project: any[]) => {
       this.project = project;
@@ -38,7 +38,6 @@ export class ProjectBudgetComponent implements OnInit {
     this.budgetData = this.formatData();
     this.projectName = this.getProject().name;
     this.displayedColumns = Object.keys(this.budgetData[1])
-    console.log(this.displayedColumns)
   }
 
   getProject() {
@@ -58,15 +57,8 @@ export class ProjectBudgetComponent implements OnInit {
 
   getCategories() {
     const project = this.getProject()
-    console.log(this.project);
     return project.categories;
   }
-
-  onAddCategory() {
-    this.projectService.addCategory().subscribe((response: any) => {
-      console.log(response);
-    });
-  };
 
   formatData() {
     var budgetArray = []
