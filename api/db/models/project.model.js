@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const { Category } = require('./category.model')
 
 const ProjectSchema = new mongoose.Schema({
   name: String,

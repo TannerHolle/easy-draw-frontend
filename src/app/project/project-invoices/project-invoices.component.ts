@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { InvoiceService } from '../../invoice/invoice.service';
 import { ProjectService } from '../project.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-project-invoices',
@@ -14,7 +15,7 @@ export class ProjectInvoicesComponent implements OnInit {
 
   categories = ["Plumbing", "Framing", "Concrete", "Interior", "Smoothing"]
 
-  constructor(public invoiceService: InvoiceService, public projectService: ProjectService) { }
+  constructor(public invoiceService: InvoiceService, private router: Router, public projectService: ProjectService) { }
   ngOnInit() {
   }
 
@@ -22,7 +23,10 @@ export class ProjectInvoicesComponent implements OnInit {
     if (form.invalid) {
       return;
     }
-    this.projectService.createInvoice(form.value.project, form.value.company, form.value.address, form.value.category, form.value.invoiceNum, form.value.invoiceAmt)
+    this.projectService.createInvoice(form.value.project, form.value.company, form.value.address, form.value.category, form.value.invoiceNum, form.value.invoiceAmt).subscribe((response: any) => {
+      this.router.navigate(['']);
+      console.log(response);
+    });
     form.resetForm();
   };
 

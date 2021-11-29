@@ -62,6 +62,12 @@ export class ProjectBudgetComponent implements OnInit {
     return project.categories;
   }
 
+  onAddCategory() {
+    this.projectService.addCategory().subscribe((response: any) => {
+      console.log(response);
+    });
+  };
+
   formatData() {
     var budgetArray = []
     var projectCategories = this.getCategories()

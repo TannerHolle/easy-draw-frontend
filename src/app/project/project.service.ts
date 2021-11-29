@@ -23,8 +23,20 @@ export class ProjectService {
       "phone": phone,
       "email": email,
       "budget": budget,
-      "categories": [],
-      "draws": []
+      "categories": [
+        {
+          "costCode": 1,
+          "category": "default",
+          "budget": 0
+        }
+      ],
+      "draws": [
+        {
+          "name": "draw1",
+          "isOpen": true,
+          "invoices": []
+        }
+      ]
     });
   }
 
@@ -59,6 +71,14 @@ export class ProjectService {
       console.log(project[0]['categories'])
       return project[0]['categories'];
     }
+  }
+
+  addCategory(){
+    return this.webReqService.post('categories', {
+      "costCode": 9,
+      "category": "more Testing",
+      "budget": 20,
+    });
 
   }
 

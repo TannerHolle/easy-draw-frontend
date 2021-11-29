@@ -6,6 +6,7 @@ const { mongoose } = require('./db/mongoose');
 const { Project } = require('./db/models/project.model')
 const { Invoice } = require('./db/models/invoice.model')
 const { Company } = require('./db/models/company.model')
+const { Category } = require('./db/models/category.model')
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -24,11 +25,25 @@ app.use((req, res, next) => {
 });
 
 
-//post a new invoice to the database
-app.post('/invoices', (req, res) => {
+//post a new cateogry to a project in the database
+app.post('/categories', (req, res) => {
   let body = req.body;
 
+  let newCategory = new Category({
+    costCode: body.costCode,
+    category: body.category,
+    budget: body.budget,
+  });
 
+  Project.findOneAndUpdate({ "_id": "61a48ab4521cc5ed5142e11c"},
+    { $push: { "categories": newCategory } }).then(() => {
+          res.sendStatus(200)
+    });
+});
+
+//post a new invoice to a project in the database
+app.post('/invoices', (req, res) => {
+  let body = req.body;
 
   let newInvoice = new Invoice({
     company: body.company,
@@ -38,9 +53,21 @@ app.post('/invoices', (req, res) => {
     invoiceAmt: body.invoiceAmt,
   });
 
-  let updatedProject = Project.findOneAndUpdate({ "_id": req.body._id },
-    { $push: { "draws/[0]/invoices": newInvoice } }).then(() => {
-      res.sendStatus(200)
+  console.log(newInvoice)
+  console.log(body.project._id)
+
+  Project.findOneAndUpdate(
+    {
+      "_id": req.body.project._id
+    },
+    { $push: { "draws.$[a].invoices": newInvoice } },
+    {
+      "new": true,
+      "arrayFilters": [
+        { "a.name": "draw1" },
+      ]
+    }).then(() => {
+          res.sendStatus(200)
     });
 });
 
