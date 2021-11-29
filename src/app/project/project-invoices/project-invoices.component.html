@@ -1,0 +1,45 @@
+<p>
+  project-invoices works!
+</p>
+<main>
+  <mat-card>
+    <form (submit)="onAddInvoice(invoiceForm)" #invoiceForm="ngForm">
+      <mat-form-field>
+        <input matInput placeholder="Company" name="company" ngModel required #company = 'ngModel'>
+        <mat-error *ngIf="company.invalid">Please Enter a Company Name</mat-error>
+      </mat-form-field>
+      <mat-form-field>
+        <input matInput placeholder="Company Address" name="address" ngModel required #address='ngModel'>
+        <mat-error *ngIf="address.invalid">Please Enter Company Address</mat-error>
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>Project</mat-label>
+        <mat-select [(ngModel)]="selectedValue" name="project" ngModel required #project = 'ngModel'>
+          <mat-option *ngFor="let project of this.projectService.projects" [value]="project">
+            {{project.name}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>Category</mat-label>
+        <mat-select name="category" ngModel required #category = 'ngModel'>
+          <mat-option *ngFor="let category of this.getCategories()" [value]="category.category">
+            {{category.category}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+      <mat-form-field>
+        <input matInput placeholder="Inovice Number" name="invoiceNum" ngModel required #invoiceNum= 'ngModel'>
+        <mat-error *ngIf="invoiceNum.invalid">Please Enter Invoice Number</mat-error>
+      </mat-form-field>
+      <mat-form-field>
+        <input matInput placeholder="Invoice Amount" name="invoiceAmt" ngModel required #invoiceAmt='ngModel'>
+        <mat-error *ngIf="invoiceAmt.invalid">Please Enter Inovice Amount</mat-error>
+      </mat-form-field>
+      <button
+        mat-raised-button
+        color="primary"
+        type="submit">Save Invoice</button>
+    </form>
+  </mat-card>
+</main>

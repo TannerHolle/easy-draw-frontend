@@ -27,10 +27,7 @@ export class InvoiceService {
   }
 
   addInvoices(company: String, address: String, project: String, category: String, invoiceNum: String, invoiceAmt: String) {
-    //get the project with incoming project ID
-    //add invoice to that projects invoice array
-    // console.log(project);
-    const invoice: Invoice = {invoiceId: "123456879", company: company, address: address, category: category, invoiceNum: invoiceNum, invoiceAmt: invoiceAmt};
+    const invoice: Invoice = {company: company, address: address, category: category, invoiceNum: invoiceNum, invoiceAmt: invoiceAmt};
     this.http.post<{message: string}>("http://localhost:3000/api/invoices", invoice)
       .subscribe((responseData) => {
         // console.log(responseData);

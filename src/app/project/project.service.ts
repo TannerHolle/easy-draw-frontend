@@ -5,10 +5,12 @@ import { WebRequestService } from '../services/web-request.service';
 
 
 import { Project } from '../models/project.model';
+import { Invoice } from '../models/invoice.model';
 
 @Injectable({providedIn: 'root'})
 export class ProjectService {
   public projects: Project[] = [];
+  public categories: {} = [];
   private projectsUpdated = new Subject<Project[]>();
 
   constructor(private http: HttpClient, private webReqService: WebRequestService) {}
@@ -36,6 +38,28 @@ export class ProjectService {
 
   deleteProject(projectId) {
     return this.webReqService.delete(`projects/${projectId}`)
+  }
+
+  createInvoice(project: {}, company: String, address: String, category: String, invoiceNum: String, invoiceAmt: String) {
+    return this.webReqService.post('invoices', {
+      "company": company,
+      "address": address,
+      "category": category,
+      "invoiceNum": invoiceNum,
+      "invoiceAmt": invoiceAmt,
+      "project": project
+    });
+  }
+
+  getCategories(id) {
+    if (id) {
+      const project = this.projects.filter(obj => {
+        return obj._id === id;
+      });
+      console.log(project[0]['categories'])
+      return project[0]['categories'];
+    }
+
   }
 
 

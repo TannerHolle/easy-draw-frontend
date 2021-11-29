@@ -13,7 +13,8 @@ import {
   MatSelectModule,
   MatTableModule,
   MatIconModule,
-  MatSlideToggleModule
+  MatSlideToggleModule,
+  MatDialogModule
 } from '@angular/material';
 
 
@@ -32,6 +33,7 @@ import { ProjectCreateComponent } from './project/project-create/project-create.
 import { ProjectDetailComponent } from './project/project-detail/project-detail.component';
 import { CompanyComponent } from './company/company.component';
 import { ProjectBudgetComponent } from './project/project-budget/project-budget.component';
+import { ProjectInvoicesComponent } from './project/project-invoices/project-invoices.component';
 
 
 @NgModule({
@@ -50,6 +52,7 @@ import { ProjectBudgetComponent } from './project/project-budget/project-budget.
     ProjectDetailComponent,
     CompanyComponent,
     ProjectBudgetComponent,
+    ProjectInvoicesComponent,
   ],
   imports: [
     BrowserModule,
@@ -59,6 +62,7 @@ import { ProjectBudgetComponent } from './project/project-budget/project-budget.
     MatCardModule,
     MatButtonModule,
     MatIconModule,
+    MatDialogModule,
     MatToolbarModule,
     MatSlideToggleModule,
     MatExpansionModule,

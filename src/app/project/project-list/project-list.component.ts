@@ -29,7 +29,6 @@ export class ProjectListComponent implements OnInit {
       this.projects = projects;
       this.projectService.projects = projects;
     });
-    console.log(this.projects)
 
 
     this.projectsSub = this.projectService.getProjectUpdateListener()

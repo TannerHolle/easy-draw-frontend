@@ -4,6 +4,7 @@ const app = express();
 const { mongoose } = require('./db/mongoose');
 
 const { Project } = require('./db/models/project.model')
+const { Invoice } = require('./db/models/invoice.model')
 const { Company } = require('./db/models/company.model')
 
 app.use(bodyParser.json());
@@ -20,6 +21,27 @@ app.use((req, res, next) => {
     "GET, POST, PATCH, DELETE, OPTIONS"
   );
   next();
+});
+
+
+//post a new invoice to the database
+app.post('/invoices', (req, res) => {
+  let body = req.body;
+
+
+
+  let newInvoice = new Invoice({
+    company: body.company,
+    address: body.address,
+    category: body.category,
+    invoiceNum: body.invoiceNum,
+    invoiceAmt: body.invoiceAmt,
+  });
+
+  let updatedProject = Project.findOneAndUpdate({ "_id": req.body._id },
+    { $push: { "draws/[0]/invoices": newInvoice } }).then(() => {
+      res.sendStatus(200)
+    });
 });
 
 

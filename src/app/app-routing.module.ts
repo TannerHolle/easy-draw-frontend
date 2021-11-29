@@ -10,14 +10,16 @@ import { HomeComponent } from './home/home.component';
 import { ProjectComponent } from './project/project.component';
 import { ProjectDetailComponent } from './project/project-detail/project-detail.component';
 import { ProjectBudgetComponent } from './project/project-budget/project-budget.component';
+import { ProjectInvoicesComponent } from './project/project-invoices/project-invoices.component';
 
 const routes: Routes = [
-  {path: '', component: HomeComponent},
-  {path: 'invoices', component: InvoiceComponent},
+  {path: '', component: ProjectComponent},
+  {path: 'invoices', children:[ {path: 'create', component: InvoiceCreateComponent}]},
   {path: 'companies', component: CompanyComponent},
+  {path: 'projects', component: ProjectComponent,},
   {path: 'projects/:id', component: ProjectBudgetComponent},
   {path: 'projects/:id/draws/:drawid', component: ProjectDetailComponent},
-  {path: 'projects', component: ProjectComponent,},
+  {path: 'project/invoices', component: ProjectInvoicesComponent},
 ];
 
 @NgModule({
