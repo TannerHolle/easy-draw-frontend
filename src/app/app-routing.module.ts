@@ -7,9 +7,11 @@ import { ProjectDetailComponent } from './project/project-detail/project-detail.
 import { ProjectBudgetComponent } from './project/project-budget/project-budget.component';
 import { ProjectInvoicesComponent } from './project/project-invoices/project-invoices.component';
 import { ProjectCreateComponent } from './project/project-create/project-create.component';
+import { HomeComponent } from './home/home.component';
 
 const routes: Routes = [
   {path: '', component: ProjectComponent},
+  {path: 'home', component: HomeComponent},
   {path: 'companies', component: CompanyComponent},
   {path: 'projects', component: ProjectComponent,},
   {path: 'projects/:id', component: ProjectBudgetComponent},

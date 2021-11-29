@@ -3,5 +3,5 @@ export interface Invoice {
   address: String;
   category: String;
   invoiceNum: String;
-  invoiceAmt: String;
+  invoiceAmt: Number;
 }

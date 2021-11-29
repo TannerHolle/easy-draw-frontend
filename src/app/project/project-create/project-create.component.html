@@ -1,33 +1,34 @@
-
-<mat-card>
-  <form (submit)="onAddProject(projectForm)" #projectForm="ngForm">
-    <mat-form-field>
-      <input matInput placeholder="Project Name" name="name" ngModel required #name = 'ngModel'>
-      <mat-error *ngIf="name.invalid">Please Enter Project Name</mat-error>
-    </mat-form-field>
-    <mat-form-field>
-      <input matInput placeholder="Address" name="address" ngModel required #address='ngModel'>
-      <mat-error *ngIf="address.invalid">Please Enter Project Address</mat-error>
-    </mat-form-field>
-    <mat-form-field>
-      <input matInput placeholder="Home Owners" name="homeOwners" ngModel required #homeOwners='ngModel'>
-      <mat-error *ngIf="homeOwners.invalid">Please Enter Home Owner Names</mat-error>
-    </mat-form-field>
-    <mat-form-field>
-      <input matInput placeholder="Budget" name="budget" ngModel required #budget= 'ngModel'>
-      <mat-error *ngIf="budget.invalid">Please Enter Budget</mat-error>
-    </mat-form-field>
-    <mat-form-field>
-      <input matInput placeholder="Phone Number" name="phone" ngModel #phone='ngModel'>
-      <mat-error *ngIf="phone.invalid">Please Enter Valid Phone Number</mat-error>
-    </mat-form-field>
-    <mat-form-field>
-      <input matInput placeholder="Email Address" name="email" ngModel #email='ngModel'>
-      <mat-error *ngIf="email.invalid">Please Enter Valid Email</mat-error>
-    </mat-form-field>
-    <button
-      mat-raised-button
-      color="primary"
-      type="submit">Save Project</button>
-  </form>
-</mat-card>
+<main>
+  <mat-card>
+    <form (submit)="onAddProject(projectForm)" #projectForm="ngForm">
+      <mat-form-field>
+        <input matInput placeholder="Project Name" name="name" ngModel required #name = 'ngModel'>
+        <mat-error *ngIf="name.invalid">Please Enter Project Name</mat-error>
+      </mat-form-field>
+      <mat-form-field>
+        <input matInput placeholder="Address" name="address" ngModel required #address='ngModel'>
+        <mat-error *ngIf="address.invalid">Please Enter Project Address</mat-error>
+      </mat-form-field>
+      <mat-form-field>
+        <input matInput placeholder="Home Owners" name="homeOwners" ngModel required #homeOwners='ngModel'>
+        <mat-error *ngIf="homeOwners.invalid">Please Enter Home Owner Names</mat-error>
+      </mat-form-field>
+      <mat-form-field>
+        <input matInput placeholder="Budget" name="budget" ngModel required #budget= 'ngModel'>
+        <mat-error *ngIf="budget.invalid">Please Enter Budget</mat-error>
+      </mat-form-field>
+      <mat-form-field>
+        <input matInput placeholder="Phone Number" name="phone" ngModel #phone='ngModel'>
+        <mat-error *ngIf="phone.invalid">Please Enter Valid Phone Number</mat-error>
+      </mat-form-field>
+      <mat-form-field>
+        <input matInput placeholder="Email Address" name="email" ngModel #email='ngModel'>
+        <mat-error *ngIf="email.invalid">Please Enter Valid Email</mat-error>
+      </mat-form-field>
+      <button
+        mat-raised-button
+        color="primary"
+        type="submit">Save Project</button>
+    </form>
+  </mat-card>
+</main>

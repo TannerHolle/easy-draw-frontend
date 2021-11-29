@@ -1,7 +1,6 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { ProjectService } from '../project.service';
-import { ProjectComponent } from '../project.component';
 import { Router } from '@angular/router';
 
 @Component({
@@ -12,7 +11,7 @@ import { Router } from '@angular/router';
 export class ProjectCreateComponent implements OnInit {
 
 
-  constructor(public projectService: ProjectService, private router: Router, public projectComponent: ProjectComponent) { }
+  constructor(public projectService: ProjectService, private router: Router) { }
   ngOnInit() {
   }
 

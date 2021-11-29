@@ -51,11 +51,11 @@ export class ProjectListComponent implements OnInit {
   }
 
   deleteProject(projectId){
-    console.log("this is the id that will be delete" + projectId)
     var result = confirm("Are you sure you want to delete this project? THIS CANNOT BE UNDONE");
     if (result) {
       this.projectService.deleteProject(projectId).subscribe((res: any) => {
-        this.router.navigate(['']);
+        window.location.reload();
+        // this.router.navigate(['']);
       });
     }
   }

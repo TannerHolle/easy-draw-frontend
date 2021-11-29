@@ -51,7 +51,7 @@ export class ProjectService {
     return this.webReqService.delete(`projects/${projectId}`)
   }
 
-  createInvoice(project: {}, company: String, address: String, category: String, invoiceNum: String, invoiceAmt: String) {
+  createInvoice(project: {}, company: String, address: String, category: String, invoiceNum: String, invoiceAmt: Number) {
     return this.webReqService.post('invoices', {
       "company": company,
       "address": address,

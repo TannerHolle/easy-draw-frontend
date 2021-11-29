@@ -70,7 +70,7 @@ import { ProjectInvoicesComponent } from './project/project-invoices/project-inv
     AppRoutingModule,
     BrowserAnimationsModule,
     HttpClientModule
-  ],
+    ],
   providers: [],
   bootstrap: [AppComponent]
 })

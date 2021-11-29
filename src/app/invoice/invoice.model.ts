@@ -5,5 +5,5 @@ export interface Invoice {
   project: String;
   category: String;
   invoiceNum: String;
-  invoiceAmt: String;
+  invoiceAmt: Number;
 }

@@ -26,7 +26,7 @@ export class InvoiceService {
     return this.invoicesUpdated.asObservable();
   }
 
-  addInvoices(company: String, address: String, project: String, category: String, invoiceNum: String, invoiceAmt: String) {
+  addInvoices(company: String, address: String, project: String, category: String, invoiceNum: String, invoiceAmt: Number) {
     const invoice: Invoice = {company: company, address: address, category: category, invoiceNum: invoiceNum, invoiceAmt: invoiceAmt};
     this.http.post<{message: string}>("http://localhost:3000/api/invoices", invoice)
       .subscribe((responseData) => {

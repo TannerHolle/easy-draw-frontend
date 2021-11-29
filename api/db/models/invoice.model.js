@@ -5,7 +5,7 @@ const InvoiceSchema = new mongoose.Schema({
   address: String,
   category: String,
   invoiceNum: String,
-  invoiceAmt: String,
+  invoiceAmt: Number,
 })
 
 const Invoice = mongoose.model('Invoice', InvoiceSchema)
