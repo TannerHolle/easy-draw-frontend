@@ -18,7 +18,7 @@ export class ProjectBudgetComponent implements OnInit {
   id: string;
   budgetData = [];
   projectName = '';
-  project: Project[] = [];
+  project = [];
 
   columns = [];
   displayedColumns: string[] = [];
@@ -33,39 +33,17 @@ export class ProjectBudgetComponent implements OnInit {
     this.id = this.route.snapshot.paramMap.get('id');
     this.projectService.getOneProject(this.id).subscribe((project: any[]) => {
       this.project = project;
+      this.budgetData = this.formatData(this.project);
+      this.projectName = this.project[0].name;
+      this.displayedColumns = Object.keys(this.budgetData[0])
     });
-    this.budgetData = this.formatData();
-    this.projectName = this.getProject().name;
-    console.log(this.budgetData)
-    this.displayedColumns = Object.keys(this.budgetData[0])
+
   }
 
-  getProject() {
-    if (this.id != undefined) {
-      const json = this.projectService.projects;
-      const project = json.filter(obj => {
-        return obj._id === this.id;
-      });
-      return project[0];
-    }
-  }
-
-  getDraws() {
-    const project = this.getProject()
-    return project.draws;
-  }
-
-  getCategories() {
-    const project = this.getProject()
-    return project.categories;
-  }
-
-  formatData() {
-    debugger;
-    console.log(this.project)
+  formatData(project) {
     var budgetArray = []
-    var projectCategories = this.getCategories()
-    var projectDraws = this.getDraws()
+    var projectCategories = project[0].categories;
+    var projectDraws = project[0].draws;
     for (var c of projectCategories) {
       var categoryInfo = {}
       categoryInfo["costCode"] = c.costCode;
@@ -102,7 +80,7 @@ export class ProjectBudgetComponent implements OnInit {
     var hiddenElement = document.createElement('a');
     hiddenElement.href = 'data:text/csv;charset=utf-8,' + encodeURI(csv);
     hiddenElement.target = '_blank';
-    hiddenElement.download = this.getProject().name + '_budget.csv';
+    hiddenElement.download = this.project[0].name + '_budget.csv';
     hiddenElement.click();
   }
 

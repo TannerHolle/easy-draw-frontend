@@ -12,7 +12,8 @@ export class ProjectService {
 
   constructor(private webReqService: WebRequestService) {}
 
-  createProject(name: string, address: string, homeOwners: string, phone: string, email: string, budget: number) {
+  createProject(name: string, address: string, homeOwners: string, phone: string, email: string, budget: number, categoryArray: any[]) {
+    debugger;
     return this.webReqService.post('projects', {
       "name": name,
       "address": address,
@@ -20,13 +21,7 @@ export class ProjectService {
       "phone": phone,
       "email": email,
       "budget": budget,
-      "categories": [
-        {
-          "costCode": "1",
-          "category": "misc",
-          "budget": 0
-        }
-      ],
+      "categories": categoryArray,
       "draws": [
         {
           "name": "draw1",
