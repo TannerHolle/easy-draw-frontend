@@ -24,27 +24,12 @@ app.use((req, res, next) => {
   next();
 });
 
+/* INVOICE API CALLS */
 
-//post a new cateogry to a project in the database
-app.post('/categories', (req, res) => {
-  let body = req.body;
-
-  let newCategory = new Category({
-    costCode: body.costCode,
-    category: body.category,
-    budget: body.budget,
-  });
-
-  console.log(newCategory);
-  console.log(body.projectId);
-
-  Project.findOneAndUpdate({ "_id": body.projectId},
-    { $push: { "categories": newCategory } }).then(() => {
-          res.sendStatus(200)
-    });
-});
-
-//post a new invoice to a project in the database
+/**
+ * POST /invoices
+ * Purpose: Create a new invoice
+ */
 app.post('/invoices', (req, res) => {
   let body = req.body;
 
@@ -74,8 +59,12 @@ app.post('/invoices', (req, res) => {
     });
 });
 
+/* PROJECT API CALLS */
 
-//get all the projects in the database
+/**
+ * GET /projects
+ * Purpose: Get all projects in the db
+ */
 app.get('/projects', (req, res) => {
   Project.find({}).then((projects) => {
     res.send(projects);
@@ -84,7 +73,10 @@ app.get('/projects', (req, res) => {
   });
 });
 
-//get info for one of the projects in the database
+/**
+ * GET /projects/:id
+ * Purpose: Get one project filtered by project id
+ */
 app.get('/projects/:id', (req, res) => {
   Project.find({"_id": req.params.id}).then((projects) => {
     console.log(projects)
@@ -95,7 +87,10 @@ app.get('/projects/:id', (req, res) => {
   });
 });
 
-//Create a new project in the database
+/**
+ * POST /projects
+ * Purpose: Create a new project
+ */
 app.post('/projects', (req, res) => {
   let body = req.body;
 
@@ -116,7 +111,10 @@ app.post('/projects', (req, res) => {
   });
 });
 
-//This is an api call to update a project in db
+/**
+ * POST /projects/:id
+ * Purpose: Update a project
+ */
 app.post('/projects/:id', (req, res) => {
   Project.findOneAndUpdate({ _id: req.params.id}, {
     $set: req.body
@@ -125,7 +123,10 @@ app.post('/projects/:id', (req, res) => {
   })
 });
 
-//This is an api call to delete a project in db
+/**
+ * DELETE /projects/:id
+ * Purpose: Delete a project from the db
+ */
 app.delete('/projects/:id', (req, res) => {
   Project.findOneAndRemove({
     _id: req.params.id
@@ -134,8 +135,12 @@ app.delete('/projects/:id', (req, res) => {
   });
 })
 
-//The next four api calls are for companies
-//This is an api call to get all companies in db
+/* COMPANY API CALLS */
+
+/**
+ * GET /companies
+ * Purpose: Get a list of all the companies
+ */
 app.get('/companies', (req, res) => {
   Company.find({}).then((companies) => {
     res.send(companies);
@@ -144,7 +149,10 @@ app.get('/companies', (req, res) => {
   });
 });
 
-//This is an api call to create a new company in db
+/**
+ * POST /companies
+ * Purpose: Create a new company
+ */
 app.post('/companies', (req, res) => {
   let body = req.body;
 
@@ -160,7 +168,10 @@ app.post('/companies', (req, res) => {
   });
 });
 
-//This is an api call to update a company in db
+/**
+ * POST /companies/:id
+ * Purpose: Update a company in the db
+ */
 app.post('/companies/:id', (req, res) => {
   Company.findOneAndUpdate({ _id: req.params.id}, {
     $set: req.body
@@ -169,118 +180,41 @@ app.post('/companies/:id', (req, res) => {
   })
 });
 
-//This is an api call to delete a company in db
+/**
+ * DELETE /companies/:id
+ * Purpose: Delete a company from the db
+ */
 app.delete('/companies/:id', (req, res) => {
   Company.findOneAndRemove({
     _id: req.params.id
   }).then((removedCompany) => {
     res.send(removedCompany)
   });
-})
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-app.get('/projects', (req, res) => {
-  Project.find({}).then((projects) => {
-    res.send(projects);
-  }).catch((e) => {
-    res.send(e);
-  });
 });
 
-app.post('/projects', (req, res) => {
-  let title = req.body.title;
+/* Catgory API CALLS */
 
-  let newProject = new Project({
-    title
+/**
+ * POST /categories
+ * Purpose: Create a new category
+ */
+ app.post('/categories', (req, res) => {
+  let body = req.body;
+
+  let newCategory = new Category({
+    costCode: body.costCode,
+    category: body.category,
+    budget: body.budget,
   });
 
-  newProject.save().then((projectDoc) => {
-    res.send(projectDoc);
-  });
+  console.log(newCategory);
+  console.log(body.projectId);
 
-})
-
-
-app.post("/api/projects", (req, res, next) => {
-  const project = req.body;
-  // console.log(project);
-  res.status(201).json({
-    message: 'project added successfully'
-  });
+  Project.findOneAndUpdate({ "_id": body.projectId},
+    { $push: { "categories": newCategory } }).then(() => {
+          res.sendStatus(200)
+    });
 });
-
-app.get('/api/projects' , (req, res, next) => {
-  const json = require("../src/app/models/projectTests.json");
-  const projects = json.projects;
-  res.status(200).json({
-    message: 'invoices fetched Successfully',
-    projects: projects
-  });
-});
-
-app.get('/api/projects/:id/invoices' , (req, res, next) => {
-  const json = require("../src/app/models/projectTests.json");
-  const projects = json.projects;
-  const invoices = projects.filter(obj => {
-    return obj.projectId === id;
-  });
-  res.status(200).json({
-    message: 'invoices fetched Successfully',
-    invoices: invoices
-  });
-});
-
-app.post("/api/:projectId/invoices/:invoiceId", (req, res, next) => {
-  const invoice = req.body;
-  //console.log(invoice);
-  res.status(201).json({
-    message: 'company added successfully'
-  });
-});
-
-app.get('/api/invoices' , (req, res, next) => {
-  const invoices = require("../src/assets/testInvoices.json");
-  res.status(200).json({
-    message: 'invoices fetched Successfully',
-    invoices: invoices
-  });
-});
-
-app.post("/api/companies", (req, res, next) => {
-  const company = req.body;
-  // console.log(company);
-  res.status(201).json({
-    message: 'company added successfully'
-  });
-});
-
-app.get('/api/companies' , (req, res, next) => {
-  const companies = [
-    {id: "asdv231", Name: "E Builders", Address: "123 tanner st", TaxID: "2541", Notes: "This is the original Company"},
-    {if: "asd5346as", Name: "Ivory Homes", Address: "589 tyler st", TaxID: "6985", Notes: ""}
-  ];
-  res.status(200).json({
-    message: 'Companies fetched Successfully',
-    companies: companies
-  });
-});
-
-
 
 module.exports = app
 
