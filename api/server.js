@@ -1,4 +1,4 @@
-const app = require("./api/app");
+const app = require("./app");
 const debug = require("debug")("node-angular");
 const http = require("http");
 
@@ -14,8 +14,6 @@ const normalizePort = val => {
   return false;
 };
 
-var distDir = __dirname + "/dist/";
-app.use(express.static(distDir));
 
 const onError = error => {
   if (error.syscall !== "listen") {
