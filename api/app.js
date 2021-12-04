@@ -1,4 +1,5 @@
 const express = require('express');
+const path = require('path');
 const bodyParser = require('body-parser');
 const app = express();
 const { mongoose } = require('./db/mongoose');
@@ -24,13 +25,18 @@ app.use((req, res, next) => {
   next();
 });
 
+app.use("/", express.static(path.join(__dirname, "angular")));
+app.use((req, res, next) => {
+  res.sendFile(path.join(__dirname, "angular", "index.html"))
+})
+
 /* INVOICE API CALLS */
 
 /**
  * POST /invoices
  * Purpose: Create a new invoice
  */
-app.post('/invoices', (req, res) => {
+app.post('/api/invoices', (req, res) => {
   let body = req.body;
 
   let newInvoice = new Invoice({
@@ -65,7 +71,7 @@ app.post('/invoices', (req, res) => {
  * GET /projects
  * Purpose: Get all projects in the db
  */
-app.get('/projects', (req, res) => {
+app.get('/api/projects', (req, res) => {
   Project.find({}).then((projects) => {
     res.send(projects);
   }).catch((e) => {
@@ -77,7 +83,7 @@ app.get('/projects', (req, res) => {
  * GET /projects/:id
  * Purpose: Get one project filtered by project id
  */
-app.get('/projects/:id', (req, res) => {
+app.get('/api/projects/:id', (req, res) => {
   Project.find({"_id": req.params.id}).then((projects) => {
     console.log(projects)
     res.send(projects);
@@ -91,7 +97,7 @@ app.get('/projects/:id', (req, res) => {
  * POST /projects
  * Purpose: Create a new project
  */
-app.post('/projects', (req, res) => {
+app.post('/api/projects', (req, res) => {
   let body = req.body;
 
   let newProject = new Project({
@@ -115,7 +121,7 @@ app.post('/projects', (req, res) => {
  * POST /projects/:id
  * Purpose: Update a project
  */
-app.post('/projects/:id', (req, res) => {
+app.post('/api/projects/:id', (req, res) => {
   Project.findOneAndUpdate({ _id: req.params.id}, {
     $set: req.body
   }).then(() => {
@@ -127,7 +133,7 @@ app.post('/projects/:id', (req, res) => {
  * DELETE /projects/:id
  * Purpose: Delete a project from the db
  */
-app.delete('/projects/:id', (req, res) => {
+app.delete('/api/projects/:id', (req, res) => {
   Project.findOneAndRemove({
     _id: req.params.id
   }).then((removedProject) => {
@@ -141,7 +147,7 @@ app.delete('/projects/:id', (req, res) => {
  * GET /companies
  * Purpose: Get a list of all the companies
  */
-app.get('/companies', (req, res) => {
+app.get('/api/companies', (req, res) => {
   Company.find({}).then((companies) => {
     res.send(companies);
   }).catch((e) => {
@@ -153,7 +159,7 @@ app.get('/companies', (req, res) => {
  * POST /companies
  * Purpose: Create a new company
  */
-app.post('/companies', (req, res) => {
+app.post('/api/companies', (req, res) => {
   let body = req.body;
 
   let newCompany = new Company({
@@ -172,7 +178,7 @@ app.post('/companies', (req, res) => {
  * POST /companies/:id
  * Purpose: Update a company in the db
  */
-app.post('/companies/:id', (req, res) => {
+app.post('/api/companies/:id', (req, res) => {
   Company.findOneAndUpdate({ _id: req.params.id}, {
     $set: req.body
   }).then(() => {
@@ -184,7 +190,7 @@ app.post('/companies/:id', (req, res) => {
  * DELETE /companies/:id
  * Purpose: Delete a company from the db
  */
-app.delete('/companies/:id', (req, res) => {
+app.delete('/api/companies/:id', (req, res) => {
   Company.findOneAndRemove({
     _id: req.params.id
   }).then((removedCompany) => {
@@ -198,7 +204,7 @@ app.delete('/companies/:id', (req, res) => {
  * POST /categories
  * Purpose: Create a new category
  */
- app.post('/categories', (req, res) => {
+ app.post('/api/categories', (req, res) => {
   let body = req.body;
 
   let newCategory = new Category({
