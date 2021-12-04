@@ -13,11 +13,6 @@ import { Router } from '@angular/router';
 })
 export class CompanyListComponent implements OnInit, OnDestroy {
 
-  // companies = [
-  //   {name: "E Builders", address: "123 tanner st", taxid: "2541", notes: "This is the original Company"},
-  //   {name: "Ivory Homes", address: "589 tyler st", taxid: "6985", notes: ""},
-  //   {name: "Edge Homes", address: "96336 deschutes ave", taxid: "3652", notes: ""},
-  // ];
 
   companies: Company[] = [];
   private companiesSub: Subscription;
@@ -40,7 +35,7 @@ export class CompanyListComponent implements OnInit, OnDestroy {
 
   deleteCompany(companyID){
     this.companyService.deleteCompany(companyID).subscribe((res: any) => {
-      this.router.navigate(['home']);
+      window.location.reload();
     });
   }
 

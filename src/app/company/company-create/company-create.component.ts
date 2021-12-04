@@ -19,7 +19,7 @@ export class CompanyCreateComponent implements OnInit {
       return;
     }
     this.companyService.createCompany(form.value.Name, form.value.Address, form.value.TaxID, form.value.Notes).subscribe((response: any) => {
-      console.log(response);
+      window.location.reload();
     });
     form.resetForm();
   };

@@ -1,15 +1,15 @@
-import { Component } from '@angular/core';
-import { Company } from './company/company.model'
+import { Component, OnInit } from '@angular/core';
+import { environment } from "../environments/environment";
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
-export class AppComponent {
-  storedCompanies: Company[] = [];
+export class AppComponent implements OnInit {
 
-  onCompaniesAdded(company) {
-    this.storedCompanies.push(company)
+  ngOnInit() {
+    console.log(environment.apiUrl)
   }
+
 }

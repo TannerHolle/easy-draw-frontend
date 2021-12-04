@@ -3,7 +3,9 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  production: false
+  production: false,
+  apiUrl: 'http://localhost:3000/api',
+  atlas: "mongodb+srv://admin:EasyDrawTestAdmin@easydrawtest.6w7rx.mongodb.net/EasyDrawTest?retryWrites=true&w=majority"
 };
 
 /*
