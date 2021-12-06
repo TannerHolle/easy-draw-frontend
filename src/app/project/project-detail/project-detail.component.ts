@@ -33,26 +33,18 @@ export class ProjectDetailComponent implements OnInit {
     this.route.params.subscribe(routeParams => {
       this.id = routeParams.id;
       this.drawId = routeParams.drawid;
-      this.drawIdCapital = this.makePretty(this.drawId);
-      this.drawInvoices = this.getInvoicesOnDraw();
-      this.draw = this.getDraw();
-      this.draws = this.getDrawInfo();
-      // this.project = this.getProject()
+      this.projectService.getOneProject(this.id).subscribe((project: any[]) => {
+        this.project = project;
+        this.drawIdCapital = this.makePretty(this.drawId);
+        this.drawInvoices = this.getInvoicesOnDraw();
+        this.draw = this.getDraw();
+        this.draws = this.getDrawInfo();
+      });
     });
   }
 
-  getProject() {
-    if (this.id != undefined) {
-      const json = this.projectService.projects;
-      const project = json.filter(obj => {
-        return obj._id === this.id;
-      });
-      return project[0];
-    }
-  }
-
   getInvoicesOnDraw() {
-    const project = this.getProject()
+    const project = this.project[0]
     const draw = project.draws.filter(obj => {
       return obj.name === this.drawId;
     });
@@ -60,7 +52,7 @@ export class ProjectDetailComponent implements OnInit {
   }
 
   getDraw() {
-    const project = this.getProject()
+    const project = this.project[0]
     const draw = project.draws.filter(obj => {
       return obj.name === this.drawId;
     });
@@ -68,7 +60,7 @@ export class ProjectDetailComponent implements OnInit {
   }
 
   getDrawInfo() {
-    return this.getProject().draws;
+    return this.project[0].draws;
   }
 
   makePretty(str) {
@@ -87,8 +79,19 @@ export class ProjectDetailComponent implements OnInit {
     var hiddenElement = document.createElement('a');
     hiddenElement.href = 'data:text/csv;charset=utf-8,' + encodeURI(csv);
     hiddenElement.target = '_blank';
-    hiddenElement.download = this.getProject().name + '_invoices.csv';
+    hiddenElement.download = this.project[0].name + '_invoices.csv';
     hiddenElement.click();
   }
+
+
+  changeDrawStatus() {
+    this.projectService.closeDraw(this.id, this.drawId).subscribe((res: any) => {
+      console.log("it worked?")
+    })
+    this.projectService.openNewDraw(this.id, this.drawId).subscribe((res: any) => {
+      window.location.reload();
+    })
+  }
+
 
 }

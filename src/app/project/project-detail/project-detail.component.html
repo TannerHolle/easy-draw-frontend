@@ -21,9 +21,13 @@
       </div>
     </div>
 
-    <br>
-    <!-- <div>
-      <mat-slide-toggle
+
+    <div class="search-results-header">
+      <button mat-raised-button (click)="changeDrawStatus()">Close Draw and open a new one</button>
+    </div>
+
+    <!-- <div class="search-results-header">
+      <mat-slide-toggle (change)="changeDrawStatus()"
           [checked]="draw['isOpen'] == true ? true : false">
       </mat-slide-toggle>
     </div> -->

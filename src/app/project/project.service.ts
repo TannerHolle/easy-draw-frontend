@@ -13,7 +13,6 @@ export class ProjectService {
   constructor(private webReqService: WebRequestService) {}
 
   createProject(name: string, address: string, homeOwners: string, phone: string, email: string, budget: number, categoryArray: any[]) {
-    debugger;
     return this.webReqService.post('projects', {
       "name": name,
       "address": address,
@@ -87,6 +86,13 @@ export class ProjectService {
     });
   }
 
+  closeDraw(projectId, drawId) {
+    return this.webReqService.post(`close-draw/${projectId}/${drawId}`, {});
+  }
+
+  openNewDraw(projectId, drawId) {
+    return this.webReqService.post(`open-new-draw/${projectId}/${drawId}`, {});
+  }
 
   getProjectUpdateListener() {
     return this.projectsUpdated.asObservable();
