@@ -32,6 +32,18 @@ export class ProjectService {
     });
   }
 
+  updateProject(id: string, name: string, address: string, homeOwners: string, phone: string, email: string, budget: number, categoryArray: any[]) {
+    return this.webReqService.post(`projects/${id}`, {
+      "name": name,
+      "address": address,
+      "homeOwners": homeOwners,
+      "phone": phone,
+      "email": email,
+      "budget": budget,
+      "categories": categoryArray,
+    });
+  }
+
   getProjects() {
     return this.webReqService.get('projects');
   };

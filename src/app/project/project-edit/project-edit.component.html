@@ -1,0 +1,71 @@
+<main>
+
+  <mat-card>
+    <form (submit)="onUpdateProject(projectForm)" #projectForm="ngForm">
+      <mat-form-field>
+        <input matInput placeholder="Project Name" name="name" value="{{project[0]?.name}}" ngModel="{{project[0]?.name}}" #name = 'ngModel'>
+      </mat-form-field>
+      <mat-form-field>
+        <input matInput placeholder="Address" name="address" value="{{project[0]?.address}}" ngModel="{{project[0]?.address}}" #address='ngModel'>
+      </mat-form-field>
+      <mat-form-field>
+        <input matInput placeholder="Home Owners" name="homeOwners" value="{{project[0]?.homeOwners}}" ngModel="{{project[0]?.homeOwners}}" #homeOwners='ngModel'>
+      </mat-form-field>
+      <mat-form-field>
+        <input matInput placeholder="Budget" name="budget" value="{{project[0]?.budget}}" ngModel="{{project[0]?.budget}}" #budget= 'ngModel'>
+      </mat-form-field>
+      <mat-form-field>
+        <input matInput placeholder="Phone Number" name="phone" value="{{project[0]?.phone}}" ngModel="{{project[0]?.phone}}"del #phone='ngModel'>
+      </mat-form-field>
+      <mat-form-field>
+        <input matInput placeholder="Email Address" name="email" value="{{project[0]?.email}}" ngModel="{{project[0]?.email}}" #email='ngModel'>
+      </mat-form-field>
+      <mat-card>
+        <table *ngFor="let field of categoryArray; let i = index">
+          <td>
+            <mat-form-field>
+              <input matInput [(ngModel)]="field.category" name="{{field.category}}" placeholder="Category">
+            </mat-form-field>
+          </td>
+          <td>
+            <mat-form-field >
+              <input matInput [(ngModel)]="field.costCode" name="{{field.costCode}}" placeholder="Cost Code">
+            </mat-form-field>
+          <td>
+            <mat-form-field >
+              <input matInput [(ngModel)]="field.budget" name="{{field.budget}}" placeholder="Budget">
+            </mat-form-field>
+          </td>
+          <td>
+            <mat-icon class="remove-icon" (click)="deleteCategory(i)" matSuffix>delete</mat-icon>
+          </td>
+        </table>
+      <table *ngIf="add == true">
+        <tr><td>
+          <mat-form-field >
+            <input matInput id="category" [(ngModel)]="newCategory.category" name="category"  placeholder="Category">
+          </mat-form-field>
+        </td>
+        <td>
+          <mat-form-field >
+            <input matInput id="costCode" [(ngModel)]="newCategory.costCode" name="costCode" placeholder="Cost Code">
+          </mat-form-field>
+        </td>
+        <td>
+          <mat-form-field >
+            <input matInput id="categoryBudget" [(ngModel)]="newCategory.budget" name="categoryBudget" placeholder="Budget" type="number">
+          </mat-form-field>
+        </td>
+      </tr>
+      </table>
+      <a mat-raised-button (click)="addCategory()">Add Category</a>
+    </mat-card>
+      <button
+        (click)="addCategoryOnSave()"
+        mat-raised-button
+        class="submit-button"
+        color="primary"
+        type="submit">Update Project</button>
+    </form>
+  </mat-card>
+</main>

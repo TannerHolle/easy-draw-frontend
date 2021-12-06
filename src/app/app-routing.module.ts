@@ -9,6 +9,7 @@ import { ProjectInvoicesComponent } from './project/project-invoices/project-inv
 import { ProjectCreateComponent } from './project/project-create/project-create.component';
 import { HomeComponent } from './home/home.component';
 import { ProjectCategoryComponent } from './project/project-category/project-category.component';
+import { ProjectEditComponent } from './project/project-edit/project-edit.component';
 
 const routes: Routes = [
   {path: '', component: ProjectComponent},
@@ -20,6 +21,7 @@ const routes: Routes = [
   {path: 'project/invoices', component: ProjectInvoicesComponent},
   {path: 'project/create', component: ProjectCreateComponent},
   {path: 'project/category/:id', component: ProjectCategoryComponent},
+  {path: 'project-edit/:id', component: ProjectEditComponent},
 ];
 
 @NgModule({
