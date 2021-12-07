@@ -85,12 +85,16 @@ export class ProjectDetailComponent implements OnInit {
 
 
   changeDrawStatus() {
-    this.projectService.closeDraw(this.id, this.drawId).subscribe((res: any) => {
-      console.log("it worked?")
-    })
-    this.projectService.openNewDraw(this.id, this.drawId).subscribe((res: any) => {
-      window.location.reload();
-    })
+    var result = confirm("Are you sure you want to close this draw? THIS CANNOT BE REOPENED");
+    if (result) {
+      this.projectService.closeDraw(this.id, this.drawId).subscribe((res: any) => {
+        console.log("it worked?")
+      });
+      this.projectService.openNewDraw(this.id, this.drawId).subscribe((res: any) => {
+        window.location.reload();
+      });
+    }
+
   }
 
 

@@ -22,6 +22,7 @@ export class CompanyListComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.companyService.getCompanies().subscribe((companies: any[]) => {
       this.companies = companies;
+      this.companyService.companies = companies;
     });
     this.companiesSub = this.companyService.getCompanyUpdateListener()
       .subscribe((companies: Company[]) => {

@@ -3,6 +3,7 @@ import { NgForm } from '@angular/forms';
 import { InvoiceService } from '../../invoice/invoice.service';
 import { ProjectService } from '../project.service';
 import { Router } from '@angular/router';
+import { CompanyService } from 'src/app/company/company.service';
 
 @Component({
   selector: 'app-project-invoices',
@@ -10,9 +11,11 @@ import { Router } from '@angular/router';
   styleUrls: ['./project-invoices.component.scss']
 })
 export class ProjectInvoicesComponent implements OnInit {
+  public companies = []
   selectedValue: {};
+  selectedCompany: {};
 
-  constructor(public invoiceService: InvoiceService, private router: Router, public projectService: ProjectService) { }
+  constructor(public invoiceService: InvoiceService, private router: Router, public projectService: ProjectService, public companyService: CompanyService) { }
   ngOnInit() {
   }
 

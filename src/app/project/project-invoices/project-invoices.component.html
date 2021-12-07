@@ -5,6 +5,14 @@
         <input matInput placeholder="Company" name="company" ngModel required #company = 'ngModel'>
         <mat-error *ngIf="company.invalid">Please Enter a Company Name</mat-error>
       </mat-form-field>
+      <!-- <mat-form-field>
+        <mat-label>Company</mat-label>
+        <mat-select [(ngModel)]="selectedCompany" name="company" ngModel required #company = 'ngModel'>
+          <mat-option *ngFor="let company of this.companyService.companies" [value]="company">
+            {{company.Name}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field> -->
       <mat-form-field>
         <input matInput placeholder="Company Address" name="address" ngModel required #address='ngModel'>
         <mat-error *ngIf="address.invalid">Please Enter Company Address</mat-error>

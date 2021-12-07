@@ -22,7 +22,7 @@
     </div>
 
 
-    <div class="search-results-header">
+    <div class="search-results-header" *ngIf="draw['isOpen'] == true">
       <button mat-raised-button (click)="changeDrawStatus()">Close Draw and open a new one</button>
     </div>
 

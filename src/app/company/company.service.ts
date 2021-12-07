@@ -7,7 +7,7 @@ import { WebRequestService } from '../services/web-request.service';
 
 @Injectable({providedIn: 'root'})
 export class CompanyService {
-  private companies: Company[] = [];
+  public companies: Company[] = [];
   private companiesUpdated = new Subject<Company[]>();
 
   constructor(private http: HttpClient, private webReqService: WebRequestService) {}
