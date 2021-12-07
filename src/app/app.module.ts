@@ -36,6 +36,8 @@ import { ProjectBudgetComponent } from './project/project-budget/project-budget.
 import { ProjectInvoicesComponent } from './project/project-invoices/project-invoices.component';
 import { ProjectCategoryComponent } from './project/project-category/project-category.component';
 import { ProjectEditComponent } from './project/project-edit/project-edit.component';
+import { LoginComponent } from './auth/login/login.component';
+import { SignUpComponent } from './auth/sign-up/sign-up.component';
 
 
 @NgModule({
@@ -57,6 +59,8 @@ import { ProjectEditComponent } from './project/project-edit/project-edit.compon
     ProjectInvoicesComponent,
     ProjectCategoryComponent,
     ProjectEditComponent,
+    LoginComponent,
+    SignUpComponent,
   ],
   imports: [
     BrowserModule,
