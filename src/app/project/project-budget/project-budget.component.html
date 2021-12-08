@@ -1,122 +1,99 @@
+<mat-sidenav-container>
+  <mat-sidenav mode="side" opened #sidenav ="matSidenav" class="mat-elevation-z8">
+    Projects:
+    <mat-divider></mat-divider>
+    <ng-container *ngFor="let project of projects">
+      <button mat-button class="menu-button" [routerLink]="['/projects', project._id]">
+        <span>{{project.name}}</span>
+    </button>
+    </ng-container>
+  </mat-sidenav>
+  <mat-sidenav-content>
+    <div class="content mat-elevation-z4">
 
-<div class="table-size">
-  <button mat-raised-button class="add-project" [routerLink]="['/project/category', id]">Add Category</button>
+      <div class="table-size">
+          <div class="search-results-header">
+            <div>
+              <span class="plain-text">Budget for: </span>
+              <span class="search-term-text">{{projectName}}</span><br>
+            </div>
+            <div class="action-buttons">
+              <button mat-button class="add-project" [routerLink]="['/project/category', id]">Add Category</button>
+              <mat-icon (click)="download()" matTooltip="Download search results" class="material-icons-outlined" style="font-size: 24px" matTooltipClass="tooltip">file_download</mat-icon>
+            </div>
+          </div>
+          <table class="mat-elevation-z2" mat-table [dataSource]="budgetData">
+
+            <!-- Cost Code Column -->
+            <ng-container matColumnDef="costCode">
+              <th mat-header-cell *matHeaderCellDef> Cost Code </th>
+              <td mat-cell *matCellDef="let element"> {{element.costCode}} </td>
+            </ng-container>
+
+            <!-- Category Column -->
+            <ng-container matColumnDef="category">
+              <th mat-header-cell *matHeaderCellDef> Cateogry </th>
+              <td mat-cell *matCellDef="let element"> {{element.category}} </td>
+            </ng-container>
+
+            <!-- Budget Column -->
+            <ng-container matColumnDef="budget">
+              <th mat-header-cell *matHeaderCellDef> Budget </th>
+              <td mat-cell *matCellDef="let element"> {{element.budget}} </td>
+            </ng-container>
+
+            <!-- Draw Columns -->
+            <ng-container *ngFor="let draw of draws">
+              <ng-container matColumnDef="{{draw.name}}">
+                <th mat-header-cell *matHeaderCellDef><button mat-raised-button [routerLink]="['/projects', id, 'draws', draw.name]">{{makePretty(draw.name)}}</button></th>
+                <td mat-cell *matCellDef="let element"> {{element[draw.name]}} </td>
+              </ng-container>
+            </ng-container>
 
 
-  <mat-card>
-    <div class="search-results-header">
-      <div>
-        <span class="plain-text">Budget for: </span>
-        <span class="search-term-text">{{projectName}}</span><br>
+
+            <!-- <ng-container matColumnDef="draw1">
+              <th mat-header-cell *matHeaderCellDef><button mat-raised-button [routerLink]="['/projects', id, 'draws', 'draw1']">Draw #1</button></th>
+              <td mat-cell *matCellDef="let element"> {{element.draw1}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="draw2">
+              <th mat-header-cell *matHeaderCellDef><button mat-raised-button [routerLink]="['/projects', id, 'draws', 'draw2']">Draw #2</button></th>
+              <td mat-cell *matCellDef="let element"> {{element.draw2}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="draw3">
+              <th mat-header-cell *matHeaderCellDef><button mat-raised-button [routerLink]="['/projects', id, 'draws', 'draw3']">Draw #3</button></th>
+              <td mat-cell *matellDef="let element"> {{element.draw3}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="draw4">
+              <th mat-header-cell *matHeaderCellDef> Draw #4 </th>
+              <td mat-cell *matCellDef="let element"> {{element.draw4}} </td>
+            </ng-container> -->
+
+            <!-- Spent Column -->
+            <ng-container matColumnDef="spent">
+              <th mat-header-cell *matHeaderCellDef> Spent </th>
+              <td mat-cell *matCellDef="let element"> {{element.spent}} </td>
+            </ng-container>
+
+            <!-- Over/Under Column -->
+            <ng-container matColumnDef="status">
+              <th mat-header-cell *matHeaderCellDef> Over/Under </th>
+              <td mat-cell *matCellDef="let element"> {{element.status}} </td>
+            </ng-container>
+
+
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row class="element-row"  *matRowDef="let row; columns: displayedColumns;" ></tr>
+          </table>
       </div>
-      <div class="action-buttons">
-        <mat-icon (click)="download()" matTooltip="Download search results" class="material-icons-outlined" style="font-size: 24px" matTooltipClass="tooltip">file_download</mat-icon>
-      </div>
+
     </div>
-    <table class="mat-elevation-z2" mat-table [dataSource]="budgetData">
+  </mat-sidenav-content>
+</mat-sidenav-container>
 
-      <!-- Weight Column -->
-      <ng-container matColumnDef="costCode">
-        <th mat-header-cell *matHeaderCellDef> Cost Code </th>
-        <td mat-cell *matCellDef="let element"> {{element.costCode}} </td>
-      </ng-container>
-
-      <!-- Weight Column -->
-      <ng-container matColumnDef="category">
-        <th mat-header-cell *matHeaderCellDef> Cateogry </th>
-        <td mat-cell *matCellDef="let element"> {{element.category}} </td>
-      </ng-container>
-
-      <!-- Name Column -->
-      <ng-container matColumnDef="budget">
-        <th mat-header-cell *matHeaderCellDef> Budget </th>
-        <td mat-cell *matCellDef="let element"> {{element.budget}} </td>
-      </ng-container>
-
-
-      <!-- Symbol Column -->
-      <ng-container matColumnDef="draw1">
-        <th mat-header-cell *matHeaderCellDef><button mat-raised-button [routerLink]="['/projects', id, 'draws', 'draw1']">Draw #1</button></th>
-        <td mat-cell *matCellDef="let element"> {{element.draw1}} </td>
-      </ng-container>
-
-
-      <!-- Symbol Column -->
-      <ng-container matColumnDef="draw2">
-        <th mat-header-cell *matHeaderCellDef><button mat-raised-button [routerLink]="['/projects', id, 'draws', 'draw2']">Draw #2</button></th>
-        <td mat-cell *matCellDef="let element"> {{element.draw2}} </td>
-      </ng-container>
-
-      <!-- Symbol Column -->
-      <ng-container matColumnDef="draw3">
-        <th mat-header-cell *matHeaderCellDef><button mat-raised-button [routerLink]="['/projects', id, 'draws', 'draw3']">Draw #3</button></th>
-        <td mat-cell *matCellDef="let element"> {{element.draw3}} </td>
-      </ng-container>
-
-
-      <!-- Symbol Column -->
-      <ng-container matColumnDef="draw4">
-        <th mat-header-cell *matHeaderCellDef> Draw #4 </th>
-        <td mat-cell *matCellDef="let element"> {{element.draw4}} </td>
-      </ng-container>
-
-      <!-- Symbol Column -->
-      <ng-container matColumnDef="draw5">
-        <th mat-header-cell *matHeaderCellDef> Draw #5 </th>
-        <td mat-cell *matCellDef="let element"> {{element.draw5}} </td>
-      </ng-container>
-
-
-      <!-- Symbol Column -->
-      <ng-container matColumnDef="draw6">
-        <th mat-header-cell *matHeaderCellDef> Draw #6 </th>
-        <td mat-cell *matCellDef="let element"> {{element.draw6}} </td>
-      </ng-container>
-
-      <!-- Symbol Column -->
-      <ng-container matColumnDef="draw7">
-        <th mat-header-cell *matHeaderCellDef> Draw #7 </th>
-        <td mat-cell *matCellDef="let element"> {{element.draw7}} </td>
-      </ng-container>
-
-
-      <!-- Symbol Column -->
-      <ng-container matColumnDef="draw8">
-        <th mat-header-cell *matHeaderCellDef> Draw #8 </th>
-        <td mat-cell *matCellDef="let element"> {{element.draw8}} </td>
-      </ng-container>
-
-      <!-- Symbol Column -->
-      <ng-container matColumnDef="draw9">
-        <th mat-header-cell *matHeaderCellDef> Draw #9 </th>
-        <td mat-cell *matCellDef="let element"> {{element.draw9}} </td>
-      </ng-container>
-
-
-      <!-- Symbol Column -->
-      <ng-container matColumnDef="draw10">
-        <th mat-header-cell *matHeaderCellDef> Draw #10 </th>
-        <td mat-cell *matCellDef="let element"> {{element.draw10}} </td>
-      </ng-container>
-
-      <!-- Weight Column -->
-      <ng-container matColumnDef="spent">
-        <th mat-header-cell *matHeaderCellDef> Spent </th>
-        <td mat-cell *matCellDef="let element"> {{element.spent}} </td>
-      </ng-container>
-
-      <!-- Weight Column -->
-      <ng-container matColumnDef="status">
-        <th mat-header-cell *matHeaderCellDef> Over/Under </th>
-        <td mat-cell *matCellDef="let element"> {{element.status}} </td>
-      </ng-container>
-
-
-      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-      <tr mat-row class="element-row"  *matRowDef="let row; columns: displayedColumns;" ></tr>
-    </table>
-  </mat-card>
-</div>
 
 <router-outlet></router-outlet>
 

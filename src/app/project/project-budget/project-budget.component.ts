@@ -1,11 +1,9 @@
-import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, AfterViewInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import {ActivatedRoute} from '@angular/router';
 import { ProjectService } from '../project.service';
-import { CastExpr } from '@angular/compiler';
-import { setupMaster } from 'cluster';
-import { Project } from '../../models/project.model'
-import { containsElement } from '@angular/animations/browser/src/render/shared';
+import { MatSidenav } from '@angular/material';
+import { BreakpointObserver } from '@angular/cdk/layout';
 
 
 
@@ -14,30 +12,52 @@ import { containsElement } from '@angular/animations/browser/src/render/shared';
   templateUrl: './project-budget.component.html',
   styleUrls: ['./project-budget.component.scss']
 })
-export class ProjectBudgetComponent implements OnInit {
+export class ProjectBudgetComponent implements OnInit, AfterViewInit {
   id: string;
   budgetData = [];
   projectName = '';
   project = [];
+  projects = [];
+  draws = [];
 
   columns = [];
   displayedColumns: string[] = [];
   dataSource = [];
 
   @ViewChild('downloadTemplate') downloadTemplate: ElementRef;
+  @ViewChild(MatSidenav)
+  sidenav!: MatSidenav;
 
 
-  constructor(private route: ActivatedRoute, private http: HttpClient, public projectService: ProjectService) { }
+  constructor(private route: ActivatedRoute, private http: HttpClient, public projectService: ProjectService, private observer: BreakpointObserver) { }
 
   ngOnInit() {
-    this.id = this.route.snapshot.paramMap.get('id');
-    this.projectService.getOneProject(this.id).subscribe((project: any[]) => {
-      this.project = project;
-      this.budgetData = this.formatData(this.project);
-      this.projectName = this.project[0].name;
-      this.displayedColumns = Object.keys(this.budgetData[0])
+    this.route.params.subscribe(routeParams => {
+      this.id = this.route.snapshot.paramMap.get('id');
+      this.projectService.getProjects().subscribe((projects: any[]) => {
+        this.projects = projects;
+      });
+      this.projectService.getOneProject(this.id).subscribe((project: any[]) => {
+        this.project = project;
+        this.budgetData = this.formatData(this.project);
+        this.projectName = this.project[0].name;
+        this.draws = this.project[0].draws;
+        this.displayedColumns = Object.keys(this.budgetData[0])
+      });
     });
 
+  }
+
+  ngAfterViewInit() {
+    this.observer.observe(['(max-width: 900px)']).subscribe((res) => {
+      if (res.matches) {
+        this.sidenav.mode = 'over';
+        this.sidenav.close();
+      } else {
+        this.sidenav.mode = 'side';
+        this.sidenav.open();
+      }
+    })
   }
 
   formatData(project) {
@@ -82,6 +102,11 @@ export class ProjectBudgetComponent implements OnInit {
     hiddenElement.target = '_blank';
     hiddenElement.download = this.project[0].name + '_budget.csv';
     hiddenElement.click();
+  }
+
+  makePretty(str) {
+    var newStr = str.replace(/(.{4})/g, '$1 ');
+    return newStr.charAt(0).toUpperCase() + newStr.slice(1);
   }
 
 }

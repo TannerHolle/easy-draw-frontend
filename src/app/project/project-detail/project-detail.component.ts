@@ -1,10 +1,10 @@
+import { BreakpointObserver } from '@angular/cdk/layout';
 import { HttpClient } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
+import { Component, ViewChild, OnInit } from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 
-import { Subscription } from 'rxjs';
-import { Project } from '../../models/project.model'
-import { ProjectComponent } from '../project.component';
+import { MatSidenav } from '@angular/material';
+
 import { ProjectService } from '../project.service';
 
 
@@ -22,12 +22,15 @@ export class ProjectDetailComponent implements OnInit {
   draws = [];
   project = [];
 
+  @ViewChild(MatSidenav)
+  sidenav!: MatSidenav;
+
 
   displayedColumns: string[] = ['company','category','address','amount','invoiceNum','amount'];
   dataSource = [];
 
 
-  constructor(private route: ActivatedRoute, private http: HttpClient, public projectService: ProjectService) { }
+  constructor(private route: ActivatedRoute, private http: HttpClient, public projectService: ProjectService, private observer: BreakpointObserver) { }
 
   ngOnInit() {
     this.route.params.subscribe(routeParams => {
@@ -41,6 +44,18 @@ export class ProjectDetailComponent implements OnInit {
         this.draws = this.getDrawInfo();
       });
     });
+  }
+
+  ngAfterViewInit() {
+    this.observer.observe(['(max-width: 900px)']).subscribe((res) => {
+      if (res.matches) {
+        this.sidenav.mode = 'over';
+        this.sidenav.close();
+      } else {
+        this.sidenav.mode = 'side';
+        this.sidenav.open();
+      }
+    })
   }
 
   getInvoicesOnDraw() {

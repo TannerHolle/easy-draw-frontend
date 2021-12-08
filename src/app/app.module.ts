@@ -14,7 +14,9 @@ import {
   MatTableModule,
   MatIconModule,
   MatSlideToggleModule,
-  MatDialogModule
+  MatDialogModule,
+  MatSidenavModule,
+  MatDividerModule
 } from '@angular/material';
 
 
@@ -72,6 +74,8 @@ import { SignUpComponent } from './auth/sign-up/sign-up.component';
     MatIconModule,
     MatDialogModule,
     MatToolbarModule,
+    MatSidenavModule,
+    MatDividerModule,
     MatSlideToggleModule,
     MatExpansionModule,
     MatSelectModule,

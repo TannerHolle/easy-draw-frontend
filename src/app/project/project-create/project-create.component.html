@@ -29,7 +29,7 @@
         <table *ngFor="let field of categoryArray; let i = index">
           <td>
             <mat-form-field>
-              <input matInput [(ngModel)]="field.category" name="{{field.category}}" placeholder="Category" readonly>
+              <input matInput [(ngModel)]="field.category" name="{{field.category}}" placeholder="Category" readonly [ngModelOptions]="{standalone: true}">
             </mat-form-field>
           </td>
           <td>
