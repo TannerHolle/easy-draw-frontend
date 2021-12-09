@@ -11,7 +11,9 @@ import {ActivatedRoute, Router} from '@angular/router';
   styleUrls: ['./project-category.component.scss']
 })
 export class ProjectCategoryComponent implements OnInit {
-
+  public categoryArray: Array<any> = [];
+  public newCategory: any = {};
+  public add = false;
   id: String;
 
   constructor(private projectService: ProjectService, private route: ActivatedRoute, private router: Router) { }
@@ -30,4 +32,6 @@ export class ProjectCategoryComponent implements OnInit {
       this.router.navigate(['/projects', this.id]);
       });
   };
+
+
 }
