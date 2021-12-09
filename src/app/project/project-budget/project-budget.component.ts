@@ -6,6 +6,11 @@ import { MatSidenav } from '@angular/material';
 import { BreakpointObserver } from '@angular/cdk/layout';
 
 
+export class CsvData {
+  public costCode: any;
+  public category: any;
+  public budget: any;
+}
 
 @Component({
   selector: 'app-project-budget',
@@ -24,9 +29,15 @@ export class ProjectBudgetComponent implements OnInit, AfterViewInit {
   displayedColumns: string[] = [];
   dataSource = [];
 
+  public records: any[] = [];
+  @ViewChild('csvReader') csvReader: any;
+  jsondatadisplay:any;
+
+
+
   @ViewChild('downloadTemplate') downloadTemplate: ElementRef;
-  @ViewChild(MatSidenav)
-  sidenav!: MatSidenav;
+  @ViewChild(MatSidenav) sidenav!: MatSidenav;
+
 
 
   constructor(private route: ActivatedRoute, private http: HttpClient, public projectService: ProjectService, private observer: BreakpointObserver) { }
@@ -108,5 +119,76 @@ export class ProjectBudgetComponent implements OnInit, AfterViewInit {
     var newStr = str.replace(/(.{4})/g, '$1 ');
     return newStr.charAt(0).toUpperCase() + newStr.slice(1);
   }
+
+  upload() {
+    console.log(this.records)
+    console.log("this is where I am going to make the call to insert all the categories into the database")
+  }
+
+  changeListener(files: FileList) {
+    console.log(files.item(0).name)
+    if(files && files.length > 0  && files.item(0).name.endsWith(".csv")) {
+      let file : File = files.item(0);
+      let reader: FileReader = new FileReader();
+      reader.readAsText(file);
+
+      reader.onload = (e) => {
+        let csvData = reader.result;
+        let csvRecordsArray = (<string>csvData).split(/\r\n|\n/);
+
+        let headersRow = this.getHeaderArray(csvRecordsArray);
+
+        this.records = this.getDataRecordsArrayFromCSVFile(csvRecordsArray, headersRow.length);
+        console.log(this.records)
+        return this.records;
+      };
+
+      reader.onerror = function () {
+        console.log('error is occured while reading file!');
+      };
+    } else {
+      alert("Please import valid .csv file.");
+      this.csvReader.nativeElement.value = "";
+      this.records = [];
+      this.jsondatadisplay = '';
+    }
+
+  }
+
+  getDataRecordsArrayFromCSVFile(csvRecordsArray: any, headerLength: any) {
+    let csvArr = [];
+
+    for (let i = 1; i < csvRecordsArray.length; i++) {
+      let curruntRecord = (csvRecordsArray[i]).split(',');
+      if (curruntRecord.length == headerLength) {
+        let csvRecord= {};
+        csvRecord["costCode"] = curruntRecord[0].trim();
+        csvRecord["category"] = curruntRecord[1].trim();
+        csvRecord["budget"] = Number(curruntRecord[2].trim());
+        csvArr.push(csvRecord);
+      }
+    }
+    return csvArr;
+  }
+
+  getHeaderArray(csvRecordsArr: any) {
+    let headers = (csvRecordsArr[0]).split(',');
+    let headerArray = [];
+    for (let j = 0; j < headers.length; j++) {
+      headerArray.push(headers[j]);
+    }
+    return headerArray;
+  }
+
+  // fileReset() {
+  //   this.csvReader.nvalue = "";
+  //   this.records = [];
+  //   this.jsondatadisplay = '';
+  // }
+
+  // getJsonData(){
+  //   this.jsondatadisplay = JSON.stringify(this.records);
+  // }
+
 
 }
