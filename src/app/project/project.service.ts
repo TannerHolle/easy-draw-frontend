@@ -8,6 +8,8 @@ import { Project } from '../models/project.model';
 export class ProjectService {
   public projects: Project[] = [];
   public categories: {} = [];
+  public records: any[] = [];
+
   private projectsUpdated = new Subject<Project[]>();
 
   constructor(private webReqService: WebRequestService) {}

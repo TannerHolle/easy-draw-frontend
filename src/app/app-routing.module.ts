@@ -12,6 +12,7 @@ import { ProjectCategoryComponent } from './project/project-category/project-cat
 import { ProjectEditComponent } from './project/project-edit/project-edit.component';
 import { LoginComponent } from './auth/login/login.component';
 import { SignUpComponent } from './auth/sign-up/sign-up.component';
+import { CategoryUploadComponent } from './project/project-category/category-upload/category-upload.component';
 
 const routes: Routes = [
   {path: '', component: ProjectComponent},
@@ -23,6 +24,7 @@ const routes: Routes = [
   {path: 'project/invoices', component: ProjectInvoicesComponent},
   {path: 'project/create', component: ProjectCreateComponent},
   {path: 'project/category/:id', component: ProjectCategoryComponent},
+  {path: 'project/category-upload/:id', component: CategoryUploadComponent},
   {path: 'project-edit/:id', component: ProjectEditComponent},
   {path: 'login', component: LoginComponent},
   {path: 'sign-up', component: SignUpComponent},

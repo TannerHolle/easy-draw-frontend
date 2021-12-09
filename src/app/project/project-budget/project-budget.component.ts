@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild, ElementRef, AfterViewInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import {ActivatedRoute} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import { ProjectService } from '../project.service';
 import { MatSidenav } from '@angular/material';
 import { BreakpointObserver } from '@angular/cdk/layout';
@@ -40,7 +40,7 @@ export class ProjectBudgetComponent implements OnInit, AfterViewInit {
 
 
 
-  constructor(private route: ActivatedRoute, private http: HttpClient, public projectService: ProjectService, private observer: BreakpointObserver) { }
+  constructor(private route: ActivatedRoute, public projectService: ProjectService, private observer: BreakpointObserver, private router: Router) { }
 
   ngOnInit() {
     this.route.params.subscribe(routeParams => {
@@ -121,8 +121,12 @@ export class ProjectBudgetComponent implements OnInit, AfterViewInit {
   }
 
   upload() {
-    console.log(this.records)
-    console.log("this is where I am going to make the call to insert all the categories into the database")
+    if (this.projectService.records.length > 0) {
+      this.router.navigate(['/project/category-upload', this.id]);
+    } else {
+      alert("you must add a file to upload")
+    }
+
   }
 
   changeListener(files: FileList) {
@@ -138,9 +142,9 @@ export class ProjectBudgetComponent implements OnInit, AfterViewInit {
 
         let headersRow = this.getHeaderArray(csvRecordsArray);
 
-        this.records = this.getDataRecordsArrayFromCSVFile(csvRecordsArray, headersRow.length);
-        console.log(this.records)
-        return this.records;
+        this.projectService.records = this.getDataRecordsArrayFromCSVFile(csvRecordsArray, headersRow.length);
+        // console.log(this.records)
+        // return this.records;
       };
 
       reader.onerror = function () {
