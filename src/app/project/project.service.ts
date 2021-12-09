@@ -88,6 +88,11 @@ export class ProjectService {
     });
   }
 
+  uploadCategories(categoryArray: Array<any> = [], id: String){
+    debugger;
+    return this.webReqService.post(`category-upload/${id}`, categoryArray);
+  }
+
   closeDraw(projectId, drawId) {
     return this.webReqService.post(`close-draw/${projectId}/${drawId}`, {});
   }

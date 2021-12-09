@@ -52,9 +52,16 @@
               <span class="search-term-text">{{projectName}}</span><br>
             </div>
             <div class="action-buttons">
-              <button mat-button class="add-project" [routerLink]="['/project/category', id]">Add Category</button>
-              <input type="file" class="upload" (change)="changeListener($event.target.files)">
               <mat-icon (click)="download()" matTooltip="Download search results" class="material-icons-outlined" style="font-size: 24px" matTooltipClass="tooltip">file_download</mat-icon>
+            </div>
+          </div>
+          <div class="search-results-header">
+            <div>
+              <span class="plain-text">Categories </span>
+            </div>
+            <div class="action-buttons">
+              <button mat-raised-button class="add-project" [routerLink]="['/project/category', id]">Add Single Category</button>
+              <input type="file" class="upload" (change)="changeListener($event.target.files)">
               <mat-icon (click)="upload()" matTooltip="Upload CSV" class="material-icons-outlined" style="font-size: 24px" matTooltipClass="tooltip">file_upload</mat-icon>
             </div>
           </div>
@@ -68,7 +75,7 @@
 
             <!-- Category Column -->
             <ng-container matColumnDef="category">
-              <th mat-header-cell *matHeaderCellDef> Cateogry </th>
+              <th mat-header-cell *matHeaderCellDef> Category </th>
               <td mat-cell *matCellDef="let element"> {{element.category}} </td>
             </ng-container>
 

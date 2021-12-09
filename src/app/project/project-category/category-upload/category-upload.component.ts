@@ -32,8 +32,10 @@ export class CategoryUploadComponent implements OnInit {
     }
   }
 
-  onAddCategory() {
-    console.log(this.categoryArray)
+  onAddCategories() {
+    this.projectService.uploadCategories(this.categoryArray, this.id).subscribe((response: any) => {
+      this.router.navigate(['/projects', this.id]);
+      });
   };
 
   addCategory() {
