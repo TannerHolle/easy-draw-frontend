@@ -41,6 +41,10 @@
         <input type="number" matInput placeholder="Invoice Amount" name="invoiceAmt" ngModel required #invoiceAmt='ngModel'>
         <mat-error *ngIf="invoiceAmt.invalid">Please Enter Inovice Amount</mat-error>
       </mat-form-field>
+      <div>
+        <button mat-stroked-button (click)="filePicker.click()" type="button">Attach Invoice PDF</button>
+        <input type="file" (change)="onFileSelected($event)" #filePicker>
+      </div>
       <button
         mat-raised-button
         color="primary"

@@ -14,9 +14,15 @@ export class ProjectInvoicesComponent implements OnInit {
   public companies = []
   selectedValue: {};
   selectedCompany: {};
+  selectedFile = null;
 
   constructor(public invoiceService: InvoiceService, private router: Router, public projectService: ProjectService, public companyService: CompanyService) { }
   ngOnInit() {
+  }
+
+  onFileSelected(event) {
+    this.selectedFile = event.target.files[0]
+    console.log(typeof(this.selectedFile));
   }
 
   onAddInvoice(form: NgForm) {
@@ -24,7 +30,7 @@ export class ProjectInvoicesComponent implements OnInit {
       return;
     }
     var draw = this.getOpenDraw()
-    this.projectService.createInvoice(form.value.project, form.value.company, form.value.address, form.value.category, form.value.invoiceNum, form.value.invoiceAmt, draw).subscribe((response: any) => {
+    this.projectService.createInvoice(form.value.project, form.value.company, form.value.address, form.value.category, form.value.invoiceNum, form.value.invoiceAmt, draw, this.selectedFile).subscribe((response: any) => {
       this.router.navigate(['']);
       console.log(response);
     });
