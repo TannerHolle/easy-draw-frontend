@@ -40,7 +40,6 @@ import { ProjectCategoryComponent } from './project/project-category/project-cat
 import { ProjectEditComponent } from './project/project-edit/project-edit.component';
 import { LoginComponent } from './auth/login/login.component';
 import { SignUpComponent } from './auth/sign-up/sign-up.component';
-import { ProjectMultiCategoryComponent } from './project/project-category/project-multi-category/project-multi-category.component';
 import { CategoryUploadComponent } from './project/project-category/category-upload/category-upload.component';
 
 
@@ -65,7 +64,6 @@ import { CategoryUploadComponent } from './project/project-category/category-upl
     ProjectEditComponent,
     LoginComponent,
     SignUpComponent,
-    ProjectMultiCategoryComponent,
     CategoryUploadComponent,
   ],
   imports: [
