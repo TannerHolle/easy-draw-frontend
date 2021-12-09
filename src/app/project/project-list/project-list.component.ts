@@ -21,7 +21,7 @@ export class ProjectListComponent implements OnInit {
   projects: Project[] = [];
   private projectsSub: Subscription;
 
-  displayedColumns: string[] = ['name', 'address', 'homeOwners', 'budget', 'phone', 'email', '_id'];
+  displayedColumns: string[] = ['name', 'address', 'client', 'budget', 'phone', 'email', '_id'];
   dataSource = [];
 
   ngOnInit() {

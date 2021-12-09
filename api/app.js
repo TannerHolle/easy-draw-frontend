@@ -98,7 +98,7 @@ app.post('/api/projects', (req, res) => {
   let newProject = new Project({
     name: body.name,
     address: body.address,
-    homeOwners: body.homeOwners,
+    client: body.client,
     phone: body.phone,
     email: body.email,
     budget: body.budget,

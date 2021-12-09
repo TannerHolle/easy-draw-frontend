@@ -14,11 +14,11 @@ export class ProjectService {
 
   constructor(private webReqService: WebRequestService) {}
 
-  createProject(name: string, address: string, homeOwners: string, phone: string, email: string, budget: number, categoryArray: any[]) {
+  createProject(name: string, address: string, client: string, phone: string, email: string, budget: number, categoryArray: any[]) {
     return this.webReqService.post('projects', {
       "name": name,
       "address": address,
-      "homeOwners": homeOwners,
+      "client": client,
       "phone": phone,
       "email": email,
       "budget": budget,
@@ -33,11 +33,11 @@ export class ProjectService {
     });
   }
 
-  updateProject(id: string, name: string, address: string, homeOwners: string, phone: string, email: string, budget: number, categoryArray: any[]) {
+  updateProject(id: string, name: string, address: string, client: string, phone: string, email: string, budget: number, categoryArray: any[]) {
     return this.webReqService.post(`projects/${id}`, {
       "name": name,
       "address": address,
-      "homeOwners": homeOwners,
+      "client": client,
       "phone": phone,
       "email": email,
       "budget": budget,

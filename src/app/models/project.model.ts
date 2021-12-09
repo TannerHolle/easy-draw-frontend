@@ -6,7 +6,7 @@ export interface Project {
   _id: string;
   name: string;
   address: string;
-  homeOwners: string;
+  client: string;
   phone: string;
   email: string;
   budget: number;

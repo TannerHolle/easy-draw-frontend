@@ -32,7 +32,7 @@ export class ProjectEditComponent implements OnInit {
     if (form.invalid) {
       return;
     }
-    this.projectService.updateProject(this.id, form.value.name, form.value.address, form.value.homeOwners, form.value.phone, form.value.email, form.value.budget, this.categoryArray).subscribe((response: any) => {
+    this.projectService.updateProject(this.id, form.value.name, form.value.address, form.value.client, form.value.phone, form.value.email, form.value.budget, this.categoryArray).subscribe((response: any) => {
       this.router.navigate(['']);
       console.log(response);
     });

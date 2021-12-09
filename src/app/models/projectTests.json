@@ -6,7 +6,7 @@
       {
         "name": "Johnsons Home",
         "address": "123 sesame st",
-        "homeOwners": "Rick and Janet Johnson",
+        "client": "Rick and Janet Johnson",
         "phone": "801-541-5236",
         "email": "Johnson@gmail.com",
         "budget": 500000,
@@ -98,7 +98,7 @@
         {
           "name": "Holle Home",
           "address": "123 kramer st",
-          "homeOwners": "KAt and Kirk holle",
+          "client": "KAt and Kirk holle",
           "phone": "801-541-5236",
           "email": "holle@gmail.com",
           "budget": 700000,

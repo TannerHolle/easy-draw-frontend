@@ -3,7 +3,7 @@
     "projectId": "123abc",
     "name": "Johnsons Home",
     "address": "123 sesame st",
-    "homeOwners": "Rick and Janet Johnson",
+    "client": "Rick and Janet Johnson",
     "phone": "801-541-5236",
     "email": "Johnson@gmail.com",
     "budget": 500000,
