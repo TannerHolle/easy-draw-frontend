@@ -26,7 +26,7 @@ export class ProjectDetailComponent implements OnInit {
   sidenav!: MatSidenav;
 
 
-  displayedColumns: string[] = ['company','category','address','amount','invoiceNum','amount'];
+  displayedColumns: string[] = ['company','category','address','invoiceNum','amount'];
   dataSource = [];
 
 
@@ -42,6 +42,7 @@ export class ProjectDetailComponent implements OnInit {
         this.drawInvoices = this.getInvoicesOnDraw();
         this.draw = this.getDraw();
         this.draws = this.getDrawInfo();
+        console.log(this.draw)
       });
     });
   }

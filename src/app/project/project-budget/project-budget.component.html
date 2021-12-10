@@ -83,49 +83,27 @@
             <!-- Budget Column -->
             <ng-container matColumnDef="budget">
               <th mat-header-cell *matHeaderCellDef> Budget </th>
-              <td mat-cell *matCellDef="let element"> {{element.budget}} </td>
+              <td mat-cell *matCellDef="let element"> {{element.budget | currency}} </td>
             </ng-container>
 
             <!-- Draw Columns -->
             <ng-container *ngFor="let draw of draws">
               <ng-container matColumnDef="{{draw.name}}">
                 <th mat-header-cell *matHeaderCellDef><button mat-raised-button [routerLink]="['/projects', id, 'draws', draw.name]">{{makePretty(draw.name)}}</button></th>
-                <td mat-cell *matCellDef="let element"> {{element[draw.name]}} </td>
+                <td mat-cell *matCellDef="let element"> {{element[draw.name] | currency}} </td>
               </ng-container>
             </ng-container>
-
-
-
-            <!-- <ng-container matColumnDef="draw1">
-              <th mat-header-cell *matHeaderCellDef><button mat-raised-button [routerLink]="['/projects', id, 'draws', 'draw1']">Draw #1</button></th>
-              <td mat-cell *matCellDef="let element"> {{element.draw1}} </td>
-            </ng-container>
-
-            <ng-container matColumnDef="draw2">
-              <th mat-header-cell *matHeaderCellDef><button mat-raised-button [routerLink]="['/projects', id, 'draws', 'draw2']">Draw #2</button></th>
-              <td mat-cell *matCellDef="let element"> {{element.draw2}} </td>
-            </ng-container>
-
-            <ng-container matColumnDef="draw3">
-              <th mat-header-cell *matHeaderCellDef><button mat-raised-button [routerLink]="['/projects', id, 'draws', 'draw3']">Draw #3</button></th>
-              <td mat-cell *matellDef="let element"> {{element.draw3}} </td>
-            </ng-container>
-
-            <ng-container matColumnDef="draw4">
-              <th mat-header-cell *matHeaderCellDef> Draw #4 </th>
-              <td mat-cell *matCellDef="let element"> {{element.draw4}} </td>
-            </ng-container> -->
 
             <!-- Spent Column -->
             <ng-container matColumnDef="spent">
               <th mat-header-cell *matHeaderCellDef> Spent </th>
-              <td mat-cell *matCellDef="let element"> {{element.spent}} </td>
+              <td mat-cell *matCellDef="let element"> {{element.spent | currency}} </td>
             </ng-container>
 
             <!-- Over/Under Column -->
             <ng-container matColumnDef="status">
               <th mat-header-cell *matHeaderCellDef> Over/Under </th>
-              <td mat-cell *matCellDef="let element"> {{element.status}} </td>
+              <td mat-cell *matCellDef="let element"> {{element.status | currency}} </td>
             </ng-container>
 
 

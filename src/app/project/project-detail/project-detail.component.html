@@ -45,12 +45,20 @@
             </ng-container>
             <ng-container matColumnDef="amount">
               <th mat-header-cell *matHeaderCellDef> Invoice Amount </th>
-              <td mat-cell *matCellDef="let element"> {{element.invoiceAmt}} </td>
+              <td mat-cell *matCellDef="let element"> {{element.invoiceAmt | currency}} </td>
             </ng-container>
             <ng-container matColumnDef="invoiceNum">
               <th mat-header-cell *matHeaderCellDef> Inovice Number </th>
               <td mat-cell *matCellDef="let element"> {{element.invoiceNum}} </td>
             </ng-container>
+            <!-- <ng-container matColumnDef="invoiceUrl">
+              <th mat-header-cell *matHeaderCellDef> Inovice Picture </th>
+              <td mat-cell *matCellDef="let element">
+                <a href='../../../assets/pictures/{{element.invoiceUrl}}' target="_blank">
+                  <button mat-raised-button>Invoice Document</button>
+                </a>
+              </td>
+            </ng-container> -->
             <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
             <tr mat-row class="element-row"  *matRowDef="let row; columns: displayedColumns;" ></tr>
           </table>
