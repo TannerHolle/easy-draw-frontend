@@ -143,8 +143,6 @@ export class ProjectBudgetComponent implements OnInit, AfterViewInit {
         let headersRow = this.getHeaderArray(csvRecordsArray);
 
         this.projectService.records = this.getDataRecordsArrayFromCSVFile(csvRecordsArray, headersRow.length);
-        // console.log(this.records)
-        // return this.records;
       };
 
       reader.onerror = function () {
@@ -183,16 +181,5 @@ export class ProjectBudgetComponent implements OnInit, AfterViewInit {
     }
     return headerArray;
   }
-
-  // fileReset() {
-  //   this.csvReader.nvalue = "";
-  //   this.records = [];
-  //   this.jsondatadisplay = '';
-  // }
-
-  // getJsonData(){
-  //   this.jsondatadisplay = JSON.stringify(this.records);
-  // }
-
 
 }

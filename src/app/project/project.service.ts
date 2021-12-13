@@ -3,6 +3,8 @@ import { Subject } from 'rxjs';
 import { WebRequestService } from '../services/web-request.service';
 
 import { Project } from '../models/project.model';
+import { HttpClient } from '@angular/common/http';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Injectable({providedIn: 'root'})
 export class ProjectService {
@@ -12,7 +14,7 @@ export class ProjectService {
 
   private projectsUpdated = new Subject<Project[]>();
 
-  constructor(private webReqService: WebRequestService) {}
+  constructor(private webReqService: WebRequestService, public http: HttpClient, public router: Router) {}
 
   createProject(name: string, address: string, client: string, phone: string, email: string, budget: number, categoryArray: any[]) {
     return this.webReqService.post('projects', {
@@ -57,16 +59,30 @@ export class ProjectService {
     return this.webReqService.delete(`projects/${projectId}`)
   }
 
-  createInvoice(project: {}, company: String, address: String, category: String, invoiceNum: String, invoiceAmt: Number, draw: String) {
-    return this.webReqService.post('invoices', {
-      "company": company,
-      "address": address,
-      "category": category,
-      "invoiceNum": invoiceNum,
-      "invoiceAmt": invoiceAmt,
-      "project": project,
-      "draw": draw
+  createInvoice(projectId: string, company: string, address: string, category: string, invoiceNum: string, invoiceAmt: Number, draw: string, image: File) {
+    const invoiceData = new FormData()
+    invoiceData.append("projectId", projectId)
+    invoiceData.append("draw", draw)
+    invoiceData.append("category", category)
+    invoiceData.append("company", company)
+    invoiceData.append("address", address)
+    invoiceData.append("invoiceNum", invoiceNum)
+    invoiceData.append("invoiceAmt", invoiceAmt.toString())
+    invoiceData.append("image", image, invoiceNum)
+    this.http.post('http://localhost:3000/api/inv', invoiceData).subscribe(responseData => {
+      console.log(responseData)
+      this.router.navigate(['']);
+
     });
+    // return this.webReqService.post('invoices', {
+    //   "company": company,
+    //   "address": address,
+    //   "category": category,
+    //   "invoiceNum": invoiceNum,
+    //   "invoiceAmt": invoiceAmt,
+    //   "project": project,
+    //   "draw": draw
+    // });
   }
 
   getCategories(id) {

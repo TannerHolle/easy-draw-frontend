@@ -1,9 +1,13 @@
 import { Component, OnInit } from '@angular/core';
-import { NgForm } from '@angular/forms';
+import { NgForm, FormGroup, FormControl, Validators } from '@angular/forms';
 import { InvoiceService } from '../../invoice/invoice.service';
 import { ProjectService } from '../project.service';
 import { Router } from '@angular/router';
 import { CompanyService } from 'src/app/company/company.service';
+import { mimeType } from './mime-type.validator';
+import { debug } from 'console';
+import { DomSanitizer } from '@angular/platform-browser';
+
 
 @Component({
   selector: 'app-project-invoices',
@@ -15,32 +19,58 @@ export class ProjectInvoicesComponent implements OnInit {
   selectedValue: {};
   selectedCompany: {};
   selectedFile = null;
+  fileName = '';
+  form: FormGroup;
+  imagePreview: string;
 
-  constructor(public invoiceService: InvoiceService, private router: Router, public projectService: ProjectService, public companyService: CompanyService) { }
+
+
+  constructor(public invoiceService: InvoiceService, private router: Router, public projectService: ProjectService, public companyService: CompanyService, private domSanitizer: DomSanitizer) { }
   ngOnInit() {
+    this.form = new FormGroup({
+      company: new FormControl(null, { validators: [Validators.required] }),
+      address: new FormControl(null, { validators: [Validators.required] }),
+      invoiceNum: new FormControl(null, { validators: [Validators.required] }),
+      invoiceAmt: new FormControl(null, { validators: [Validators.required] }),
+      projectId: new FormControl(null, { validators: [Validators.required] }),
+      category: new FormControl(null, { validators: [Validators.required] }),
+      image: new FormControl(null, {
+        validators: [Validators.required]
+      })
+    });
   }
 
-  onFileSelected(event) {
-    this.selectedFile = event.target.files[0]
-    console.log(typeof(this.selectedFile));
+  onImagePicked(event: Event) {
+    const file = (event.target as HTMLInputElement).files[0];
+    this.fileName = file.name
+    this.form.patchValue({image: file});
+    this.form.get('image').updateValueAndValidity();
+    const reader = new FileReader();
+    reader.onload = () => {
+      this.domSanitizer.bypassSecurityTrustUrl(reader.result as string)
+    };
+    reader.readAsDataURL(file);
   }
 
-  onAddInvoice(form: NgForm) {
-    if (form.invalid) {
+  onAddInvoice() {
+    if (this.form.invalid) {
       return;
     }
     var draw = this.getOpenDraw()
-    this.projectService.createInvoice(form.value.project, form.value.company, form.value.address, form.value.category, form.value.invoiceNum, form.value.invoiceAmt, draw).subscribe((response: any) => {
-      this.router.navigate(['']);
-      console.log(response);
-    });
-    form.resetForm();
+
+    this.projectService.createInvoice(this.form.value.projectId, this.form.value.company, this.form.value.address, this.form.value.category, this.form.value.invoiceNum, this.form.value.invoiceAmt, draw, this.form.value.image)
+    // .subscribe((response: any) => {
+    //   this.router.navigate(['']);
+    //   console.log(response);
+    // });
+    this.form.reset();
   };
 
   getCategories() {
-    if (this.selectedValue) {
+    if (this.form.value.projectId) {
       const project = this.projectService.projects.filter(obj => {
-        return obj._id === this.selectedValue['_id'];
+        return obj._id === this.form.value.projectId;
+        // return obj._id === '61b252ce372843448101c4c6';
       });
       if(project[0]['categories'].length > 0) {
         return project[0]['categories'];
@@ -50,7 +80,8 @@ export class ProjectInvoicesComponent implements OnInit {
 
   getOpenDraw() {
     const project = this.projectService.projects.filter(obj => {
-      return obj._id === this.selectedValue['_id'];
+      return obj._id === this.form.value.projectId;
+      // return obj._id === '61b252ce372843448101c4c6';
     });
     const draw = project[0].draws.filter(obj => {
       return obj.isOpen === true;

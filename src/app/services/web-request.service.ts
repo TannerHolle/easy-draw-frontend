@@ -23,6 +23,11 @@ export class WebRequestService {
      {responseType: 'text'});
    }
 
+   postInvoice(uri: string, payload: FormData) {
+     debugger;
+     return this.http.post(`${this.ROOT_URL}/${uri}`, payload);
+   }
+
    patch(uri: string, payload: Object) {
      return this.http.patch(`${this.ROOT_URL}/${uri}`, payload);
    }

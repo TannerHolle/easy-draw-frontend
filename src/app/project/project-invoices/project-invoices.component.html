@@ -1,23 +1,75 @@
 <main>
   <mat-card>
-    <form (submit)="onAddInvoice(invoiceForm)" #invoiceForm="ngForm">
+    <form [formGroup]="form" (submit)="onAddInvoice()">
       <mat-form-field>
-        <input matInput placeholder="Company" name="company" ngModel required #company = 'ngModel'>
-        <mat-error *ngIf="company.invalid">Please Enter a Company Name</mat-error>
+        <input
+        matInput
+        type="text"
+        formControlName="company"
+        placeholder="Company" >
+        <mat-error *ngIf="form.get('company').invalid">Please Enter a Company Name</mat-error>
       </mat-form-field>
-      <!-- <mat-form-field>
-        <mat-label>Company</mat-label>
-        <mat-select [(ngModel)]="selectedCompany" name="company" ngModel required #company = 'ngModel'>
-          <mat-option *ngFor="let company of this.companyService.companies" [value]="company">
-            {{company.Name}}
+      <mat-form-field>
+        <input
+        matInput
+        type="text"
+        formControlName="address"
+        placeholder="Company Address" >
+        <mat-error *ngIf="form.get('address').invalid">Please Enter a Company Address</mat-error>
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>Project</mat-label>
+        <mat-select formControlName="projectId">
+          <mat-option *ngFor="let project of this.projectService.projects" [value]="project._id">
+            {{project.name}}
           </mat-option>
         </mat-select>
-      </mat-form-field> -->
-      <mat-form-field>
-        <input matInput placeholder="Company Address" name="address" ngModel required #address='ngModel'>
-        <mat-error *ngIf="address.invalid">Please Enter Company Address</mat-error>
+        <mat-error *ngIf="form.get('projectId').invalid">Please select a project</mat-error>
       </mat-form-field>
       <mat-form-field>
+        <mat-label>Category</mat-label>
+        <mat-select formControlName="category">
+          <mat-option *ngFor="let category of this.getCategories()" [value]="category.category">
+            {{category.category}}
+          </mat-option>
+        </mat-select>
+        <mat-error *ngIf="form.get('category').invalid">Please select a category</mat-error>
+      </mat-form-field>
+      <mat-form-field>
+        <input
+        matInput
+        type="text"
+        formControlName="invoiceNum"
+        placeholder="Invoice Number" >
+        <mat-error *ngIf="form.get('invoiceNum').invalid">Please Enter an Invoice Number</mat-error>
+      </mat-form-field>
+      <mat-form-field>
+        <input
+        matInput
+        type="number"
+        formControlName="invoiceAmt"
+        placeholder="Invoice Amount" >
+        <mat-error *ngIf="form.get('invoiceAmt').invalid">Please Enter an Invoice Amount</mat-error>
+      </mat-form-field>
+      <div>
+        <button mat-stroked-button (click)="filePicker.click()" type="button">Attach Invoice PDF</button> {{fileName}}
+        <input type="file" (change)="onImagePicked($event)" #filePicker>
+        <mat-error *ngIf="form.get('image').invalid">Please attach an image</mat-error>
+      </div>
+      <!-- <div *ngIf="imagePreview !== '' && imagePreview && form.get('image').valid">
+        <img [src]="imagePreview" [alt]="form.value.company">
+        {{fileName}}
+      </div> -->
+      <button
+        class="submit-button"
+        mat-raised-button
+        color="primary"
+        type="submit">Save Invoice</button>
+    </form>
+  </mat-card>
+</main>
+
+      <!-- <mat-form-field>
         <mat-label>Project</mat-label>
         <mat-select [(ngModel)]="selectedValue" name="project" ngModel required #project = 'ngModel'>
           <mat-option *ngFor="let project of this.projectService.projects" [value]="project">
@@ -32,23 +84,4 @@
             {{category.category}}
           </mat-option>
         </mat-select>
-      </mat-form-field>
-      <mat-form-field>
-        <input matInput placeholder="Inovice Number" name="invoiceNum" ngModel required #invoiceNum= 'ngModel'>
-        <mat-error *ngIf="invoiceNum.invalid">Please Enter Invoice Number</mat-error>
-      </mat-form-field>
-      <mat-form-field>
-        <input type="number" matInput placeholder="Invoice Amount" name="invoiceAmt" ngModel required #invoiceAmt='ngModel'>
-        <mat-error *ngIf="invoiceAmt.invalid">Please Enter Inovice Amount</mat-error>
-      </mat-form-field>
-      <div>
-        <button mat-stroked-button (click)="filePicker.click()" type="button">Attach Invoice PDF</button>
-        <input type="file" (change)="onFileSelected($event)" #filePicker>
-      </div>
-      <button
-        mat-raised-button
-        color="primary"
-        type="submit">Save Invoice</button>
-    </form>
-  </mat-card>
-</main>
+      </mat-form-field> -->

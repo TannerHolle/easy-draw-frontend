@@ -63,7 +63,7 @@
               <button mat-raised-button class="add-project" [routerLink]="['/project/category', id]">Add Single Category</button>
               <button mat-raised-button class="add-project" (click)="filePicker.click()">Upload CSV of Categories</button>
               <input type="file" class="upload" (change)="changeListener($event.target.files)" #filePicker>
-              <mat-icon (change)="upload()" matTooltip="Upload CSV" class="material-icons-outlined" style="font-size: 24px" matTooltipClass="tooltip">file_upload</mat-icon>
+              <mat-icon (click)="upload()" matTooltip="Upload CSV" class="material-icons-outlined" style="font-size: 24px" matTooltipClass="tooltip">file_upload</mat-icon>
             </div>
           </div>
           <table class="mat-elevation-z2" mat-table [dataSource]="budgetData">

@@ -26,7 +26,7 @@ export class ProjectDetailComponent implements OnInit {
   sidenav!: MatSidenav;
 
 
-  displayedColumns: string[] = ['company','category','address','invoiceNum','amount'];
+  displayedColumns: string[] = ['company','category','address','invoiceNum','amount', 'invoicePath'];
   dataSource = [];
 
 
