@@ -12,12 +12,15 @@ export class CompanyService {
 
   constructor(private http: HttpClient, private webReqService: WebRequestService) {}
 
-  createCompany(Name: string, Address: string, TaxID: string, Notes: string) {
+  createCompany(name: string, address: string, email: string, phone: string, taxId: string, notes: string) {
     return this.webReqService.post('companies', {
-      "Name": Name,
-      "Address": Address,
-      "TaxID": TaxID,
-      "Notes": Notes
+      "name": name,
+      "address": address,
+      "email": email,
+      "phone": phone,
+      "taxId": taxId,
+      "certOfInsurance": 'PlaceHolderForNow',
+      "notes": notes
     });
   }
 

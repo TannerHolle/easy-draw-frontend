@@ -16,12 +16,15 @@ export class CompanyListComponent implements OnInit, OnDestroy {
 
   companies: Company[] = [];
   private companiesSub: Subscription;
+  displayedColumns: string[] = ['name', 'address', 'email', 'phone', 'taxId', '_id'];
+
 
   constructor(public companyService: CompanyService, private router: Router) { }
 
   ngOnInit() {
     this.companyService.getCompanies().subscribe((companies: any[]) => {
       this.companies = companies;
+      console.log(companies)
       this.companyService.companies = companies;
     });
     this.companiesSub = this.companyService.getCompanyUpdateListener()

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
+import { Router } from '@angular/router';
 import { CompanyService } from '../company.service';
 
 
@@ -10,7 +11,7 @@ import { CompanyService } from '../company.service';
 })
 export class CompanyCreateComponent implements OnInit {
 
-  constructor(public companyService: CompanyService) { }
+  constructor(public companyService: CompanyService, private router: Router) { }
   ngOnInit() {
   }
 
@@ -18,8 +19,8 @@ export class CompanyCreateComponent implements OnInit {
     if (form.invalid) {
       return;
     }
-    this.companyService.createCompany(form.value.Name, form.value.Address, form.value.TaxID, form.value.Notes).subscribe((response: any) => {
-      window.location.reload();
+    this.companyService.createCompany(form.value.name, form.value.address, form.value.email, form.value.phone, form.value.taxId, form.value.Notes).subscribe((response: any) => {
+      this.router.navigate(['/companies']);
     });
     form.resetForm();
   };

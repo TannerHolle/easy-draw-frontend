@@ -1,24 +1,35 @@
-<mat-card>
-  <form (submit)="onAddCompany(companyForm)" #companyForm="ngForm">
-    <mat-form-field>
-      <input matInput placeholder="Company Name" name="Name" ngModel required #Name = 'ngModel'>
-      <mat-error *ngIf="Name.invalid">Please Enter a Company Name</mat-error>
-    </mat-form-field>
-    <mat-form-field>
-      <input matInput placeholder="Company Address" name="Address" ngModel required #Address= 'ngModel'>
-      <mat-error *ngIf="Address.invalid">Please Enter a Company Name</mat-error>
-    </mat-form-field>
-    <mat-form-field>
-      <input matInput placeholder="Tax ID#" name="TaxID" ngModel required #TaxID='ngModel'>
-      <mat-error *ngIf="TaxID.invalid">Please Enter a Company Name</mat-error>
-    </mat-form-field>
-    <mat-form-field>
-      <textarea matInput placeholder="Additional Company Notes" rows="6" name="Notes" ngModel></textarea>
-    </mat-form-field>
-    <button
-      mat-raised-button
-      color="primary"
-      type="submit">Save Company</button>
-  </form>
-</mat-card>
+<main>
+  <mat-card>
+    <form (submit)="onAddCompany(companyForm)" #companyForm="ngForm">
+      <mat-form-field>
+        <input matInput placeholder="Company Name" name="name" ngModel required #name = 'ngModel'>
+        <mat-error *ngIf="name.invalid">Please Enter a Company Name</mat-error>
+      </mat-form-field>
+      <mat-form-field>
+        <input matInput placeholder="Company Address" name="address" ngModel required #address= 'ngModel'>
+        <mat-error *ngIf="address.invalid">Please Enter a Company Name</mat-error>
+      </mat-form-field>
+      <mat-form-field>
+        <input matInput placeholder="Email Address" name="email" ngModel required #email= 'ngModel'>
+        <mat-error *ngIf="email.invalid">Please Enter a Company Name</mat-error>
+      </mat-form-field>
+      <mat-form-field>
+        <input matInput placeholder="Phone Number" name="phone" ngModel required #phone= 'ngModel'>
+        <mat-error *ngIf="phone.invalid">Please Enter a Company Name</mat-error>
+      </mat-form-field>
+      <mat-form-field>
+        <input matInput placeholder="Tax ID#" name="taxId" ngModel required #taxId='ngModel'>
+        <mat-error *ngIf="taxId.invalid">Please Enter a Company Name</mat-error>
+      </mat-form-field>
+      <mat-form-field>
+        <textarea matInput placeholder="Additional Company Notes" rows="6" name="Notes" ngModel></textarea>
+      </mat-form-field>
+      <button
+        mat-raised-button
+        color="primary"
+        type="submit">Save Company</button>
+    </form>
+  </mat-card>
+
+</main>
 

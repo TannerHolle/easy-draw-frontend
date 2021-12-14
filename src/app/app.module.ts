@@ -16,7 +16,8 @@ import {
   MatSlideToggleModule,
   MatDialogModule,
   MatSidenavModule,
-  MatDividerModule
+  MatDividerModule,
+  MatMenuModule
 } from '@angular/material';
 
 
@@ -82,6 +83,7 @@ import { ProjectService } from './project/project.service';
     MatToolbarModule,
     MatSidenavModule,
     MatDividerModule,
+    MatMenuModule,
     MatSlideToggleModule,
     MatExpansionModule,
     MatSelectModule,

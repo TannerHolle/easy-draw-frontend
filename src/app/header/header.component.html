@@ -1,10 +1,17 @@
 <mat-toolbar color="primary" class="mat-elevation-z6">
 
   <a mat-button routerLink="">Easy Draw</a>
-  <a mat-button [routerLink]="['/project-list']">Projects</a>
-  <a mat-button routerLink="/companies">Subs/Vendors</a>
-  <a mat-button routerLink="">Financial</a>
-  <a mat-button routerLink="">Management</a>
+  <!-- <a mat-button routerLink="">Home</a> -->
+  <button mat-button [matMenuTriggerFor]="financial">Financial</button>
+  <mat-menu #financial="matMenu">
+    <button mat-menu-item>Project Budgets</button>
+    <button mat-menu-item>Draws</button>
+  </mat-menu>
+  <button mat-button [matMenuTriggerFor]="management">Management</button>
+  <mat-menu #management="matMenu">
+    <button mat-menu-item routerLink="/project-list">Projects</button>
+    <button mat-menu-item routerLink="/companies">Sub-Contractors/Vendors</button>
+  </mat-menu>
   <div class="spacer"></div>
   <a mat-button>Settings</a>
   <a mat-raised-button color="warn" routerLink="/sign-up">Sign Up</a>

@@ -16,27 +16,50 @@ export class ProjectDashboardComponent implements OnInit {
   constructor(public projectService: ProjectService, private router: Router, public projectComponent: ProjectComponent) { }
 
   createProj: Boolean = false;
-  projects: Project[] = [];
+  projects = [];
+  formattedData = [];
   private projectsSub: Subscription;
 
-  displayedColumns: string[] = ['name', 'client', 'budget', '_id'];
+  displayedColumns: string[] = ['name', 'client', 'budget', 'spent', 'status'];
   dataSource = [];
 
   ngOnInit() {
     this.projectService.getProjects().subscribe((projects: any[]) => {
       this.projects = projects;
+      this.formattedData = this.formatProjectDashboard(this.projects);
       this.projectService.projects = projects;
-    });
-
-
-    this.projectsSub = this.projectService.getProjectUpdateListener()
-      .subscribe((projects: Project[]) => {
-        this.projects = projects;
     });
   }
 
-  ngOnDestroy() {
-    this.projectsSub.unsubscribe()
+  //   this.projectsSub = this.projectService.getProjectUpdateListener()
+  //     .subscribe((projects: Project[]) => {
+  //       this.projects = projects;
+  //   });
+  // }
+
+  // ngOnDestroy() {
+  //   this.projectsSub.unsubscribe()
+  // }
+
+  formatProjectDashboard(projects) {
+    var formattedProjects = [];
+    for (let project of projects){
+      let projectSpent = 0;
+      var projectObj = {};
+      projectObj["_id"] = project._id
+      projectObj["name"] = project.name
+      projectObj["client"] = project.client
+      projectObj["budget"] = project.budget
+      for (let draw of project.draws) {
+        for ( let invoice of draw.invoices) {
+          projectSpent = projectSpent + invoice.invoiceAmt;
+        }
+      }
+      projectObj["spent"] = projectSpent;
+      projectObj["status"] = project.budget - projectSpent;
+      formattedProjects.push(projectObj)
+    }
+    return formattedProjects
   }
 
   createInvoice() {

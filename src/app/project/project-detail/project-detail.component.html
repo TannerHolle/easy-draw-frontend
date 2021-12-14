@@ -61,6 +61,9 @@
             <tr mat-row class="element-row"  *matRowDef="let row; columns: displayedColumns;" ></tr>
           </table>
         </div>
+        <div class="btn-group">
+          <button mat-raised-button [routerLink]="['/project/invoices']">Add Invoice</button>
+        </div>
       </div>
     </div>
   </mat-sidenav-content>

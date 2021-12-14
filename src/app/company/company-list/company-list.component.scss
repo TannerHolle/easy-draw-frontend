@@ -1,9 +1,27 @@
-:host {
-  display: block;
-  margin-top: 1rem;
+table {
+  width: 100%;
 }
 
-.info-text {
-  text-align: center;
+main {
+  width: 80%;
+  margin: 1rem auto;
 }
+
+.btn-group {
+  margin-top: 1rem;
+  float: right
+}
+
+button {
+  display: block; /* Make the buttons appear below each other */
+}
+
+.element-row {
+  cursor: pointer;
+}
+
+.action-items {
+  cursor: pointer;
+}
+
 

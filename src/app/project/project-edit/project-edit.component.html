@@ -3,22 +3,22 @@
   <mat-card>
     <form (submit)="onUpdateProject(projectForm)" #projectForm="ngForm">
       <mat-form-field>
-        <input matInput placeholder="Project Name" name="name" value="{{project[0]?.name}}" ngModel="{{project[0]?.name}}" #name = 'ngModel'>
+        <input matInput placeholder="Project" name="name" value="{{project[0]?.name}}" ngModel="{{project[0]?.name}}" #name = 'ngModel'>
+      </mat-form-field>
+      <mat-form-field>
+        <input matInput placeholder="Client" name="client" value="{{project[0]?.client}}" ngModel="{{project[0]?.client}}" #client='ngModel'>
       </mat-form-field>
       <mat-form-field>
         <input matInput placeholder="Address" name="address" value="{{project[0]?.address}}" ngModel="{{project[0]?.address}}" #address='ngModel'>
-      </mat-form-field>
-      <mat-form-field>
-        <input matInput placeholder="Home Owners" name="client" value="{{project[0]?.client}}" ngModel="{{project[0]?.client}}" #client='ngModel'>
-      </mat-form-field>
-      <mat-form-field>
-        <input matInput placeholder="Budget" name="budget" value="{{project[0]?.budget}}" ngModel="{{project[0]?.budget}}" #budget= 'ngModel'>
       </mat-form-field>
       <mat-form-field>
         <input matInput placeholder="Phone Number" name="phone" value="{{project[0]?.phone}}" ngModel="{{project[0]?.phone}}"del #phone='ngModel'>
       </mat-form-field>
       <mat-form-field>
         <input matInput placeholder="Email Address" name="email" value="{{project[0]?.email}}" ngModel="{{project[0]?.email}}" #email='ngModel'>
+      </mat-form-field>
+      <mat-form-field>
+        <input matInput placeholder="Budget" name="budget" value="{{project[0]?.budget}}" ngModel="{{project[0]?.budget}}" #budget= 'ngModel'>
       </mat-form-field>
       <mat-card>
         <table *ngFor="let field of categoryArray; let i = index">
