@@ -4,8 +4,7 @@
 
 export const environment = {
   production: false,
-  apiUrl: 'http://localhost:3000/api',
-  atlas: "mongodb+srv://admin:EasyDrawTestAdmin@easydrawtest.6w7rx.mongodb.net/EasyDrawTest?retryWrites=true&w=majority"
+  apiUrl: 'http://localhost:3000/api'
 };
 
 /*

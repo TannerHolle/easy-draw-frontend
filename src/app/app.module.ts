@@ -41,6 +41,8 @@ import { ProjectEditComponent } from './project/project-edit/project-edit.compon
 import { LoginComponent } from './auth/login/login.component';
 import { SignUpComponent } from './auth/sign-up/sign-up.component';
 import { CategoryUploadComponent } from './project/project-category/category-upload/category-upload.component';
+import { ProjectDashboardComponent } from './project/project-dashboard/project-dashboard.component';
+import { ProjectService } from './project/project.service';
 
 
 @NgModule({
@@ -65,6 +67,7 @@ import { CategoryUploadComponent } from './project/project-category/category-upl
     LoginComponent,
     SignUpComponent,
     CategoryUploadComponent,
+    ProjectDashboardComponent,
   ],
   imports: [
     BrowserModule,
@@ -86,7 +89,7 @@ import { CategoryUploadComponent } from './project/project-category/category-upl
     BrowserAnimationsModule,
     HttpClientModule
     ],
-  providers: [],
+  providers: [ProjectComponent],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

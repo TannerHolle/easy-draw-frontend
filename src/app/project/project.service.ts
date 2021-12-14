@@ -69,7 +69,7 @@ export class ProjectService {
     invoiceData.append("invoiceNum", invoiceNum)
     invoiceData.append("invoiceAmt", invoiceAmt.toString())
     invoiceData.append("image", image, invoiceNum)
-    this.http.post('http://localhost:3000/api/inv', invoiceData).subscribe(responseData => {
+    this.http.post('http://easydrawtest-env.eba-xyk5napp.us-west-2.elasticbeanstalk.com/api/inv', invoiceData).subscribe(responseData => {
       console.log(responseData)
       this.router.navigate(['']);
 
