@@ -62,7 +62,6 @@ export class ProjectService {
   }
 
   createInvoice(projectId: string, company: {}, category: string, invoiceNum: string, invoiceAmt: Number, draw: string, image: File) {
-    debugger;
     const invoiceData = new FormData()
     invoiceData.append("projectId", projectId)
     invoiceData.append("draw", draw)
