@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { CompanyService } from '../company.service';
 
 
@@ -10,9 +10,11 @@ import { CompanyService } from '../company.service';
   styleUrls: ['./company-create.component.scss']
 })
 export class CompanyCreateComponent implements OnInit {
-
-  constructor(public companyService: CompanyService, private router: Router) { }
+  navigateTo
+  constructor(public companyService: CompanyService, public route: ActivatedRoute, private router: Router) { }
   ngOnInit() {
+    this.navigateTo = this.route.snapshot.paramMap.get('id')
+
   }
 
   onAddCompany(form: NgForm) {
@@ -20,7 +22,11 @@ export class CompanyCreateComponent implements OnInit {
       return;
     }
     this.companyService.createCompany(form.value.name, form.value.address, form.value.email, form.value.phone, form.value.taxId, form.value.Notes).subscribe((response: any) => {
-      this.router.navigate(['/companies']);
+      if (this.navigateTo == "123") {
+        this.router.navigate(['/project/invoices'])
+      } else {
+        this.router.navigate(['/companies']);
+      }
     });
     form.resetForm();
   };

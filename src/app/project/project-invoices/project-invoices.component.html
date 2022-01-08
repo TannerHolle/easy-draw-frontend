@@ -1,22 +1,31 @@
 <main>
   <mat-card>
     <form [formGroup]="form" (submit)="onAddInvoice()">
-      <mat-form-field>
+      <!-- <mat-form-field>
         <input
         matInput
         type="text"
         formControlName="company"
         placeholder="Company" >
         <mat-error *ngIf="form.get('company').invalid">Please Enter a Company Name</mat-error>
-      </mat-form-field>
+      </mat-form-field> -->
       <mat-form-field>
+        <mat-label>Company</mat-label>
+        <mat-select formControlName="company" >
+          <mat-option *ngFor="let company of this.companies" [value]="company" (blur)="createNewCompany(company._id)">
+            {{company.name}}
+          </mat-option>
+        </mat-select>
+        <mat-error *ngIf="form.get('company').invalid">Please select a company</mat-error>
+      </mat-form-field>
+      <!-- <mat-form-field>
         <input
         matInput
         type="text"
         formControlName="address"
         placeholder="Company Address" >
         <mat-error *ngIf="form.get('address').invalid">Please Enter a Company Address</mat-error>
-      </mat-form-field>
+      </mat-form-field> -->
       <mat-form-field>
         <mat-label>Project</mat-label>
         <mat-select formControlName="projectId">

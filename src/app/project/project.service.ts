@@ -5,16 +5,18 @@ import { WebRequestService } from '../services/web-request.service';
 import { Project } from '../models/project.model';
 import { HttpClient } from '@angular/common/http';
 import { ActivatedRoute, Router } from '@angular/router';
+import { CompanyService } from '../company/company.service';
 
 @Injectable({providedIn: 'root'})
 export class ProjectService {
   public projects: Project[] = [];
   public categories: {} = [];
+  public companies: {} = [];
   public records: any[] = [];
 
   private projectsUpdated = new Subject<Project[]>();
 
-  constructor(private webReqService: WebRequestService, public http: HttpClient, public router: Router) {}
+  constructor(private webReqService: WebRequestService, public http: HttpClient, public router: Router, public CompanyService: CompanyService) {}
 
   createProject(name: string, address: string, client: string, phone: string, email: string, budget: number, categoryArray: any[]) {
     return this.webReqService.post('projects', {
@@ -59,13 +61,14 @@ export class ProjectService {
     return this.webReqService.delete(`projects/${projectId}`)
   }
 
-  createInvoice(projectId: string, company: string, address: string, category: string, invoiceNum: string, invoiceAmt: Number, draw: string, image: File) {
+  createInvoice(projectId: string, company: {}, category: string, invoiceNum: string, invoiceAmt: Number, draw: string, image: File) {
+    debugger;
     const invoiceData = new FormData()
     invoiceData.append("projectId", projectId)
     invoiceData.append("draw", draw)
     invoiceData.append("category", category)
-    invoiceData.append("company", company)
-    invoiceData.append("address", address)
+    invoiceData.append("company", company['name'])
+    invoiceData.append("address", company['address'])
     invoiceData.append("invoiceNum", invoiceNum)
     invoiceData.append("invoiceAmt", invoiceAmt.toString())
     invoiceData.append("image", image, invoiceNum)

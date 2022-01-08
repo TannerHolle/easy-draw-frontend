@@ -17,7 +17,8 @@ import {
   MatDialogModule,
   MatSidenavModule,
   MatDividerModule,
-  MatMenuModule
+  MatMenuModule,
+  MatAutocompleteModule
 } from '@angular/material';
 
 
@@ -89,7 +90,8 @@ import { ProjectService } from './project/project.service';
     MatSelectModule,
     AppRoutingModule,
     BrowserAnimationsModule,
-    HttpClientModule
+    HttpClientModule,
+    MatAutocompleteModule
     ],
   providers: [ProjectComponent],
   bootstrap: [AppComponent]
