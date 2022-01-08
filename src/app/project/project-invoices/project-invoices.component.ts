@@ -62,7 +62,6 @@ export class ProjectInvoicesComponent implements OnInit {
       return;
     }
     var draw = this.getOpenDraw()
-    debugger;
     this.projectService.createInvoice(this.form.value.projectId, this.form.value.company, this.form.value.category, this.form.value.invoiceNum, this.form.value.invoiceAmt, draw, this.form.value.image)
     // .subscribe((response: any) => {
     //   this.router.navigate(['']);
