@@ -101,7 +101,7 @@ export class ProjectDetailComponent implements OnInit {
 
 
   changeDrawStatus() {
-    var result = confirm("Are you sure you want to close this draw? THIS CANNOT BE REOPENED");
+    var result = confirm("Are you sure you want to close this draw?");
     if (result) {
       this.projectService.closeDraw(this.id, this.drawId).subscribe((res: any) => {
         console.log("it worked?")

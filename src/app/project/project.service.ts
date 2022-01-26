@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs';
 import { WebRequestService } from '../services/web-request.service';
+import { environment } from "../../environments/environment";
+
 
 import { Project } from '../models/project.model';
 import { HttpClient } from '@angular/common/http';
@@ -71,7 +73,7 @@ export class ProjectService {
     invoiceData.append("invoiceNum", invoiceNum)
     invoiceData.append("invoiceAmt", invoiceAmt.toString())
     invoiceData.append("image", image, invoiceNum)
-    this.http.post('http://easydrawtest-env.eba-xyk5napp.us-west-2.elasticbeanstalk.com/api/inv', invoiceData).subscribe(responseData => {
+    this.http.post(environment.apiUrl + '/inv', invoiceData).subscribe(responseData => {
       console.log(responseData)
       this.router.navigate(['']);
 

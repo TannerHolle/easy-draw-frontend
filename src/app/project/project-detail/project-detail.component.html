@@ -18,16 +18,16 @@
             <button mat-raised-button class="menu-button" [routerLink]="['/projects', id]">Project Budget</button>
           </div>
         </div>
-        <div class="search-results-header">
-          <div>
-            Draw Status: <span *ngIf="draw['isOpen'] == true">Open</span> <span *ngIf="draw['isOpen'] == false">Closed</span>
-          </div>
-          <div class="action-buttons">
+        <div class="search-results-header demo">
+          <span>
+            Draw Status: <ng-container *ngIf="draw['isOpen'] == true">Open</ng-container> <ng-container *ngIf="draw['isOpen'] == false">Closed</ng-container>
+          </span>
+          <span *ngIf="draw['isOpen'] == true">
+            <button mat-button (click)="changeDrawStatus()">Close Draw and open a new one</button>
+          </span>
+          <span class="action-buttons">
             <mat-icon (click)="download()" matTooltip="Download search results" class="material-icons-outlined" style="font-size: 24px" matTooltipClass="tooltip">file_download</mat-icon>
-          </div>
-        </div>
-        <div class="search-results-header" *ngIf="draw['isOpen'] == true">
-          <button mat-raised-button (click)="changeDrawStatus()">Close Draw and open a new one</button>
+          </span>
         </div>
         <div class="mat-elevation-z2">
           <table mat-table [dataSource]="drawInvoices">
@@ -62,7 +62,7 @@
           </table>
         </div>
         <div class="btn-group">
-          <button mat-raised-button [routerLink]="['/project/invoices']">Add Invoice</button>
+          <button mat-raised-button [routerLink]="['/project/invoices', id]">Add Invoice</button>
         </div>
       </div>
     </div>

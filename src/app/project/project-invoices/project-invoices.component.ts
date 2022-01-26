@@ -23,6 +23,7 @@ export class ProjectInvoicesComponent implements OnInit {
   fileName = '';
   form: FormGroup;
   imagePreview: string;
+  selected;
 
 
 
@@ -32,7 +33,7 @@ export class ProjectInvoicesComponent implements OnInit {
     this.form = new FormGroup({
       // company: new FormControl(null, { validators: [Validators.required] }),
       company: new FormControl(null, { validators: [Validators.required] }),
-      // address: new FormControl(null, { validators: [Validators.required] }),
+      draw: new FormControl(null, { validators: [Validators.required] }),
       invoiceNum: new FormControl(null, { validators: [Validators.required] }),
       invoiceAmt: new FormControl(null, { validators: [Validators.required] }),
       projectId: new FormControl(null, { validators: [Validators.required] }),
@@ -42,6 +43,7 @@ export class ProjectInvoicesComponent implements OnInit {
       })
     });
     var projectID = this.route.snapshot.paramMap.get('id')
+    this.form.get('projectId').setValue(projectID);
     this.getCompanies();
   }
 
@@ -74,13 +76,24 @@ export class ProjectInvoicesComponent implements OnInit {
     if (this.form.value.projectId) {
       const project = this.projectService.projects.filter(obj => {
         return obj._id === this.form.value.projectId;
-        // return obj._id === '61b252ce372843448101c4c6';
       });
       if(project[0]['categories'].length > 0) {
         return project[0]['categories'];
       }
     }
   }
+
+  getDraws() {
+    if (this.form.value.projectId) {
+      const project = this.projectService.projects.filter(obj => {
+        return obj._id === this.form.value.projectId;
+      });
+      if(project[0]['draws'].length > 0) {
+        return project[0]['draws'];
+      }
+    }
+  }
+
 
   getCompanies() {
     this.companyService.getCompanies().subscribe((companies: any[]) => {

@@ -100,3 +100,19 @@ mat-divider {
   margin-top: 1rem;
   float: right
 }
+
+div.demo {
+  display: table;
+  width: 100%;
+  table-layout: fixed;    /* For cells of equal size */
+}
+div.demo span {
+  display: table-cell;
+  text-align: center;
+}
+div.demo span:first-child {
+  text-align: left;
+}
+div.demo span:last-child {
+  text-align: right;
+}
