@@ -17,19 +17,20 @@ import { Company } from 'src/app/company/company.model';
 })
 export class ProjectInvoicesComponent implements OnInit {
   public companies = []
+  public draws = []
   selectedValue: {};
   selectedCompany: {};
   selectedFile = null;
   fileName = '';
   form: FormGroup;
   imagePreview: string;
-  selected;
 
 
 
   constructor(public invoiceService: InvoiceService, private router: Router, public projectService: ProjectService, public companyService: CompanyService, private route: ActivatedRoute, private domSanitizer: DomSanitizer) { }
   ngOnInit() {
     this.companies = [{name: 'Create New Company', _id: '123'}];
+    // this.draws = [{name: 'Open New Draw', id: '123'}];
     this.form = new FormGroup({
       // company: new FormControl(null, { validators: [Validators.required] }),
       company: new FormControl(null, { validators: [Validators.required] }),
@@ -44,6 +45,7 @@ export class ProjectInvoicesComponent implements OnInit {
     });
     var projectID = this.route.snapshot.paramMap.get('id')
     this.form.get('projectId').setValue(projectID);
+    this.getDraws();
     this.getCompanies();
   }
 
@@ -84,12 +86,14 @@ export class ProjectInvoicesComponent implements OnInit {
   }
 
   getDraws() {
+    var openNewDraw = {name: 'Open New Draw', id: '123'};
     if (this.form.value.projectId) {
       const project = this.projectService.projects.filter(obj => {
         return obj._id === this.form.value.projectId;
       });
       if(project[0]['draws'].length > 0) {
-        return project[0]['draws'];
+        this.draws = project[0]['draws'];
+        // this.draws.push(openNewDraw)
       }
     }
   }
@@ -105,7 +109,6 @@ export class ProjectInvoicesComponent implements OnInit {
   getOpenDraw() {
     const project = this.projectService.projects.filter(obj => {
       return obj._id === this.form.value.projectId;
-      // return obj._id === '61b252ce372843448101c4c6';
     });
     const draw = project[0].draws.filter(obj => {
       return obj.isOpen === true;
@@ -116,6 +119,12 @@ export class ProjectInvoicesComponent implements OnInit {
   createNewCompany(id) {
     if (id === '123') {
       this.router.navigate(['company/create', id]);
+    }
+  }
+
+  openNewDraw(id) {
+    if (id === '123') {
+      window.alert("this is where you would open a new draw")
     }
   }
 
