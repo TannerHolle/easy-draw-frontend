@@ -3,7 +3,7 @@ import { RouterModule } from '@angular/router';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import {
   MatInputModule,
   MatCardModule,
@@ -18,7 +18,8 @@ import {
   MatSidenavModule,
   MatDividerModule,
   MatMenuModule,
-  MatAutocompleteModule
+  MatAutocompleteModule,
+  MatProgressSpinnerModule
 } from '@angular/material';
 
 
@@ -45,6 +46,7 @@ import { SignUpComponent } from './auth/sign-up/sign-up.component';
 import { CategoryUploadComponent } from './project/project-category/category-upload/category-upload.component';
 import { ProjectDashboardComponent } from './project/project-dashboard/project-dashboard.component';
 import { ProjectService } from './project/project.service';
+import { AuthInterceptor } from './auth/auth-interceptor';
 
 
 @NgModule({
@@ -84,6 +86,7 @@ import { ProjectService } from './project/project.service';
     MatToolbarModule,
     MatSidenavModule,
     MatDividerModule,
+    MatProgressSpinnerModule,
     MatMenuModule,
     MatSlideToggleModule,
     MatExpansionModule,
@@ -93,7 +96,7 @@ import { ProjectService } from './project/project.service';
     HttpClientModule,
     MatAutocompleteModule
     ],
-  providers: [ProjectComponent],
+  providers: [ProjectComponent, {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true}],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

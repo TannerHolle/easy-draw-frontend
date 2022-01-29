@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { NgForm } from "@angular/forms"
+import { Router } from '@angular/router';
 import { AuthService } from '../auth.service';
 
 
@@ -10,7 +11,9 @@ import { AuthService } from '../auth.service';
 })
 export class LoginComponent implements OnInit {
 
-  constructor(public authService: AuthService) { }
+  isLoading = false;
+
+  constructor(public authService: AuthService, private router: Router) { }
 
   ngOnInit() {
   }
@@ -19,8 +22,7 @@ export class LoginComponent implements OnInit {
     if (form.invalid) {
       return;
     }
-    this.authService.login(form.value.email, form.value.password).subscribe((response: any) => {
-      console.log(response);
-    });
+    this.isLoading = true;
+    this.authService.login(form.value.email, form.value.password)
   }
 }

@@ -1,6 +1,7 @@
 <main>
   <mat-card>
-    <form [formGroup]="form" (submit)="onAddInvoice()">
+    <mat-spinner *ngIf="isLoading"></mat-spinner>
+    <form [formGroup]="form" (submit)="onAddInvoice()" *ngIf="!isloading">
       <!-- <mat-form-field>
         <input
         matInput
@@ -17,6 +18,15 @@
           </mat-option>
         </mat-select>
         <mat-error *ngIf="form.get('projectId').invalid">Please select a project</mat-error>
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>Draw</mat-label>
+        <mat-select formControlName="draw">
+          <mat-option *ngFor="let draw of this.draws" [value]="draw.name" (blur)="openNewDraw(draw.id)">
+            {{draw.name}}
+          </mat-option>
+        </mat-select>
+        <mat-error *ngIf="form.get('draw').invalid">Please select a Draw</mat-error>
       </mat-form-field>
       <mat-form-field>
         <mat-label>Company</mat-label>
@@ -44,15 +54,6 @@
           </mat-option>
         </mat-select>
         <mat-error *ngIf="form.get('category').invalid">Please select a category</mat-error>
-      </mat-form-field>
-      <mat-form-field>
-        <mat-label>Draw</mat-label>
-        <mat-select formControlName="draw">
-          <mat-option *ngFor="let draw of this.draws" [value]="draw.name" (blur)="openNewDraw(draw.id)">
-            {{draw.name}}
-          </mat-option>
-        </mat-select>
-        <mat-error *ngIf="form.get('draw').invalid">Please select a Draw</mat-error>
       </mat-form-field>
       <mat-form-field>
         <input

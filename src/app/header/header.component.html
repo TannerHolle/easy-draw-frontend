@@ -1,20 +1,22 @@
 <mat-toolbar color="primary" class="mat-elevation-z6">
 
-  <a mat-button routerLink="">Easy Draw</a>
-  <!-- <a mat-button routerLink="">Home</a> -->
-  <button mat-button [matMenuTriggerFor]="financial">Financial</button>
+  <ng-container *ngIf='!userIsAuthenticated'><a mat-button routerLink="home">Easy Draw</a></ng-container>
+  <ng-container *ngIf='userIsAuthenticated'><a mat-button routerLink="">Easy Draw</a></ng-container>
+  <button  *ngIf='userIsAuthenticated' mat-button [matMenuTriggerFor]="financial">Financial</button>
   <mat-menu #financial="matMenu">
     <button mat-menu-item>Project Budgets</button>
     <button mat-menu-item>Draws</button>
   </mat-menu>
-  <button mat-button [matMenuTriggerFor]="management">Management</button>
+  <button *ngIf='userIsAuthenticated' mat-button [matMenuTriggerFor]="management">Management</button>
   <mat-menu #management="matMenu">
     <button mat-menu-item routerLink="/project-list">Projects</button>
     <button mat-menu-item routerLink="/companies">Sub-Contractors/Vendors</button>
   </mat-menu>
   <div class="spacer"></div>
-  <a mat-button>Settings</a>
-  <a mat-raised-button color="warn" routerLink="/sign-up">Sign Up</a>
-  <a mat-raised-button color="accent" routerLink="/login">Login</a>
+  <a *ngIf='!userIsAuthenticated' mat-button>About Us</a>
+  <a *ngIf='userIsAuthenticated' mat-button>Settings</a>
+  <a *ngIf='!userIsAuthenticated' mat-button routerLink="/sign-up">Sign Up</a>
+  <a *ngIf='!userIsAuthenticated' mat-button routerLink="/login">Login</a>
+  <a *ngIf='userIsAuthenticated' mat-button (click)="onLogout()">Logout</a>
 </mat-toolbar>
 <router-outlet></router-outlet>

@@ -13,7 +13,7 @@ export class CompanyService {
   constructor(private http: HttpClient, private webReqService: WebRequestService) {}
 
   createCompany(name: string, address: string, email: string, phone: string, taxId: string, notes: string) {
-    return this.webReqService.post('companies', {
+    return this.webReqService.post('company/create', {
       "name": name,
       "address": address,
       "email": email,
@@ -25,11 +25,11 @@ export class CompanyService {
   }
 
   getCompanies() {
-    return this.webReqService.get('companies');
+    return this.webReqService.get('company/list');
   }
 
   deleteCompany(companyId) {
-    return this.webReqService.delete(`companies/${companyId}`)
+    return this.webReqService.delete(`company/delete/${companyId}`)
   }
 
   getCompanyUpdateListener() {

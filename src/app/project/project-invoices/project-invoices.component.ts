@@ -24,6 +24,8 @@ export class ProjectInvoicesComponent implements OnInit {
   fileName = '';
   form: FormGroup;
   imagePreview: string;
+  isLoading = false;
+
 
 
 
@@ -46,6 +48,8 @@ export class ProjectInvoicesComponent implements OnInit {
     var projectID = this.route.snapshot.paramMap.get('id')
     this.form.get('projectId').setValue(projectID);
     this.getDraws();
+    this.form.get('draw').setValue(this.getOpenDraw());
+
     this.getCompanies();
   }
 
@@ -65,13 +69,14 @@ export class ProjectInvoicesComponent implements OnInit {
     if (this.form.invalid) {
       return;
     }
+    this.isLoading = true;
     var draw = this.getOpenDraw()
     this.projectService.createInvoice(this.form.value.projectId, this.form.value.company, this.form.value.category, this.form.value.invoiceNum, this.form.value.invoiceAmt, draw, this.form.value.image)
     // .subscribe((response: any) => {
     //   this.router.navigate(['']);
     //   console.log(response);
     // });
-    this.form.reset();
+    // this.form.reset();
   };
 
   getCategories() {

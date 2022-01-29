@@ -20,7 +20,7 @@ export class ProjectDashboardComponent implements OnInit {
   formattedData = [];
   private projectsSub: Subscription;
 
-  displayedColumns: string[] = ['name', 'client', 'budget', 'spent', 'status'];
+  displayedColumns: string[] = ['name', 'client', 'budget', 'spent', 'status', '_id'];
   dataSource = [];
 
   ngOnInit() {

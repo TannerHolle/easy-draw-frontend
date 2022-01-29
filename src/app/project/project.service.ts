@@ -21,7 +21,7 @@ export class ProjectService {
   constructor(private webReqService: WebRequestService, public http: HttpClient, public router: Router, public CompanyService: CompanyService) {}
 
   createProject(name: string, address: string, client: string, phone: string, email: string, budget: number, categoryArray: any[]) {
-    return this.webReqService.post('projects', {
+    return this.webReqService.post('project/create/', {
       "name": name,
       "address": address,
       "client": client,
@@ -40,7 +40,7 @@ export class ProjectService {
   }
 
   updateProject(id: string, name: string, address: string, client: string, phone: string, email: string, budget: number, categoryArray: any[]) {
-    return this.webReqService.post(`projects/${id}`, {
+    return this.webReqService.post(`project/update/${id}`, {
       "name": name,
       "address": address,
       "client": client,
@@ -52,15 +52,15 @@ export class ProjectService {
   }
 
   getProjects() {
-    return this.webReqService.get('projects');
+    return this.webReqService.get('project/list');
   };
 
   getOneProject(id) {
-    return this.webReqService.get(`projects/${id}`);
+    return this.webReqService.get(`project/${id}`);
   };
 
   deleteProject(projectId) {
-    return this.webReqService.delete(`projects/${projectId}`)
+    return this.webReqService.delete(`project/delete/${projectId}`)
   }
 
   createInvoice(projectId: string, company: {}, category: string, invoiceNum: string, invoiceAmt: Number, draw: string, image: File) {
@@ -73,9 +73,11 @@ export class ProjectService {
     invoiceData.append("invoiceNum", invoiceNum)
     invoiceData.append("invoiceAmt", invoiceAmt.toString())
     invoiceData.append("image", image, invoiceNum)
-    this.http.post(environment.apiUrl + '/inv', invoiceData).subscribe(responseData => {
+    this.http.post(environment.apiUrl + '/invoice/create', invoiceData).subscribe(responseData => {
       console.log(responseData)
-      this.router.navigate(['']);
+      // this.router.navigate(['']);
+      this.router.navigate(['/projects', projectId]);
+
 
     });
     // return this.webReqService.post('invoices', {
@@ -100,7 +102,7 @@ export class ProjectService {
   }
 
   addCategory(category: String, costCode: String, budget: Number, id: String){
-    return this.webReqService.post('categories', {
+    return this.webReqService.post('category/create', {
       "costCode": costCode,
       "category": category,
       "budget": budget,
@@ -109,15 +111,15 @@ export class ProjectService {
   }
 
   uploadCategories(categoryArray: Array<any> = [], id: String){
-    return this.webReqService.post(`category-upload/${id}`, categoryArray);
+    return this.webReqService.post(`category/upload/${id}`, categoryArray);
   }
 
   closeDraw(projectId, drawId) {
-    return this.webReqService.post(`close-draw/${projectId}/${drawId}`, {});
+    return this.webReqService.post(`project/close-draw/${projectId}/${drawId}`, {});
   }
 
   openNewDraw(projectId, drawId) {
-    return this.webReqService.post(`open-new-draw/${projectId}/${drawId}`, {});
+    return this.webReqService.post(`project/open-new-draw/${projectId}/${drawId}`, {});
   }
 
   getProjectUpdateListener() {
