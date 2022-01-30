@@ -106,6 +106,7 @@ export class ProjectBudgetComponent implements OnInit, AfterViewInit {
   }
 
   download() {
+    debugger;
     const items = this.budgetData
     const replacer = (key, value) => value === null ? '' : value // specify how you want to handle null values here
     const header = Object.keys(items[0])

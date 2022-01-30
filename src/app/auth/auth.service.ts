@@ -45,7 +45,12 @@ export class AuthService {
       console.log(response)
       this.login(email,password)
       this.router.navigate(["/projects"]);
-    })
+    },
+    error => {
+      this.authStatusListener.next(false);
+      window.alert("Please try again. If this continues to happen, please reach out to support")
+      window.location.reload();
+    });
     // return this.webReqService.post('user/sign-up', {
     //   "email": email,
     //   "password": password,
@@ -70,6 +75,11 @@ export class AuthService {
         this.saveAuthData(token, expirationDate, this.userId);
         this.router.navigate(["/projects"]);
       }
+    },
+    error => {
+      this.authStatusListener.next(false);
+      window.alert("Invalid email or password, Try again")
+      window.location.reload();
     });
     // return this.webReqService.post('user/login', {
     //   "email": email,

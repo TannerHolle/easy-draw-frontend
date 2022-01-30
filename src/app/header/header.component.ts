@@ -35,4 +35,13 @@ export class HeaderComponent implements OnInit, OnDestroy {
     this.authListenerSubs.unsubscribe();
   }
 
+  downloadBudgetTemplate() {
+    const header = "costCode,category,budget"
+    var hiddenElement = document.createElement('a');
+    hiddenElement.href = 'data:text/csv;charset=utf-8,' + encodeURI(header);
+    hiddenElement.target = '_blank';
+    hiddenElement.download = 'BudgetTemplate.csv';
+    hiddenElement.click();
+  }
+
 }

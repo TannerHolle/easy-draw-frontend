@@ -1,7 +1,7 @@
 <main>
 
   <div class="mat-elevation-z2">
-    <table mat-table [dataSource]="companies">
+    <table mat-table *ngIf='companies.length > 0' [dataSource]="companies">
 
       <!-- Position Column -->
       <ng-container matColumnDef="name">
@@ -55,11 +55,13 @@
 
     </table>
 
+
   </div>
+  <h2 style="text-align: center;" *ngIf="companies.length==0">No companies added yet, please add a company</h2>
+
   <div class="btn-group">
     <button mat-raised-button [routerLink]="['/company/create']">Add Sub-Contractor/Vendor</button>
   </div>
 </main>
 
 
-<p class="info-text mat-body-1" *ngIf="companies.length==0">No companies added yet</p>
