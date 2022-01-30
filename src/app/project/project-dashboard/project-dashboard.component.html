@@ -48,7 +48,7 @@
   </div>
   <button class='btn-group' mat-raised-button [routerLink]="['/project/invoices']">Add Invoice</button>
 </div>
-<div *ngIf='formattedData == 0'>
+<div *ngIf='formattedData.length == 0'>
   <h2>Welcome to Easy Draw.</h2>
   You must create a project to start using our features.
 

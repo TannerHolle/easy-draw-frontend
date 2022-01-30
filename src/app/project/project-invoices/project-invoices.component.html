@@ -1,7 +1,7 @@
 <main>
   <mat-card>
     <mat-spinner *ngIf="isLoading"></mat-spinner>
-    <form [formGroup]="form" (submit)="onAddInvoice()" *ngIf="!isloading">
+    <form [formGroup]="form" (submit)="onAddInvoice()" *ngIf="!isLoading">
       <!-- <mat-form-field>
         <input
         matInput
