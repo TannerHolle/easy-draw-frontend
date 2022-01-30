@@ -31,53 +31,59 @@
               <mat-icon (click)="upload()" matTooltip="Upload CSV" class="material-icons-outlined" style="font-size: 24px" matTooltipClass="tooltip">file_upload</mat-icon>
             </div>
           </div>
-          <table class="mat-elevation-z2" mat-table [dataSource]="budgetData">
+          <ng-container *ngIf='this.budgetData.length > 0'>
+            <table class="mat-elevation-z2" mat-table [dataSource]="budgetData">
 
-            <!-- Cost Code Column -->
-            <ng-container matColumnDef="costCode">
-              <th mat-header-cell *matHeaderCellDef> Cost Code </th>
-              <td mat-cell *matCellDef="let element"> {{element.costCode}} </td>
-            </ng-container>
-
-            <!-- Category Column -->
-            <ng-container matColumnDef="category">
-              <th mat-header-cell *matHeaderCellDef> Category </th>
-              <td mat-cell *matCellDef="let element"> {{element.category}} </td>
-            </ng-container>
-
-            <!-- Budget Column -->
-            <ng-container matColumnDef="budget">
-              <th mat-header-cell *matHeaderCellDef> Budget </th>
-              <td mat-cell *matCellDef="let element"> {{element.budget | currency}} </td>
-            </ng-container>
-
-            <!-- Draw Columns -->
-            <ng-container *ngFor="let draw of draws">
-              <ng-container matColumnDef="{{draw.name}}">
-                <th mat-header-cell *matHeaderCellDef><button mat-raised-button [routerLink]="['/projects', id, 'draws', draw.name]">{{makePretty(draw.name)}}</button></th>
-                <td mat-cell *matCellDef="let element"> {{element[draw.name] | currency}} </td>
+              <!-- Cost Code Column -->
+              <ng-container matColumnDef="costCode">
+                <th mat-header-cell *matHeaderCellDef> Cost Code </th>
+                <td mat-cell *matCellDef="let element"> {{element.costCode}} </td>
               </ng-container>
-            </ng-container>
 
-            <!-- Spent Column -->
-            <ng-container matColumnDef="spent">
-              <th mat-header-cell *matHeaderCellDef> Spent </th>
-              <td mat-cell *matCellDef="let element"> {{element.spent | currency}} </td>
-            </ng-container>
+              <!-- Category Column -->
+              <ng-container matColumnDef="category">
+                <th mat-header-cell *matHeaderCellDef> Category </th>
+                <td mat-cell *matCellDef="let element"> {{element.category}} </td>
+              </ng-container>
 
-            <!-- Over/Under Column -->
-            <ng-container matColumnDef="status">
-              <th mat-header-cell *matHeaderCellDef> Over/Under </th>
-              <td mat-cell *matCellDef="let element"> {{element.status | currency}} </td>
-            </ng-container>
+              <!-- Budget Column -->
+              <ng-container matColumnDef="budget">
+                <th mat-header-cell *matHeaderCellDef> Budget </th>
+                <td mat-cell *matCellDef="let element"> {{element.budget | currency}} </td>
+              </ng-container>
+
+              <!-- Draw Columns -->
+              <ng-container *ngFor="let draw of draws">
+                <ng-container matColumnDef="{{draw.name}}">
+                  <th mat-header-cell *matHeaderCellDef><button mat-raised-button [routerLink]="['/projects', id, 'draws', draw.name]">{{makePretty(draw.name)}}</button></th>
+                  <td mat-cell *matCellDef="let element"> {{element[draw.name] | currency}} </td>
+                </ng-container>
+              </ng-container>
+
+              <!-- Spent Column -->
+              <ng-container matColumnDef="spent">
+                <th mat-header-cell *matHeaderCellDef> Spent </th>
+                <td mat-cell *matCellDef="let element"> {{element.spent | currency}} </td>
+              </ng-container>
+
+              <!-- Over/Under Column -->
+              <ng-container matColumnDef="status">
+                <th mat-header-cell *matHeaderCellDef> Over/Under </th>
+                <td mat-cell *matCellDef="let element"> {{element.status | currency}} </td>
+              </ng-container>
 
 
-            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-            <tr mat-row class="element-row"  *matRowDef="let row; columns: displayedColumns;" ></tr>
-          </table>
-          <div class="btn-group">
-            <button mat-raised-button [routerLink]="['/project/invoices', id]">Add Invoice</button>
+              <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+              <tr mat-row class="element-row"  *matRowDef="let row; columns: displayedColumns;" ></tr>
+            </table>
+            <div class="btn-group">
+              <button mat-raised-button [routerLink]="['/project/invoices', id]">Add Invoice</button>
+            </div>
+          </ng-container>
+          <div *ngIf='this.budgetData.length == 0'>
+            You must add at least one category before you are able to add invoices to this project
           </div>
+
       </div>
 
 

@@ -33,7 +33,7 @@ export class ProjectEditComponent implements OnInit {
       return;
     }
     this.projectService.updateProject(this.id, form.value.name, form.value.address, form.value.client, form.value.phone, form.value.email, form.value.budget, this.categoryArray).subscribe((response: any) => {
-      this.router.navigate(['']);
+      this.router.navigate(['/projects']);
       console.log(response);
     });
   };

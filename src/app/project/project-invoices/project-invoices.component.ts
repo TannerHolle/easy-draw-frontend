@@ -8,6 +8,7 @@ import { mimeType } from './mime-type.validator';
 import { debug } from 'console';
 import { DomSanitizer } from '@angular/platform-browser';
 import { Company } from 'src/app/company/company.model';
+import { AuthService } from 'src/app/auth/auth.service';
 
 
 @Component({
@@ -29,8 +30,9 @@ export class ProjectInvoicesComponent implements OnInit {
 
 
 
-  constructor(public invoiceService: InvoiceService, private router: Router, public projectService: ProjectService, public companyService: CompanyService, private route: ActivatedRoute, private domSanitizer: DomSanitizer) { }
+  constructor(public invoiceService: InvoiceService, private authService: AuthService, private router: Router, public projectService: ProjectService, public companyService: CompanyService, private route: ActivatedRoute, private domSanitizer: DomSanitizer) { }
   ngOnInit() {
+
     this.companies = [{name: 'Create New Company', _id: '123'}];
     // this.draws = [{name: 'Open New Draw', id: '123'}];
     this.form = new FormGroup({
@@ -46,10 +48,11 @@ export class ProjectInvoicesComponent implements OnInit {
       })
     });
     var projectID = this.route.snapshot.paramMap.get('id')
-    this.form.get('projectId').setValue(projectID);
+    if(projectID) {
+      this.form.get('projectId').setValue(projectID);
+      this.form.get('draw').setValue(this.getOpenDraw());
+    }
     this.getDraws();
-    this.form.get('draw').setValue(this.getOpenDraw());
-
     this.getCompanies();
   }
 

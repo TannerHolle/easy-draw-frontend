@@ -48,11 +48,16 @@ export class ProjectService {
       "email": email,
       "budget": budget,
       "categories": categoryArray,
+      "creator": null
     });
   }
 
   getProjects() {
-    return this.webReqService.get('project/list');
+    return this.webReqService.get(`project/list`);
+  };
+
+  getProjectsForUser(creatorId) {
+    return this.webReqService.get(`project/list/${creatorId}`);
   };
 
   getOneProject(id) {
@@ -75,7 +80,6 @@ export class ProjectService {
     invoiceData.append("image", image, invoiceNum)
     this.http.post(environment.apiUrl + '/invoice/create', invoiceData).subscribe(responseData => {
       console.log(responseData)
-      // this.router.navigate(['']);
       this.router.navigate(['/projects', projectId]);
 
 

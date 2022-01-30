@@ -11,9 +11,14 @@
         <mat-error *ngIf="passwordInput.invalid">Please Enter a Password</mat-error>
       </mat-form-field>
       <button
+        *ngIf="!isLoading"
         mat-raised-button
         color="accent"
         type="submit">Sign Up</button>
     </form>
+    <br>
+    <div>
+      Currently we have no functionality to reset your password so DO NOT FORGET IT or you will not be able to access your data
+    </div>
   </mat-card>
 </main>

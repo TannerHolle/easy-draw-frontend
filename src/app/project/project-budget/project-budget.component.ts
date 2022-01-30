@@ -4,6 +4,7 @@ import {ActivatedRoute, Router} from '@angular/router';
 import { ProjectService } from '../project.service';
 import { MatSidenav } from '@angular/material';
 import { BreakpointObserver } from '@angular/cdk/layout';
+import { AuthService } from 'src/app/auth/auth.service';
 
 
 export class CsvData {
@@ -40,12 +41,12 @@ export class ProjectBudgetComponent implements OnInit, AfterViewInit {
 
 
 
-  constructor(private route: ActivatedRoute, public projectService: ProjectService, private observer: BreakpointObserver, private router: Router) { }
+  constructor(private route: ActivatedRoute, public projectService: ProjectService, private observer: BreakpointObserver, private router: Router, private authService: AuthService) { }
 
   ngOnInit() {
     this.route.params.subscribe(routeParams => {
       this.id = this.route.snapshot.paramMap.get('id');
-      this.projectService.getProjects().subscribe((projects: any[]) => {
+      this.projectService.getProjectsForUser(this.authService.getUserID()).subscribe((projects: any[]) => {
         this.projects = projects;
       });
       this.projectService.getOneProject(this.id).subscribe((project: any[]) => {
@@ -53,7 +54,9 @@ export class ProjectBudgetComponent implements OnInit, AfterViewInit {
         this.budgetData = this.formatData(this.project);
         this.projectName = this.project[0].name;
         this.draws = this.project[0].draws;
-        this.displayedColumns = Object.keys(this.budgetData[0])
+        if(this.budgetData.length > 0) {
+          this.displayedColumns = Object.keys(this.budgetData[0])
+        }
       });
     });
 
@@ -97,6 +100,8 @@ export class ProjectBudgetComponent implements OnInit, AfterViewInit {
       categoryInfo["status"] = categoryInfo["budget"] - categoryInfo["spent"];
       budgetArray.push(categoryInfo);
     }
+    console.log(budgetArray)
+
     return budgetArray;
   }
 

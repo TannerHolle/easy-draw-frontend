@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { ResponseType } from '@angular/http';
 import { environment } from "../../environments/environment";
 
 
@@ -32,7 +33,7 @@ export class WebRequestService {
    }
 
    delete(uri: string) {
-     return this.http.delete(`${this.ROOT_URL}/${uri}`);
+     return this.http.delete(`${this.ROOT_URL}/${uri}`, {responseType: 'text'});
    }
 
 

@@ -3,6 +3,7 @@ import { MatPaginator, MatTableDataSource, MatSort} from '@angular/material';
 import { Router } from '@angular/router';
 
 import { Subscription } from 'rxjs';
+import { AuthService } from 'src/app/auth/auth.service';
 import { Project } from '../../models/project.model'
 import { ProjectComponent } from '../project.component';
 import { ProjectService } from '../project.service';
@@ -15,7 +16,7 @@ import { ProjectService } from '../project.service';
   styleUrls: ['./project-list.component.scss']
 })
 export class ProjectListComponent implements OnInit {
-  constructor(public projectService: ProjectService, private router: Router, public projectComponent: ProjectComponent) { }
+  constructor(public projectService: ProjectService, private router: Router, public projectComponent: ProjectComponent, private authService: AuthService) { }
 
   createProj: Boolean = false;
   projects: Project[] = [];
@@ -25,7 +26,7 @@ export class ProjectListComponent implements OnInit {
   dataSource = [];
 
   ngOnInit() {
-    this.projectService.getProjects().subscribe((projects: any[]) => {
+    this.projectService.getProjectsForUser(this.authService.getUserID()).subscribe((projects: any[]) => {
       this.projects = projects;
       this.projectService.projects = projects;
     });

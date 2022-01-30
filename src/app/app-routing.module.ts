@@ -18,7 +18,8 @@ import { CompanyCreateComponent } from './company/company-create/company-create.
 import { AuthGuard } from './auth/auth.guard';
 
 const routes: Routes = [
-  {path: '', component: ProjectComponent},
+  {path: '', component: HomeComponent},
+  {path: 'projects', component: ProjectComponent},
   {path: 'home', component: HomeComponent},
   {path: 'companies', component: CompanyComponent},
   {path: 'project-list', component: ProjectListComponent},

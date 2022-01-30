@@ -13,6 +13,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
   userIsAuthenticated = false;
   private authListenerSubs: Subscription;
   managementOptions = ['Projects', 'Companies']
+  userId: string;
 
   constructor(private authService: AuthService) { }
 
@@ -22,6 +23,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
       .getAuthStatusListener()
       .subscribe(isAuthenticated => {
         this.userIsAuthenticated = isAuthenticated;
+        this.userId = this.authService.getUserID()
       });
   }
 
