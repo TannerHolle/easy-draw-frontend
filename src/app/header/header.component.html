@@ -1,7 +1,7 @@
 <mat-toolbar color="primary" class="mat-elevation-z6">
 
-  <ng-container *ngIf='!userIsAuthenticated'><a mat-button routerLink="home">Easy Draw</a></ng-container>
-  <ng-container *ngIf='userIsAuthenticated'><a mat-button routerLink="projects">Easy Draw</a></ng-container>
+  <ng-container *ngIf='!userIsAuthenticated'><a mat-button routerLink="home"><h2>Easy Draw</h2></a></ng-container>
+  <ng-container *ngIf='userIsAuthenticated'><a mat-button routerLink="projects"><h2>Easy Draw</h2></a></ng-container>
 
   <button  *ngIf='userIsAuthenticated' mat-button [matMenuTriggerFor]="financial">Financial</button>
   <mat-menu #financial="matMenu">
@@ -14,6 +14,11 @@
     <button mat-menu-item routerLink="/project-list">Projects</button>
     <button mat-menu-item routerLink="/companies">Sub-Contractors/Vendors</button>
   </mat-menu>
+
+  <!-- <button *ngIf='userIsAuthenticated' mat-button routerLink="/project-list">Projects</button>
+  <button *ngIf='userIsAuthenticated' mat-button routerLink="/companies">Sub-Contractors/Vendors</button> -->
+
+
 
   <button *ngIf='userIsAuthenticated' mat-button [matMenuTriggerFor]="templates">Templates</button>
   <mat-menu #templates="matMenu">
