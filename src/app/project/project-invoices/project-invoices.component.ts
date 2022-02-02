@@ -121,7 +121,7 @@ export class ProjectInvoicesComponent implements OnInit {
 
 
   getCompanies() {
-    this.companyService.getCompanies().subscribe((companies: any[]) => {
+    this.companyService.getCompaniesForUser(this.authService.getUserID()).subscribe((companies: any[]) => {
       Array.prototype.push.apply(companies,this.companies)
       this.companies = companies
     });

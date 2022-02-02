@@ -3,6 +3,7 @@ import { Subscription } from 'rxjs';
 import { Company } from '../company.model'
 import { CompanyService } from '../company.service';
 import { Router } from '@angular/router';
+import { AuthService } from 'src/app/auth/auth.service';
 
 
 
@@ -19,10 +20,10 @@ export class CompanyListComponent implements OnInit, OnDestroy {
   displayedColumns: string[] = ['name', 'address', 'email', 'phone', 'taxId', '_id'];
 
 
-  constructor(public companyService: CompanyService, private router: Router) { }
+  constructor(public companyService: CompanyService, private router: Router, private authService: AuthService) { }
 
   ngOnInit() {
-    this.companyService.getCompanies().subscribe((companies: any[]) => {
+    this.companyService.getCompaniesForUser(this.authService.getUserID()).subscribe((companies: any[]) => {
       this.companies = companies;
       console.log(companies)
       this.companyService.companies = companies;

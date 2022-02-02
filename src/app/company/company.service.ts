@@ -28,6 +28,10 @@ export class CompanyService {
     return this.webReqService.get('company/list');
   }
 
+  getCompaniesForUser(creatorId) {
+    return this.webReqService.get(`company/list/${creatorId}`);
+  }
+
   deleteCompany(companyId) {
     return this.webReqService.delete(`company/delete/${companyId}`)
   }
