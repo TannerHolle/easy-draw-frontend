@@ -27,7 +27,7 @@ export class ProjectComponent implements OnInit {
         this.projects = projects;
 
     });
-    this.companyService.getCompanies().subscribe((companies: any[]) => {
+    this.companyService.getCompaniesForUser(this.authService.getUserID()).subscribe((companies: any[]) => {
       this.companyService.companies = companies;
     });
   }

@@ -6,6 +6,7 @@ import {ActivatedRoute} from '@angular/router';
 import { MatSidenav } from '@angular/material';
 
 import { ProjectService } from '../project.service';
+import { AuthService } from 'src/app/auth/auth.service';
 
 
 @Component({
@@ -30,12 +31,15 @@ export class ProjectDetailComponent implements OnInit {
   dataSource = [];
 
 
-  constructor(private route: ActivatedRoute, private http: HttpClient, public projectService: ProjectService, private observer: BreakpointObserver) { }
+  constructor(private route: ActivatedRoute, private http: HttpClient, public projectService: ProjectService, private observer: BreakpointObserver, private authService: AuthService) { }
 
   ngOnInit() {
     this.route.params.subscribe(routeParams => {
       this.id = routeParams.id;
       this.drawId = routeParams.drawid;
+      this.projectService.getProjectsForUser(this.authService.getUserID()).subscribe((projects: any[]) => {
+        this.projectService.projects = projects;
+      });
       this.projectService.getOneProject(this.id).subscribe((project: any[]) => {
         this.project = project;
         this.drawIdCapital = this.makePretty(this.drawId);

@@ -31,6 +31,7 @@ export class ProjectInvoicesComponent implements OnInit {
 
   constructor(public invoiceService: InvoiceService, private authService: AuthService, private router: Router, public projectService: ProjectService, public companyService: CompanyService, private route: ActivatedRoute, private domSanitizer: DomSanitizer) { }
   ngOnInit() {
+
     this.companies = [{name: 'Create New Company', _id: '123'}];
     this.form = new FormGroup({
       company: new FormControl(null, { validators: [Validators.required] }),
@@ -50,9 +51,17 @@ export class ProjectInvoicesComponent implements OnInit {
       if (drawId) {
         this.form.get('draw').setValue(drawId);
       }
-      this.getDrawsAndCategories(projectID)    }
-    this.getDraws();
-    this.getCompanies();
+      this.projectService.getProjectsForUser(this.authService.getUserID()).subscribe((projects: any[]) => {
+        this.projectService.projects = projects;
+        this.getDrawsAndCategories(projectID)
+      });
+    }
+    this.projectService.getProjectsForUser(this.authService.getUserID()).subscribe((projects: any[]) => {
+      this.projectService.projects = projects;
+      this.getDraws();
+      this.getCompanies();
+    });
+
   }
 
   onImagePicked(event: Event) {
@@ -85,15 +94,16 @@ export class ProjectInvoicesComponent implements OnInit {
     const project = this.projectService.projects.filter(obj => {
       return obj._id === this.form.value.projectId;
     });
+
+    if(project[0]['draws'].length > 0) {
+      this.draws = project[0]['draws'];
+    }
     if(project[0]['categories'].length > 0) {
       this.categories = project[0]['categories'];
     } else {
       this.categories = [];
     }
-    if(project[0]['draws'].length > 0) {
-      this.draws = project[0]['draws'];
-      // this.draws.push({name: 'Open New Draw', id: '123'});
-    }
+
   }
 
   getCategories() {

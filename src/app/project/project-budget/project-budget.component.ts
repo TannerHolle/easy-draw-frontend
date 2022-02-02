@@ -50,6 +50,7 @@ export class ProjectBudgetComponent implements OnInit, AfterViewInit {
       this.id = this.route.snapshot.paramMap.get('id');
       this.projectService.getProjectsForUser(this.authService.getUserID()).subscribe((projects: any[]) => {
         this.projects = projects;
+        this.projectService.projects = projects;
       });
       this.projectService.getOneProject(this.id).subscribe((project: any[]) => {
         this.project = project;
