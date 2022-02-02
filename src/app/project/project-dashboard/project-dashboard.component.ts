@@ -85,6 +85,7 @@ export class ProjectDashboardComponent implements OnInit {
   }
 
   cellClicked(element) {
+    debugger;
     this.projectComponent.projectInvoices = element.inovices;
   }
 

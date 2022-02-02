@@ -25,6 +25,7 @@ export class ProjectBudgetComponent implements OnInit, AfterViewInit {
   project = [];
   projects = [];
   draws = [];
+  spent = 100;
 
   columns = [];
   displayedColumns: string[] = [];
@@ -33,6 +34,7 @@ export class ProjectBudgetComponent implements OnInit, AfterViewInit {
   public records: any[] = [];
   @ViewChild('csvReader') csvReader: any;
   jsondatadisplay:any;
+  public fileName: string;
 
 
 
@@ -74,6 +76,10 @@ export class ProjectBudgetComponent implements OnInit, AfterViewInit {
     })
   }
 
+  calculateTotal(column) {
+    return this.budgetData.reduce((accum, curr) => accum + curr[column], 0);
+  }
+
   formatData(project) {
     var budgetArray = []
     var projectCategories = project[0].categories;
@@ -100,13 +106,11 @@ export class ProjectBudgetComponent implements OnInit, AfterViewInit {
       categoryInfo["status"] = categoryInfo["budget"] - categoryInfo["spent"];
       budgetArray.push(categoryInfo);
     }
-    console.log(budgetArray)
 
     return budgetArray;
   }
 
   download() {
-    debugger;
     const items = this.budgetData
     const replacer = (key, value) => value === null ? '' : value // specify how you want to handle null values here
     const header = Object.keys(items[0])
@@ -136,7 +140,7 @@ export class ProjectBudgetComponent implements OnInit, AfterViewInit {
   }
 
   changeListener(files: FileList) {
-    console.log(files.item(0).name)
+    this.fileName = files.item(0).name
     if(files && files.length > 0  && files.item(0).name.endsWith(".csv")) {
       let file : File = files.item(0);
       let reader: FileReader = new FileReader();
@@ -165,13 +169,14 @@ export class ProjectBudgetComponent implements OnInit, AfterViewInit {
 
   getDataRecordsArrayFromCSVFile(csvRecordsArray: any, headerLength: any) {
     let csvArr = [];
+    debugger;
 
     for (let i = 1; i < csvRecordsArray.length; i++) {
       let curruntRecord = (csvRecordsArray[i]).split(',');
       if (curruntRecord.length == headerLength) {
         let csvRecord= {};
-        csvRecord["costCode"] = curruntRecord[0].trim();
-        csvRecord["category"] = curruntRecord[1].trim();
+        csvRecord["costCode"] = curruntRecord[0].trim().replace(/["]+/g, '');
+        csvRecord["category"] = curruntRecord[1].trim().replace(/["]+/g, '');
         csvRecord["budget"] = Number(curruntRecord[2].trim());
         csvArr.push(csvRecord);
       }

@@ -4,6 +4,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { AppMaterialModules } from './material.module';
+
 import {
   MatInputModule,
   MatCardModule,
@@ -19,7 +21,8 @@ import {
   MatDividerModule,
   MatMenuModule,
   MatAutocompleteModule,
-  MatProgressSpinnerModule
+  MatProgressSpinnerModule,
+  MatFooterRow
 } from '@angular/material';
 
 
@@ -74,6 +77,7 @@ import { AuthInterceptor } from './auth/auth-interceptor';
     ProjectDashboardComponent,
   ],
   imports: [
+    AppMaterialModules,
     BrowserModule,
     FormsModule,
     ReactiveFormsModule,

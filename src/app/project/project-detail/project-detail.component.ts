@@ -67,6 +67,11 @@ export class ProjectDetailComponent implements OnInit {
     return draw[0].invoices;
   }
 
+  calculateTotal() {
+
+    return this.drawInvoices.reduce((accum, curr) => accum + curr.invoiceAmt, 0);
+  }
+
   getDraw() {
     const project = this.project[0]
     const draw = project.draws.filter(obj => {

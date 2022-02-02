@@ -27,6 +27,7 @@ const routes: Routes = [
   {path: 'projects/:id/draws/:drawid', component: ProjectDetailComponent},
   {path: 'project/invoices', component: ProjectInvoicesComponent},
   {path: 'project/invoices/:id', component: ProjectInvoicesComponent},
+  {path: 'project/invoices/:id/:drawId', component: ProjectInvoicesComponent},
   {path: 'project/create', component: ProjectCreateComponent},
   {path: 'company/create', component: CompanyCreateComponent, canActivate: [AuthGuard]},
   {path: 'company/create/:id', component: CompanyCreateComponent},

@@ -23,7 +23,9 @@
   <button *ngIf='userIsAuthenticated' mat-button [matMenuTriggerFor]="templates">Templates</button>
   <mat-menu #templates="matMenu">
     <button mat-menu-item (click)="downloadBudgetTemplate()">Project Budget Template</button>
+    <button mat-menu-item (click)="downloadVendorTemplate()">Sub-Contractor/Vendor Template</button>
   </mat-menu>
+
 
   <div class="spacer"></div>
   <a *ngIf='!userIsAuthenticated' mat-button>About Us</a>

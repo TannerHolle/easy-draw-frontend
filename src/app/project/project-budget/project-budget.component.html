@@ -26,7 +26,7 @@
             </div>
             <div class="action-buttons">
               <button mat-raised-button class="add-project" [routerLink]="['/project/category', id]">Add Single Category</button>
-              <button mat-raised-button class="add-project" (click)="filePicker.click()">Upload CSV of Categories</button>
+              <button mat-raised-button class="add-project" (click)="filePicker.click()">Upload CSV of Categories</button> {{fileName}}
               <input type="file" class="upload" (change)="changeListener($event.target.files)" #filePicker>
               <mat-icon (click)="upload()" matTooltip="Upload CSV" class="material-icons-outlined" style="font-size: 24px" matTooltipClass="tooltip">file_upload</mat-icon>
             </div>
@@ -38,18 +38,21 @@
               <ng-container matColumnDef="costCode">
                 <th mat-header-cell *matHeaderCellDef> Cost Code </th>
                 <td mat-cell *matCellDef="let element"> {{element.costCode}} </td>
+                <td mat-footer-cell *matFooterCellDef></td>
               </ng-container>
 
               <!-- Category Column -->
               <ng-container matColumnDef="category">
                 <th mat-header-cell *matHeaderCellDef> Category </th>
                 <td mat-cell *matCellDef="let element"> {{element.category}} </td>
+                <td mat-footer-cell *matFooterCellDef>Total:</td>
               </ng-container>
 
               <!-- Budget Column -->
               <ng-container matColumnDef="budget">
                 <th mat-header-cell *matHeaderCellDef> Budget </th>
                 <td mat-cell *matCellDef="let element"> {{element.budget | currency}} </td>
+                <td mat-footer-cell *matFooterCellDef>{{ calculateTotal('budget') | currency}}</td>
               </ng-container>
 
               <!-- Draw Columns -->
@@ -57,6 +60,8 @@
                 <ng-container matColumnDef="{{draw.name}}">
                   <th mat-header-cell *matHeaderCellDef><button mat-raised-button [routerLink]="['/projects', id, 'draws', draw.name]">{{makePretty(draw.name)}}</button></th>
                   <td mat-cell *matCellDef="let element"> {{element[draw.name] | currency}} </td>
+                  <td mat-footer-cell *matFooterCellDef>{{ calculateTotal(draw.name) | currency}}</td>
+
                 </ng-container>
               </ng-container>
 
@@ -64,17 +69,23 @@
               <ng-container matColumnDef="spent">
                 <th mat-header-cell *matHeaderCellDef> Spent </th>
                 <td mat-cell *matCellDef="let element"> {{element.spent | currency}} </td>
+                <td mat-footer-cell *matFooterCellDef>{{ calculateTotal('spent') | currency}}</td>
+
               </ng-container>
 
               <!-- Over/Under Column -->
               <ng-container matColumnDef="status">
-                <th mat-header-cell *matHeaderCellDef> Over/Under </th>
+                <th mat-header-cell *matHeaderCellDef> Remaining Balance </th>
                 <td mat-cell *matCellDef="let element"> {{element.status | currency}} </td>
+                <td mat-footer-cell *matFooterCellDef>{{ calculateTotal('status') | currency}}</td>
+
               </ng-container>
 
-
+              <!--ROWS-->
               <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
               <tr mat-row class="element-row"  *matRowDef="let row; columns: displayedColumns;" ></tr>
+              <tr mat-footer-row class="footer-row" *matFooterRowDef="displayedColumns"></tr>
+
             </table>
             <div class="btn-group">
               <button mat-raised-button [routerLink]="['/project/invoices', id]">Add Invoice</button>

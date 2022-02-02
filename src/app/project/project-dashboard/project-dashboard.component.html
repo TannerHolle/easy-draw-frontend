@@ -5,7 +5,9 @@
       <!-- Position Column -->
       <ng-container matColumnDef="name">
         <th mat-header-cell *matHeaderCellDef> Project </th>
-        <td mat-cell class="element-row"  *matCellDef="let element"  (click)="cellClicked(element)" [routerLink]="['/projects', element._id]"> {{element.name}} </td>
+        <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+
+        <!-- <td mat-cell class="element-row"  *matCellDef="let element"  (click)="cellClicked(element)" [routerLink]="['/projects', element._id]"> {{element.name}} </td> -->
       </ng-container>
 
       <!-- Weight Column -->
@@ -28,7 +30,7 @@
 
       <!-- Symbol Column -->
       <ng-container matColumnDef="status">
-        <th mat-header-cell *matHeaderCellDef> Over/under </th>
+        <th mat-header-cell *matHeaderCellDef> Remaining Balance </th>
         <td mat-cell *matCellDef="let element"> {{element.status | currency}} </td>
       </ng-container>
 
@@ -41,8 +43,9 @@
         </td>
       </ng-container>
 
+      <!--ROWS-->
       <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-      <tr mat-row  *matRowDef="let row; columns: displayedColumns;"></tr>
+      <tr mat-row class="element-row" *matRowDef="let row; columns: displayedColumns;" [routerLink]="['/projects', row._id]"></tr>
 
     </table>
   </div>

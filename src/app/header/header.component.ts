@@ -43,5 +43,13 @@ export class HeaderComponent implements OnInit, OnDestroy {
     hiddenElement.download = 'BudgetTemplate.csv';
     hiddenElement.click();
   }
+  downloadVendorTemplate() {
+    const header = "Name,Address,Email,Phone,TaxId"
+    var hiddenElement = document.createElement('a');
+    hiddenElement.href = 'data:text/csv;charset=utf-8,' + encodeURI(header);
+    hiddenElement.target = '_blank';
+    hiddenElement.download = 'BudgetTemplate.csv';
+    hiddenElement.click();
+  }
 
 }
