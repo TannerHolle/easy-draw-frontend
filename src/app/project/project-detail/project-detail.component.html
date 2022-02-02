@@ -15,15 +15,12 @@
             <span class="search-term-text">{{drawIdCapital}}</span><br>
           </div>
           <div>
-            <button mat-raised-button class="menu-button" [routerLink]="['/projects', id]">Project Budget</button>
+            <button mat-button class="menu-button" [routerLink]="['/projects', id]">Project Budget</button>
           </div>
         </div>
-        <div class="search-results-header demo">
+        <div class="search-results-header">
           <span>
-            Draw Status: <ng-container *ngIf="draw['isOpen'] == true">Open</ng-container> <ng-container *ngIf="draw['isOpen'] == false">Closed</ng-container>
-          </span>
-          <span *ngIf="draw['isOpen'] == true">
-            <button mat-button (click)="changeDrawStatus()">Close Draw and open a new one</button>
+            <button mat-button (click)="createDraw()">Open New Draw</button>
           </span>
           <span class="action-buttons">
             <mat-icon (click)="download()" matTooltip="Download search results" class="material-icons-outlined" style="font-size: 24px" matTooltipClass="tooltip">file_download</mat-icon>

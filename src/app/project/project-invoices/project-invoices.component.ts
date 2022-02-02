@@ -19,9 +19,8 @@ import { AuthService } from 'src/app/auth/auth.service';
 export class ProjectInvoicesComponent implements OnInit {
   public companies = []
   public draws = []
-  selectedValue: {};
-  selectedCompany: {};
-  selectedFile = null;
+  public categories = []
+  selectedProjectId = '';
   fileName = '';
   form: FormGroup;
   imagePreview: string;
@@ -32,11 +31,8 @@ export class ProjectInvoicesComponent implements OnInit {
 
   constructor(public invoiceService: InvoiceService, private authService: AuthService, private router: Router, public projectService: ProjectService, public companyService: CompanyService, private route: ActivatedRoute, private domSanitizer: DomSanitizer) { }
   ngOnInit() {
-
     this.companies = [{name: 'Create New Company', _id: '123'}];
-    // this.draws = [{name: 'Open New Draw', id: '123'}];
     this.form = new FormGroup({
-      // company: new FormControl(null, { validators: [Validators.required] }),
       company: new FormControl(null, { validators: [Validators.required] }),
       draw: new FormControl(null, { validators: [Validators.required] }),
       invoiceNum: new FormControl(null, { validators: [Validators.required] }),
@@ -51,6 +47,7 @@ export class ProjectInvoicesComponent implements OnInit {
     if(projectID) {
       this.form.get('projectId').setValue(projectID);
       this.form.get('draw').setValue(this.getOpenDraw());
+      this.getDrawsAndCategories(projectID)
     }
     this.getDraws();
     this.getCompanies();
@@ -82,6 +79,22 @@ export class ProjectInvoicesComponent implements OnInit {
     // this.form.reset();
   };
 
+  getDrawsAndCategories(projectId) {
+    this.selectedProjectId = projectId;
+    const project = this.projectService.projects.filter(obj => {
+      return obj._id === this.form.value.projectId;
+    });
+    if(project[0]['categories'].length > 0) {
+      this.categories = project[0]['categories'];
+    } else {
+      this.categories = [];
+    }
+    if(project[0]['draws'].length > 0) {
+      this.draws = project[0]['draws'];
+      // this.draws.push({name: 'Open New Draw', id: '123'});
+    }
+  }
+
   getCategories() {
     if (this.form.value.projectId) {
       const project = this.projectService.projects.filter(obj => {
@@ -94,14 +107,13 @@ export class ProjectInvoicesComponent implements OnInit {
   }
 
   getDraws() {
-    var openNewDraw = {name: 'Open New Draw', id: '123'};
     if (this.form.value.projectId) {
       const project = this.projectService.projects.filter(obj => {
         return obj._id === this.form.value.projectId;
       });
       if(project[0]['draws'].length > 0) {
         this.draws = project[0]['draws'];
-        // this.draws.push(openNewDraw)
+        return project[0]['draws'];
       }
     }
   }
@@ -130,9 +142,13 @@ export class ProjectInvoicesComponent implements OnInit {
     }
   }
 
-  openNewDraw(id) {
-    if (id === '123') {
-      window.alert("this is where you would open a new draw")
+  openNewDraw(draw) {
+    if (draw.name === 'Open New Draw') {
+      let draws = this.getDraws();
+      let lastDraw = draws.slice(-2)[0];
+      this.projectService.openNewDraw(this.form.value.projectId,lastDraw.name).subscribe(() => {
+        this.router.navigate(['projects']);
+      });
     }
   }
 

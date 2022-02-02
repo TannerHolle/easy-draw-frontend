@@ -42,7 +42,7 @@ export class ProjectDetailComponent implements OnInit {
         this.drawInvoices = this.getInvoicesOnDraw();
         this.draw = this.getDraw();
         this.draws = this.getDrawInfo();
-        console.log(this.draw)
+        console.log(this.drawInvoices)
       });
     });
   }
@@ -100,17 +100,10 @@ export class ProjectDetailComponent implements OnInit {
   }
 
 
-  changeDrawStatus() {
-    var result = confirm("Are you sure you want to close this draw?");
-    if (result) {
-      this.projectService.closeDraw(this.id, this.drawId).subscribe((res: any) => {
-        console.log("it worked?")
-      });
-      this.projectService.openNewDraw(this.id, this.drawId).subscribe((res: any) => {
-        window.location.reload();
-      });
-    }
-
+  createDraw() {
+    this.projectService.openNewDraw(this.id, this.drawId).subscribe((res: any) => {
+      window.location.reload();
+    });
   }
 
 

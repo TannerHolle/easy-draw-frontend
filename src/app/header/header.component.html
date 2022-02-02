@@ -3,7 +3,7 @@
   <ng-container *ngIf='!userIsAuthenticated'><a mat-button routerLink="home"><h2>Easy Draw</h2></a></ng-container>
   <ng-container *ngIf='userIsAuthenticated'><a mat-button routerLink="projects"><h2>Easy Draw</h2></a></ng-container>
 
-  <button  *ngIf='userIsAuthenticated' mat-button [matMenuTriggerFor]="financial">Financial</button>
+  <!-- <button  *ngIf='userIsAuthenticated' mat-button [matMenuTriggerFor]="financial">Financial</button>
   <mat-menu #financial="matMenu">
     <button mat-menu-item>Project Budgets</button>
     <button mat-menu-item>Draws</button>
@@ -11,12 +11,12 @@
 
   <button *ngIf='userIsAuthenticated' mat-button [matMenuTriggerFor]="management">Management</button>
   <mat-menu #management="matMenu">
-    <button mat-menu-item routerLink="/project-list">Projects</button>
+    <button mat-menu-item routerLink="/projects">Projects</button>
     <button mat-menu-item routerLink="/companies">Sub-Contractors/Vendors</button>
-  </mat-menu>
+  </mat-menu> -->
 
-  <!-- <button *ngIf='userIsAuthenticated' mat-button routerLink="/project-list">Projects</button>
-  <button *ngIf='userIsAuthenticated' mat-button routerLink="/companies">Sub-Contractors/Vendors</button> -->
+  <button *ngIf='userIsAuthenticated' mat-button routerLink="/projects">Projects</button>
+  <button *ngIf='userIsAuthenticated' mat-button routerLink="/companies">Sub-Contractors/Vendors</button>
 
 
 

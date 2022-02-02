@@ -13,7 +13,7 @@
       <mat-form-field>
         <mat-label>Project</mat-label>
         <mat-select formControlName="projectId">
-          <mat-option *ngFor="let project of this.projectService.projects" [value]="project._id">
+          <mat-option *ngFor="let project of this.projectService.projects" [value]="project._id" (blur)="getDrawsAndCategories(project._id)">
             {{project.name}}
           </mat-option>
         </mat-select>
@@ -22,7 +22,7 @@
       <mat-form-field>
         <mat-label>Draw</mat-label>
         <mat-select formControlName="draw">
-          <mat-option *ngFor="let draw of this.draws" [value]="draw.name" (blur)="openNewDraw(draw.id)">
+          <mat-option *ngFor="let draw of this.draws" [value]="draw.name" (blur)="openNewDraw(draw)">
             {{draw.name}}
           </mat-option>
         </mat-select>
@@ -37,19 +37,10 @@
         </mat-select>
         <mat-error *ngIf="form.get('company').invalid">Please select a company</mat-error>
       </mat-form-field>
-      <!-- <mat-form-field>
-        <input
-        matInput
-        type="text"
-        formControlName="address"
-        placeholder="Company Address" >
-        <mat-error *ngIf="form.get('address').invalid">Please Enter a Company Address</mat-error>
-      </mat-form-field> -->
-
       <mat-form-field>
         <mat-label>Category</mat-label>
         <mat-select formControlName="category">
-          <mat-option *ngFor="let category of this.getCategories()" [value]="category.category">
+          <mat-option *ngFor="let category of this.categories" [value]="category.category">
             {{category.category}}
           </mat-option>
         </mat-select>
