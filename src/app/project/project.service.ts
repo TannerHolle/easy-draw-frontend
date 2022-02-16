@@ -79,7 +79,6 @@ export class ProjectService {
     invoiceData.append("invoiceNum", invoiceNum)
     invoiceData.append("invoiceAmt", invoiceAmt.toString())
     invoiceData.append("image", image, invoiceNum)
-    debugger;
     this.http.post(environment.apiUrl + '/invoice/create', invoiceData).subscribe(responseData => {
       console.log(responseData)
       this.router.navigate(['/projects', projectId]);

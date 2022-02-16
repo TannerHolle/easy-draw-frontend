@@ -20,6 +20,7 @@ export class ProjectInvoicesComponent implements OnInit {
   public companies = []
   public draws = []
   public categories = []
+  selectedCompanies;
   selectedProjectId = '';
   fileName = '';
   form: FormGroup;
@@ -53,7 +54,7 @@ export class ProjectInvoicesComponent implements OnInit {
       }
       this.projectService.getProjectsForUser(this.authService.getUserID()).subscribe((projects: any[]) => {
         this.projectService.projects = projects;
-        this.getDrawsAndCategories(projectID)
+        this.getDrawsAndCategories(projectID);
       });
     }
     this.projectService.getProjectsForUser(this.authService.getUserID()).subscribe((projects: any[]) => {
@@ -134,6 +135,7 @@ export class ProjectInvoicesComponent implements OnInit {
     this.companyService.getCompaniesForUser(this.authService.getUserID()).subscribe((companies: any[]) => {
       Array.prototype.push.apply(companies,this.companies)
       this.companies = companies
+      this.selectedCompanies = companies
     });
   }
 
@@ -150,7 +152,13 @@ export class ProjectInvoicesComponent implements OnInit {
   createNewCompany(id) {
     if (id === '123') {
       this.router.navigate(['company/create', id]);
+    } else {
+      this.selectedCompanies = this.companies;
     }
+  }
+
+  resetCompanies() {
+    this.selectedCompanies = this.companies;
   }
 
   openNewDraw(draw) {
@@ -161,6 +169,27 @@ export class ProjectInvoicesComponent implements OnInit {
         this.router.navigate(['projects']);
       });
     }
+  }
+
+  // onKey(value) {
+  //   this.selectedCompanies = this.search(value);
+  // }
+
+  // // Filter the states list and send back to populate the selectedStates**
+  // search(value: string) {
+  //   let filter = value.toLowerCase();
+  //   return this.companies.filter(option => option.name.toLowerCase().match(filter));
+  // }
+  public searchInput:String = '';
+  public searchResult: Array<any> = [];
+
+  fetchSeries(value: any) {
+    if (value === '') {
+      return this.searchResult = [];
+    }
+    this.searchResult = this.companies.filter((company) => {
+      return company.name.toLowerCase().startsWith(value.toLowerCase());
+    })
   }
 
 
