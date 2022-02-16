@@ -25,12 +25,14 @@ export class ProjectDashboardComponent implements OnInit {
   private authListenerSubs: Subscription;
   managementOptions = ['Projects', 'Companies']
   userId: string;
+  userName: string;
 
   displayedColumns: string[] = ['name', 'client', 'budget', 'spent', 'status', '_id'];
   dataSource = [];
 
   ngOnInit() {
     this.userId = this.authService.getUserID()
+    this.userName = this.authService.getUserName()
     this.projectService.getProjectsForUser(this.userId).subscribe((projects: any[]) => {
       this.projects = projects;
       console.log(this.projects)
@@ -45,16 +47,6 @@ export class ProjectDashboardComponent implements OnInit {
         this.userId = this.authService.getUserID()
       });
   }
-
-  //   this.projectsSub = this.projectService.getProjectUpdateListener()
-  //     .subscribe((projects: Project[]) => {
-  //       this.projects = projects;
-  //   });
-  // }
-
-  // ngOnDestroy() {
-  //   this.projectsSub.unsubscribe()
-  // }
 
   formatProjectDashboard(projects) {
     var formattedProjects = [];

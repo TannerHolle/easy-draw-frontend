@@ -61,7 +61,6 @@
                   <th mat-header-cell *matHeaderCellDef><button mat-raised-button [routerLink]="['/projects', id, 'draws', draw.name]">{{makePretty(draw.name)}}</button></th>
                   <td mat-cell *matCellDef="let element"> {{element[draw.name] | currency}} </td>
                   <td mat-footer-cell *matFooterCellDef>{{ calculateTotal(draw.name) | currency}}</td>
-
                 </ng-container>
               </ng-container>
 
@@ -70,6 +69,13 @@
                 <th mat-header-cell *matHeaderCellDef> Spent </th>
                 <td mat-cell *matCellDef="let element"> {{element.spent | currency}} </td>
                 <td mat-footer-cell *matFooterCellDef>{{ calculateTotal('spent') | currency}}</td>
+              </ng-container>
+
+              <!-- Change Orders Column -->
+              <ng-container matColumnDef="changeOrders">
+                <th mat-header-cell *matHeaderCellDef> Change Orders </th>
+                <td mat-cell *matCellDef="let element"> {{element.changeOrders | currency}} </td>
+                <td mat-footer-cell *matFooterCellDef>{{ calculateTotal('changeOrders') | currency}}</td>
 
               </ng-container>
 

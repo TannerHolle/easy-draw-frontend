@@ -41,9 +41,8 @@ export class ProjectInvoicesComponent implements OnInit {
       invoiceAmt: new FormControl(null, { validators: [Validators.required] }),
       projectId: new FormControl(null, { validators: [Validators.required] }),
       category: new FormControl(null, { validators: [Validators.required] }),
-      image: new FormControl(null, {
-        validators: [Validators.required]
-      })
+      changeOrder: new FormControl(null),
+      image: new FormControl(null, {validators: [Validators.required]})
     });
     var projectID = this.route.snapshot.paramMap.get('id')
     if(projectID) {
@@ -82,13 +81,16 @@ export class ProjectInvoicesComponent implements OnInit {
       return;
     }
     this.isLoading = true;
-    this.projectService.createInvoice(this.form.value.projectId, this.form.value.company, this.form.value.category, this.form.value.invoiceNum, this.form.value.invoiceAmt, this.form.value.draw, this.form.value.image)
-    // .subscribe((response: any) => {
-    //   this.router.navigate(['']);
-    //   console.log(response);
-    // });
-    // this.form.reset();
+    if (!this.form.value.changeOrder) {
+      this.projectService.createInvoice(this.form.value.projectId, this.form.value.company, this.form.value.category, this.form.value.invoiceNum, this.form.value.invoiceAmt, this.form.value.draw, this.form.value.image)
+    } else {
+      this.projectService.createChangeOrder(this.form.value.projectId, this.form.value.company, this.form.value.category, this.form.value.invoiceNum, this.form.value.invoiceAmt, this.form.value.draw, this.form.value.image)
+    }
   };
+
+  showOptions(event) {
+    console.log(event.checked);
+}
 
   getDrawsAndCategories(projectId) {
     this.selectedProjectId = projectId;

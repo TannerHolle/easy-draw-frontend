@@ -33,7 +33,8 @@ export class ProjectService {
         {
           "name": "draw1",
           "isOpen": true,
-          "invoices": []
+          "invoices": [],
+          "changeOrders": []
         }
       ]
     });
@@ -82,8 +83,6 @@ export class ProjectService {
     this.http.post(environment.apiUrl + '/invoice/create', invoiceData).subscribe(responseData => {
       console.log(responseData)
       this.router.navigate(['/projects', projectId]);
-
-
     });
     // return this.webReqService.post('invoices', {
     //   "company": company,
@@ -94,6 +93,23 @@ export class ProjectService {
     //   "project": project,
     //   "draw": draw
     // });
+  }
+
+  createChangeOrder(projectId: string, company: {}, category: string, invoiceNum: string, invoiceAmt: Number, draw: string, image: File) {
+    const changeOrderData = new FormData()
+    changeOrderData.append("projectId", projectId)
+    changeOrderData.append("draw", draw)
+    changeOrderData.append("category", category)
+    changeOrderData.append("company", company['name'])
+    changeOrderData.append("address", company['address'])
+    changeOrderData.append("taxId", company['taxId'])
+    changeOrderData.append("invoiceNum", invoiceNum)
+    changeOrderData.append("invoiceAmt", invoiceAmt.toString())
+    changeOrderData.append("image", image, invoiceNum)
+    this.http.post(environment.apiUrl + '/invoice/create-change-order', changeOrderData).subscribe(responseData => {
+      console.log(responseData)
+      this.router.navigate(['/projects', projectId]);
+    });
   }
 
   getCategories(id) {

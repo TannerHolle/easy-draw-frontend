@@ -67,10 +67,9 @@
         <input type="file" (change)="onImagePicked($event)" #filePicker>
         <mat-error *ngIf="form.get('image').invalid">Please attach an image</mat-error>
       </div>
-      <!-- <div *ngIf="imagePreview !== '' && imagePreview && form.get('image').valid">
-        <img [src]="imagePreview" [alt]="form.value.company">
-        {{fileName}}
-      </div> -->
+      <mat-checkbox formControlName="changeOrder" (change)="showOptions($event)">
+        Change Order?
+      </mat-checkbox>
       <button
         class="submit-button"
         mat-raised-button

@@ -91,6 +91,7 @@ export class ProjectBudgetComponent implements OnInit, AfterViewInit {
       categoryInfo["category"] = c.category;
       categoryInfo["budget"] = c.budget;
       var spend = 0;
+      var changeOrders = 0;
       for (var draws of projectDraws) {
         if (!categoryInfo.hasOwnProperty(draws.name)) {
           categoryInfo[draws.name] = 0;
@@ -101,8 +102,14 @@ export class ProjectBudgetComponent implements OnInit, AfterViewInit {
             spend = spend + d.invoiceAmt;
           }
         }
+        for (var d of draws.changeOrders) {
+          if (d.category == c.category) {
+            changeOrders = changeOrders + d.invoiceAmt;
+          }
+        }
       }
 
+      categoryInfo["changeOrders"] = changeOrders;
       categoryInfo["spent"] = spend;
       categoryInfo["status"] = categoryInfo["budget"] - categoryInfo["spent"];
       budgetArray.push(categoryInfo);
@@ -170,7 +177,6 @@ export class ProjectBudgetComponent implements OnInit, AfterViewInit {
 
   getDataRecordsArrayFromCSVFile(csvRecordsArray: any, headerLength: any) {
     let csvArr = [];
-    debugger;
 
     for (let i = 1; i < csvRecordsArray.length; i++) {
       let curruntRecord = (csvRecordsArray[i]).split(',');

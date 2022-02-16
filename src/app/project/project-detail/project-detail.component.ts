@@ -20,6 +20,8 @@ export class ProjectDetailComponent implements OnInit {
   drawIdCapital: string;
   draw = []
   drawInvoices = [];
+  drawChangeOrders = [];
+  drawData = [];
   draws = [];
   project = [];
 
@@ -35,6 +37,7 @@ export class ProjectDetailComponent implements OnInit {
 
   ngOnInit() {
     this.route.params.subscribe(routeParams => {
+      this.drawData = [];
       this.id = routeParams.id;
       this.drawId = routeParams.drawid;
       this.projectService.getProjectsForUser(this.authService.getUserID()).subscribe((projects: any[]) => {
@@ -44,9 +47,15 @@ export class ProjectDetailComponent implements OnInit {
         this.project = project;
         this.drawIdCapital = this.makePretty(this.drawId);
         this.drawInvoices = this.getInvoicesOnDraw();
+        if (this.drawInvoices.length > 0) {
+          this.drawData.push({name: 'Invoices', data: this.drawInvoices});
+        }
+        this.drawChangeOrders = this.getChangeOrdersOnDraw();
+        if (this.drawChangeOrders.length > 0) {
+          this.drawData.push({name: 'Change Orders', data: this.drawChangeOrders});
+        }
         this.draw = this.getDraw();
         this.draws = this.getDrawInfo();
-        console.log(this.drawInvoices)
       });
     });
   }
@@ -71,10 +80,23 @@ export class ProjectDetailComponent implements OnInit {
     return draw[0].invoices;
   }
 
-  calculateTotal() {
-
-    return this.drawInvoices.reduce((accum, curr) => accum + curr.invoiceAmt, 0);
+  getChangeOrdersOnDraw() {
+    const project = this.project[0]
+    const draw = project.draws.filter(obj => {
+      return obj.name === this.drawId;
+    });
+    return draw[0].changeOrders;
   }
+
+  calculateTotal(name) {
+    if (name === 'Invoices') {
+      return this.drawInvoices.reduce((accum, curr) => accum + curr.invoiceAmt, 0);
+    }
+    if (name === 'Change Orders') {
+      return this.drawChangeOrders.reduce((accum, curr) => accum + curr.invoiceAmt, 0);
+    }
+  }
+
 
   getDraw() {
     const project = this.project[0]
