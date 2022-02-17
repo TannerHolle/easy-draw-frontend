@@ -3,7 +3,7 @@
     Draws:
     <mat-divider></mat-divider>
     <ng-container *ngFor="let d of draws; index as i;">
-      <button mat-button class="menu-button" [routerLink]="['/projects', id, 'draws', 'draw' + (i+1)]">Draw {{i+1}}</button>
+      <button mat-button class="menu-button" [routerLink]="['/projects', id, 'draws', d.name]">{{ d.name }}</button>
     </ng-container>
   </mat-sidenav>
   <mat-sidenav-content>
@@ -12,7 +12,7 @@
         <div class="search-results-header">
           <div>
             <span class="plain-text">{{project[0]?.name}}: </span>
-            <span class="search-term-text">{{drawIdCapital}}</span><br>
+            <span class="search-term-text">{{drawId}}</span><br>
           </div>
           <div>
             <button mat-button class="menu-button" [routerLink]="['/projects', id]">Project Budget</button>
@@ -20,10 +20,10 @@
         </div>
         <div class="search-results-header">
           <span>
-            <button mat-button (click)="createDraw()">Open New Draw</button>
+            <button mat-button (click)="openDialog()">Open New Draw</button>
           </span>
           <span class="action-buttons">
-            <mat-icon (click)="download()" matTooltip="Download search results" class="material-icons-outlined" style="font-size: 24px" matTooltipClass="tooltip">file_download</mat-icon>
+            <mat-icon (click)="download()" matTooltip="Download Draw Sheet" class="material-icons-outlined" style="font-size: 24px" matTooltipClass="tooltip">file_download</mat-icon>
           </span>
         </div>
         <ng-container *ngIf="drawData.length == 0">You will see Inovices and Change orders here once you input them</ng-container>

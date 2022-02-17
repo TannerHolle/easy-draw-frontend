@@ -1,12 +1,12 @@
 import { BreakpointObserver } from '@angular/cdk/layout';
-import { HttpClient } from '@angular/common/http';
 import { Component, ViewChild, OnInit } from '@angular/core';
-import {ActivatedRoute} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 
-import { MatSidenav } from '@angular/material';
+import { MatDialog, MatSidenav } from '@angular/material';
 
 import { ProjectService } from '../project.service';
 import { AuthService } from 'src/app/auth/auth.service';
+import { DrawNameDialogComponent } from './draw-name-dialog/draw-name-dialog.component';
 
 
 @Component({
@@ -24,6 +24,8 @@ export class ProjectDetailComponent implements OnInit {
   drawData = [];
   draws = [];
   project = [];
+  name: string;
+
 
   @ViewChild(MatSidenav)
   sidenav!: MatSidenav;
@@ -33,7 +35,7 @@ export class ProjectDetailComponent implements OnInit {
   dataSource = [];
 
 
-  constructor(private route: ActivatedRoute, private http: HttpClient, public projectService: ProjectService, private observer: BreakpointObserver, private authService: AuthService) { }
+  constructor(private route: ActivatedRoute, public dialog: MatDialog, public projectService: ProjectService, private observer: BreakpointObserver, private authService: AuthService, private router: Router) { }
 
   ngOnInit() {
     this.route.params.subscribe(routeParams => {
@@ -137,5 +139,22 @@ export class ProjectDetailComponent implements OnInit {
     });
   }
 
+  openDialog(): void {
+    let drawName: string;
+
+    const dialogRef = this.dialog.open(DrawNameDialogComponent, {
+      width: '255px',
+      data: {drawName: drawName},
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.projectService.openNewDraw(this.id, result).subscribe((res: any) => {
+          this.router.navigate(['/projects', this.id, 'draws', result]);
+        });
+      }
+    });
+  }
 
 }
+

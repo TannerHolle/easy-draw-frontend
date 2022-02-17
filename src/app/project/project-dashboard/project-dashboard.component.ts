@@ -84,7 +84,7 @@ export class ProjectDashboardComponent implements OnInit {
     var result = confirm("Are you sure you want to delete this project? THIS CANNOT BE UNDONE");
     if (result) {
       this.projectService.deleteProject(projectId).subscribe((res: any) => {
-        window.location.reload();
+        this.router.navigate(["/projects"]);
       });
     }
   }

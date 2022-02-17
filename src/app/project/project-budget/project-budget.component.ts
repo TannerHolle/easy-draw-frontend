@@ -2,9 +2,10 @@ import { Component, OnInit, ViewChild, ElementRef, AfterViewInit } from '@angula
 import { HttpClient } from '@angular/common/http';
 import {ActivatedRoute, Router} from '@angular/router';
 import { ProjectService } from '../project.service';
-import { MatSidenav } from '@angular/material';
+import { MatDialog, MatSidenav } from '@angular/material';
 import { BreakpointObserver } from '@angular/cdk/layout';
 import { AuthService } from 'src/app/auth/auth.service';
+import { CategoryDialogComponent } from './category-dialog/category-dialog.component';
 
 
 export class CsvData {
@@ -27,6 +28,8 @@ export class ProjectBudgetComponent implements OnInit, AfterViewInit {
   draws = [];
   spent = 100;
 
+
+
   columns = [];
   displayedColumns: string[] = [];
   dataSource = [];
@@ -43,7 +46,7 @@ export class ProjectBudgetComponent implements OnInit, AfterViewInit {
 
 
 
-  constructor(private route: ActivatedRoute, public projectService: ProjectService, private observer: BreakpointObserver, private router: Router, private authService: AuthService) { }
+  constructor(private route: ActivatedRoute, public dialog: MatDialog, public projectService: ProjectService, private observer: BreakpointObserver, private router: Router, private authService: AuthService) { }
 
   ngOnInit() {
     this.route.params.subscribe(routeParams => {
@@ -109,9 +112,9 @@ export class ProjectBudgetComponent implements OnInit, AfterViewInit {
         }
       }
 
-      categoryInfo["changeOrders"] = changeOrders;
       categoryInfo["spent"] = spend;
       categoryInfo["status"] = categoryInfo["budget"] - categoryInfo["spent"];
+      categoryInfo["changeOrders"] = changeOrders;
       budgetArray.push(categoryInfo);
     }
 
@@ -198,6 +201,25 @@ export class ProjectBudgetComponent implements OnInit, AfterViewInit {
       headerArray.push(headers[j]);
     }
     return headerArray;
+  }
+
+  openDialog(): void {
+    let category: string;
+    let costCode: string;
+    let budget: string;
+
+    const dialogRef = this.dialog.open(CategoryDialogComponent, {
+      width: '255px',
+      data: {category: category, costCode: costCode, budget: budget},
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.projectService.addCategory(result.category, result.costCode, result.budget, this.id).subscribe((response: any) => {
+          window.location.reload();
+        });
+      }
+    });
   }
 
 }

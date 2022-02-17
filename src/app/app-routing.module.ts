@@ -16,6 +16,7 @@ import { CategoryUploadComponent } from './project/project-category/category-upl
 import { ProjectListComponent } from './project/project-list/project-list.component';
 import { CompanyCreateComponent } from './company/company-create/company-create.component';
 import { AuthGuard } from './auth/auth.guard';
+import { ProjectDashboardComponent } from './project/project-dashboard/project-dashboard.component';
 
 const routes: Routes = [
   {path: '', component: HomeComponent},

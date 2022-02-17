@@ -1,0 +1,19 @@
+<h1 mat-dialog-title>Category</h1>
+<div mat-dialog-content>
+  <mat-form-field appearance="fill">
+    <mat-label>Category Name</mat-label>
+    <input matInput [(ngModel)]="data.category">
+  </mat-form-field>
+  <mat-form-field appearance="fill">
+    <mat-label>Cost Code</mat-label>
+    <input matInput [(ngModel)]="data.costCode">
+  </mat-form-field>
+  <mat-form-field appearance="fill">
+    <mat-label>Budget</mat-label>
+    <input matInput [(ngModel)]="data.budget">
+  </mat-form-field>
+</div>
+<div mat-dialog-actions>
+  <button mat-button (click)="onNoClick()">Cancel</button>
+  <button mat-button [mat-dialog-close]="data" cdkFocusInitial>Ok</button>
+</div>

@@ -50,6 +50,8 @@ import { CategoryUploadComponent } from './project/project-category/category-upl
 import { ProjectDashboardComponent } from './project/project-dashboard/project-dashboard.component';
 import { ProjectService } from './project/project.service';
 import { AuthInterceptor } from './auth/auth-interceptor';
+import { DrawNameDialogComponent } from './project/project-detail/draw-name-dialog/draw-name-dialog.component';
+import { CategoryDialogComponent } from './project/project-budget/category-dialog/category-dialog.component';
 
 
 @NgModule({
@@ -75,6 +77,8 @@ import { AuthInterceptor } from './auth/auth-interceptor';
     SignUpComponent,
     CategoryUploadComponent,
     ProjectDashboardComponent,
+    DrawNameDialogComponent,
+    CategoryDialogComponent,
   ],
   imports: [
     AppMaterialModules,
@@ -101,6 +105,7 @@ import { AuthInterceptor } from './auth/auth-interceptor';
     MatAutocompleteModule
     ],
   providers: [ProjectComponent, {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true}],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  entryComponents: [DrawNameDialogComponent, CategoryDialogComponent]
 })
 export class AppModule { }

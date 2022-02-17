@@ -15,7 +15,6 @@ export class AppComponent implements OnInit {
 
   ngOnInit() {
     this.authService.autoAuthUser()
-    console.log(environment.apiUrl)
   }
 
 }
