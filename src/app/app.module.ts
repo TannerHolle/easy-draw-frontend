@@ -36,7 +36,7 @@ import { InvoiceListComponent } from './invoice/invoice-list/invoice-list.compon
 import { InvoiceComponent } from './invoice/invoice.component';
 import { HomeComponent } from './home/home.component';
 import { ProjectComponent } from './project/project.component';
-import { ProjectListComponent } from './project/project-list/project-list.component';
+// import { ProjectListComponent } from './project/project-list/project-list.component';
 import { ProjectCreateComponent } from './project/project-create/project-create.component';
 import { ProjectDetailComponent } from './project/project-detail/project-detail.component';
 import { CompanyComponent } from './company/company.component';
@@ -65,7 +65,7 @@ import { CategoryDialogComponent } from './category/category-dialog/category-dia
     InvoiceComponent,
     HomeComponent,
     ProjectComponent,
-    ProjectListComponent,
+    // ProjectListComponent,
     ProjectCreateComponent,
     ProjectDetailComponent,
     CompanyComponent,

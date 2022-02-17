@@ -12,7 +12,7 @@ import { ProjectEditComponent } from './project/project-edit/project-edit.compon
 import { LoginComponent } from './auth/login/login.component';
 import { SignUpComponent } from './auth/sign-up/sign-up.component';
 import { CategoryUploadComponent } from './category/category-upload/category-upload.component';
-import { ProjectListComponent } from './project/project-list/project-list.component';
+// import { ProjectListComponent } from './project/project-list/project-list.component';
 import { CompanyCreateComponent } from './company/company-create/company-create.component';
 import { AuthGuard } from './auth/auth.guard';
 import { ProjectDashboardComponent } from './project/project-dashboard/project-dashboard.component';
@@ -22,7 +22,7 @@ const routes: Routes = [
   {path: 'projects', component: ProjectComponent, canActivate: [AuthGuard]},
   {path: 'home', component: HomeComponent},
   {path: 'companies', component: CompanyComponent},
-  {path: 'project-list', component: ProjectListComponent},
+  // {path: 'project-list', component: ProjectListComponent},
   {path: 'projects/:id', component: ProjectBudgetComponent},
   {path: 'projects/:id/draws/:drawid', component: ProjectDetailComponent},
   {path: 'project/invoices', component: ProjectInvoicesComponent},
