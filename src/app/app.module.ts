@@ -42,16 +42,16 @@ import { ProjectDetailComponent } from './project/project-detail/project-detail.
 import { CompanyComponent } from './company/company.component';
 import { ProjectBudgetComponent } from './project/project-budget/project-budget.component';
 import { ProjectInvoicesComponent } from './project/project-invoices/project-invoices.component';
-import { ProjectCategoryComponent } from './project/project-category/project-category.component';
+// import { ProjectCategoryComponent } from './project/project-category/project-category.component';
 import { ProjectEditComponent } from './project/project-edit/project-edit.component';
 import { LoginComponent } from './auth/login/login.component';
 import { SignUpComponent } from './auth/sign-up/sign-up.component';
-import { CategoryUploadComponent } from './project/project-category/category-upload/category-upload.component';
+import { CategoryUploadComponent } from './category/category-upload/category-upload.component';
 import { ProjectDashboardComponent } from './project/project-dashboard/project-dashboard.component';
 import { ProjectService } from './project/project.service';
 import { AuthInterceptor } from './auth/auth-interceptor';
 import { DrawNameDialogComponent } from './project/project-detail/draw-name-dialog/draw-name-dialog.component';
-import { CategoryDialogComponent } from './project/project-budget/category-dialog/category-dialog.component';
+import { CategoryDialogComponent } from './category/category-dialog/category-dialog.component';
 
 
 @NgModule({
@@ -71,7 +71,7 @@ import { CategoryDialogComponent } from './project/project-budget/category-dialo
     CompanyComponent,
     ProjectBudgetComponent,
     ProjectInvoicesComponent,
-    ProjectCategoryComponent,
+    // ProjectCategoryComponent,
     ProjectEditComponent,
     LoginComponent,
     SignUpComponent,

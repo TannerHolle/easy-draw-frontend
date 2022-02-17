@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ProjectService } from '../../project.service';
+import { CategoryService } from '../category.service';
 import {ActivatedRoute, Router} from '@angular/router';
 
 
@@ -15,7 +15,7 @@ export class CategoryUploadComponent implements OnInit {
   public add = false;
   id: String;
 
-  constructor(private projectService: ProjectService, private route: ActivatedRoute, private router: Router) { }
+  constructor(private categoryService: CategoryService, private route: ActivatedRoute, private router: Router) { }
 
   ngOnInit() {
     this.id = this.route.snapshot.paramMap.get('id');
@@ -23,7 +23,8 @@ export class CategoryUploadComponent implements OnInit {
   }
 
   fillCategoryArray() {
-    for (let category of this.projectService.records) {
+    debugger;
+    for (let category of this.categoryService.records) {
       var newCategory = {};
       newCategory["category"] = category.category;
       newCategory["costCode"] = category.costCode;
@@ -33,7 +34,7 @@ export class CategoryUploadComponent implements OnInit {
   }
 
   onAddCategories() {
-    this.projectService.uploadCategories(this.categoryArray, this.id).subscribe((response: any) => {
+    this.categoryService.uploadCategories(this.categoryArray, this.id).subscribe((response: any) => {
       this.router.navigate(['/projects', this.id]);
       });
   };

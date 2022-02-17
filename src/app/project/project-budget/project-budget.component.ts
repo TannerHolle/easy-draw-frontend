@@ -5,7 +5,8 @@ import { ProjectService } from '../project.service';
 import { MatDialog, MatSidenav } from '@angular/material';
 import { BreakpointObserver } from '@angular/cdk/layout';
 import { AuthService } from 'src/app/auth/auth.service';
-import { CategoryDialogComponent } from './category-dialog/category-dialog.component';
+import { CategoryDialogComponent } from '../../category/category-dialog/category-dialog.component';
+import { CategoryService } from 'src/app/category/category.service';
 
 
 export class CsvData {
@@ -46,7 +47,7 @@ export class ProjectBudgetComponent implements OnInit, AfterViewInit {
 
 
 
-  constructor(private route: ActivatedRoute, public dialog: MatDialog, public projectService: ProjectService, private observer: BreakpointObserver, private router: Router, private authService: AuthService) { }
+  constructor(private route: ActivatedRoute, public dialog: MatDialog, public categoryService: CategoryService, public projectService: ProjectService, private observer: BreakpointObserver, private router: Router, private authService: AuthService) { }
 
   ngOnInit() {
     this.route.params.subscribe(routeParams => {
@@ -163,7 +164,7 @@ export class ProjectBudgetComponent implements OnInit, AfterViewInit {
 
         let headersRow = this.getHeaderArray(csvRecordsArray);
 
-        this.projectService.records = this.getDataRecordsArrayFromCSVFile(csvRecordsArray, headersRow.length);
+        this.categoryService.records = this.getDataRecordsArrayFromCSVFile(csvRecordsArray, headersRow.length);
       };
 
       reader.onerror = function () {
