@@ -77,7 +77,6 @@
                 <th mat-header-cell *matHeaderCellDef> Change Orders </th>
                 <td mat-cell *matCellDef="let element"> {{element.changeOrders | currency}} </td>
                 <td mat-footer-cell *matFooterCellDef>{{ calculateTotal('changeOrders') | currency}}</td>
-
               </ng-container>
 
               <!-- Over/Under Column -->
@@ -85,7 +84,13 @@
                 <th mat-header-cell *matHeaderCellDef> Remaining Balance </th>
                 <td mat-cell *matCellDef="let element"> {{element.status | currency}} </td>
                 <td mat-footer-cell *matFooterCellDef>{{ calculateTotal('status') | currency}}</td>
+              </ng-container>
 
+              <!-- Over/Under Column -->
+              <ng-container matColumnDef="totalCost">
+                <th mat-header-cell *matHeaderCellDef> Total Cost </th>
+                <td mat-cell *matCellDef="let element"> {{element.totalCost | currency}} </td>
+                <td mat-footer-cell *matFooterCellDef>{{ calculateTotal('totalCost') | currency}}</td>
               </ng-container>
 
               <!--ROWS-->

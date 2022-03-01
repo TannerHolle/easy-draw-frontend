@@ -19,9 +19,16 @@ export class WebRequestService {
      return this.http.get(`${this.ROOT_URL}/${uri}`);
    }
 
+   getImages(uri: string) {
+     return this.http.get(`${this.ROOT_URL}/${uri}`, {responseType: 'blob'});
+   }
+
    post(uri: string, payload: Object) {
-     return this.http.post(`${this.ROOT_URL}/${uri}`, payload,
-     {responseType: 'text'});
+     return this.http.post(`${this.ROOT_URL}/${uri}`, payload, {responseType: 'text'});
+   }
+
+   postImages(uri: string, payload: Object) {
+     return this.http.post(`${this.ROOT_URL}/${uri}`, payload, {responseType: 'blob'});
    }
 
    postInvoice(uri: string, payload: FormData) {

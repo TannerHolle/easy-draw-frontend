@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs';
 import { WebRequestService } from '../services/web-request.service';
 import { environment } from "../../environments/environment";
-
+import { Observable } from 'rxjs';
 
 import { Project } from '../models/project.model';
 import { HttpClient } from '@angular/common/http';
@@ -20,7 +20,7 @@ export class ProjectService {
 
   constructor(private webReqService: WebRequestService, public http: HttpClient, public router: Router, public CompanyService: CompanyService) {}
 
-  createProject(name: string, address: string, client: string, phone: string, email: string, budget: number, categoryArray: any[]) {
+  createProject(name: string, draw: string, address: string, client: string, phone: string, email: string, budget: number, categoryArray: any[]) {
     return this.webReqService.post('project/create/', {
       "name": name,
       "address": address,
@@ -31,7 +31,7 @@ export class ProjectService {
       "categories": categoryArray,
       "draws": [
         {
-          "name": "draw1",
+          "name": draw,
           "isOpen": true,
           "invoices": [],
           "changeOrders": []
@@ -53,6 +53,16 @@ export class ProjectService {
     });
   }
 
+  changePaidStatus(id: string, drawId: string, invoiceId: string, isPaid: boolean, type: string) {
+    return this.webReqService.post(`invoice/change-paid-status`, {
+      "id": id,
+      "drawId": drawId,
+      "invoiceId": invoiceId,
+      "paidStatus": isPaid,
+      "type": type
+    });
+  }
+
   getProjects() {
     return this.webReqService.get(`project/list`);
   };
@@ -64,6 +74,28 @@ export class ProjectService {
   getOneProject(id) {
     return this.webReqService.get(`project/${id}`);
   };
+
+  getImage(imageUrl: string): Observable<Blob> {
+    return this.http.get(imageUrl, { responseType: 'blob' });
+  }
+
+  saveImages(id, drawId) {
+    return this.webReqService.getImages(`project/save-images/${id}/${drawId}`);
+  };
+
+  convertImages() {
+    return this.webReqService.get(`project/convert-images`);
+  };
+
+  download(filename){
+    const fileObj = {
+        filename : filename
+    };
+    console.log(fileObj);
+    return this.webReqService.postImages(`project/download`, fileObj);
+  }
+
+
 
   deleteProject(projectId) {
     return this.webReqService.delete(`project/delete/${projectId}`)

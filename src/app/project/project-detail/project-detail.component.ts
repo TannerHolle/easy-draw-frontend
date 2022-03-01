@@ -1,12 +1,18 @@
 import { BreakpointObserver } from '@angular/cdk/layout';
 import { Component, ViewChild, OnInit } from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
+import { saveAs } from 'file-saver';
+import { PDFDocument, StandardFonts, rgb  } from 'pdf-lib'
+import { jsPDF } from 'jspdf'
+import * as JSZip from 'jszip';
+
 
 import { MatDialog, MatSidenav } from '@angular/material';
 
 import { ProjectService } from '../project.service';
 import { AuthService } from 'src/app/auth/auth.service';
 import { DrawNameDialogComponent } from './draw-name-dialog/draw-name-dialog.component';
+import { HttpClient } from '@angular/common/http';
 
 
 @Component({
@@ -25,20 +31,22 @@ export class ProjectDetailComponent implements OnInit {
   draws = [];
   project = [];
   name: string;
+  imgUrls = []
 
 
   @ViewChild(MatSidenav)
   sidenav!: MatSidenav;
 
 
-  displayedColumns: string[] = ['company','category','address','invoiceNum','amount', 'taxId', 'invoicePath'];
+  displayedColumns: string[] = ['company','category','address','invoiceNum','amount', 'taxId', 'invoicePath', 'isPaid'];
   dataSource = [];
 
 
-  constructor(private route: ActivatedRoute, public dialog: MatDialog, public projectService: ProjectService, private observer: BreakpointObserver, private authService: AuthService, private router: Router) { }
+  constructor(private route: ActivatedRoute, private http: HttpClient, public dialog: MatDialog, public projectService: ProjectService, private observer: BreakpointObserver, private authService: AuthService, private router: Router) { }
 
   ngOnInit() {
     this.route.params.subscribe(routeParams => {
+      this.imgUrls = [];
       this.drawData = [];
       this.id = routeParams.id;
       this.drawId = routeParams.drawid;
@@ -154,7 +162,16 @@ export class ProjectDetailComponent implements OnInit {
         });
       }
     });
+  };
+
+  changePaidStatus(isPaid, invoiceId, type) {
+    this.projectService.changePaidStatus(this.id, this.drawId, invoiceId, isPaid, type).subscribe((res: any) => {
+      window.location.reload();
+    });
   }
 
+
 }
+
+
 

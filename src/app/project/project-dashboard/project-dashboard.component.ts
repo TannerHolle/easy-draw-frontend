@@ -27,7 +27,7 @@ export class ProjectDashboardComponent implements OnInit {
   userId: string;
   userName: string;
 
-  displayedColumns: string[] = ['name', 'client', 'budget', 'spent', 'status', '_id'];
+  displayedColumns: string[] = ['name', 'client', 'budget', 'spent', 'status', 'changeOrder', '_id'];
   dataSource = [];
 
   ngOnInit() {
@@ -55,6 +55,7 @@ export class ProjectDashboardComponent implements OnInit {
         continue;
       }
       let projectSpent = 0;
+      let changeOrderSpend = 0;
       var projectObj = {};
       projectObj["_id"] = project._id
       projectObj["name"] = project.name
@@ -64,8 +65,12 @@ export class ProjectDashboardComponent implements OnInit {
         for ( let invoice of draw.invoices) {
           projectSpent = projectSpent + invoice.invoiceAmt;
         }
+        for ( let changeOrder of draw.changeOrders) {
+          changeOrderSpend = changeOrderSpend + changeOrder.invoiceAmt;
+        }
       }
       projectObj["spent"] = projectSpent;
+      projectObj["changeOrder"] = changeOrderSpend;
       projectObj["status"] = project.budget - projectSpent;
       formattedProjects.push(projectObj)
     }

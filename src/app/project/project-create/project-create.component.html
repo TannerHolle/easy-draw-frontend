@@ -6,6 +6,10 @@
         <mat-error *ngIf="name.invalid">Please Enter Project Name</mat-error>
       </mat-form-field>
       <mat-form-field>
+        <input matInput placeholder="First Draw Name (Examples: Draw 1, March 1-31, etc)" name="draw" ngModel required #draw = 'ngModel'>
+        <mat-error *ngIf="draw.invalid">Please Enter Draw Name</mat-error>
+      </mat-form-field>
+      <mat-form-field>
         <input matInput placeholder="Address" name="address" ngModel required #address='ngModel'>
         <mat-error *ngIf="address.invalid">Please Enter Project Address</mat-error>
       </mat-form-field>
@@ -14,15 +18,15 @@
         <mat-error *ngIf="client.invalid">Please Enter Client</mat-error>
       </mat-form-field>
       <mat-form-field>
-        <input matInput placeholder="Budget" name="budget" ngModel #budget= 'ngModel'>
+        <input matInput type="number" placeholder="Budget" name="budget" ngModel required #budget= 'ngModel'>
         <mat-error *ngIf="budget.invalid">Please Enter Budget</mat-error>
       </mat-form-field>
       <mat-form-field>
-        <input matInput placeholder="Phone Number" name="phone" ngModel #phone='ngModel'>
+        <input matInput placeholder="Phone Number" name="phone" ngModel required #phone='ngModel'>
         <mat-error *ngIf="phone.invalid">Please Enter Valid Phone Number</mat-error>
       </mat-form-field>
       <mat-form-field>
-        <input matInput placeholder="Email Address" name="email" ngModel #email='ngModel'>
+        <input matInput type="email" placeholder="Email Address" name="email" ngModel required #email='ngModel'>
         <mat-error *ngIf="email.invalid">Please Enter Valid Email</mat-error>
       </mat-form-field>
       <mat-card>
@@ -75,21 +79,3 @@
   </mat-card>
 </main>
 
-
-<!-- <td>
-  <mat-form-field>
-    <input matInput [(ngModel)]="field.category" name="{{field.category}}" placeholder="Category">
-  </mat-form-field>
-</td>
-<td>
-  <mat-form-field >
-    <input matInput [(ngModel)]="field.costCode" name="{{field.costCode}}" placeholder="Cost Code">
-  </mat-form-field>
-<td>
-  <mat-form-field >
-    <input matInput [(ngModel)]="field.budget" name="{{field.budget}}" placeholder="Budget" >
-  </mat-form-field>
-</td>
-<td>
-  <a mat-raised-button (click)="deleteCategory(i)">Delete</a>
-</td> -->

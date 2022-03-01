@@ -62,10 +62,16 @@
               <td mat-footer-cell *matFooterCellDef></td>
             </ng-container>
             <ng-container matColumnDef="invoicePath">
-              <th mat-header-cell *matHeaderCellDef> Inovice PDF </th>
+              <th mat-header-cell *matHeaderCellDef> Inovice </th>
               <td mat-cell *matCellDef="let element">
                 <a href={{element.invoicePath}} target="_blank"><button>Click to View Invoice</button></a>
               </td>
+              <td mat-footer-cell *matFooterCellDef></td>
+
+            </ng-container>
+            <ng-container matColumnDef="isPaid">
+              <th mat-header-cell *matHeaderCellDef> Is Paid? </th>
+              <td mat-cell *matCellDef="let element"><mat-checkbox [checked]="element.isPaid" (click)="changePaidStatus(element.isPaid, element._id, data.name)"></mat-checkbox></td>
               <td mat-footer-cell *matFooterCellDef></td>
 
             </ng-container>

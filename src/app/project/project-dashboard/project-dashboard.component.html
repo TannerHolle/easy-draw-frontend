@@ -35,6 +35,12 @@
       </ng-container>
 
       <!-- Symbol Column -->
+      <ng-container matColumnDef="changeOrder">
+        <th mat-header-cell *matHeaderCellDef> Change Orders </th>
+        <td mat-cell *matCellDef="let element"> {{element.changeOrder | currency}} </td>
+      </ng-container>
+
+      <!-- Symbol Column -->
       <ng-container matColumnDef="_id">
         <th mat-header-cell *matHeaderCellDef> Actions </th>
         <td mat-cell *matCellDef="let element">

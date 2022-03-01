@@ -116,6 +116,7 @@ export class ProjectBudgetComponent implements OnInit, AfterViewInit {
       categoryInfo["spent"] = spend;
       categoryInfo["status"] = categoryInfo["budget"] - categoryInfo["spent"];
       categoryInfo["changeOrders"] = changeOrders;
+      categoryInfo["totalCost"] = spend + changeOrders;
       budgetArray.push(categoryInfo);
     }
 
