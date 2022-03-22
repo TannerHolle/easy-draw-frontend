@@ -32,13 +32,14 @@ export class ProjectDetailComponent implements OnInit {
   project = [];
   name: string;
   imgUrls = []
+  isChecked = false;
 
 
   @ViewChild(MatSidenav)
   sidenav!: MatSidenav;
 
 
-  displayedColumns: string[] = ['company','category','address','invoiceNum','amount', 'taxId', 'invoicePath', 'isPaid'];
+  displayedColumns: string[] = ['company','category','address','invoiceNum','amount', 'taxId', 'invoicePath', 'isPaid', '_id'];
   dataSource = [];
 
 
@@ -57,6 +58,7 @@ export class ProjectDetailComponent implements OnInit {
         this.project = project;
         this.drawIdCapital = this.makePretty(this.drawId);
         this.drawInvoices = this.getInvoicesOnDraw();
+        console.log(this.drawInvoices)
         if (this.drawInvoices.length > 0) {
           this.drawData.push({name: 'Invoices', data: this.drawInvoices});
         }
@@ -168,6 +170,13 @@ export class ProjectDetailComponent implements OnInit {
     this.projectService.changePaidStatus(this.id, this.drawId, invoiceId, isPaid, type).subscribe((res: any) => {
       window.location.reload();
     });
+  }
+
+  deleteInvoice() {
+    var result = confirm("Are you sure you want to delete this In? THIS CANNOT BE UNDONE");
+    if (result) {
+      window.alert("the invoice would've been deleted")
+    }
   }
 
 

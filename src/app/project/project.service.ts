@@ -116,15 +116,29 @@ export class ProjectService {
       console.log(responseData)
       this.router.navigate(['/projects', projectId]);
     });
-    // return this.webReqService.post('invoices', {
-    //   "company": company,
-    //   "address": address,
-    //   "category": category,
-    //   "invoiceNum": invoiceNum,
-    //   "invoiceAmt": invoiceAmt,
-    //   "project": project,
-    //   "draw": draw
-    // });
+  }
+
+  updateInvoice(projectId: string, invoiceNum: string, invoiceAmt: Number, draw: string, invoiceId: string) {
+    let updateData = {
+      projectId: projectId,
+      invoiceNum: invoiceNum,
+      invoiceAmt: invoiceAmt,
+      invoiceId: invoiceId,
+      draw: draw
+    }
+    debugger;
+    // const invoiceData = new FormData()
+    // invoiceData.append("projectId", projectId)
+    // invoiceData.append("draw", draw)
+    // invoiceData.append("category", category)
+    // invoiceData.append("company", company['name'])
+    // invoiceData.append("invoiceNum", invoiceNum)
+    // invoiceData.append("invoiceAmt", invoiceAmt.toString())
+    // invoiceData.append("invoiceId", invoiceId)
+    this.http.post(environment.apiUrl + '/invoice/update', updateData).subscribe(responseData => {
+      console.log(responseData)
+      this.router.navigate(['/projects', projectId]);
+    });
   }
 
   createChangeOrder(projectId: string, company: {}, category: string, invoiceNum: string, invoiceAmt: Number, draw: string, image: File) {

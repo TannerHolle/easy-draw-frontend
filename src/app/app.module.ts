@@ -52,6 +52,7 @@ import { ProjectService } from './project/project.service';
 import { AuthInterceptor } from './auth/auth-interceptor';
 import { DrawNameDialogComponent } from './project/project-detail/draw-name-dialog/draw-name-dialog.component';
 import { CategoryDialogComponent } from './category/category-dialog/category-dialog.component';
+import { EditInvoiceComponent } from './project/project-invoices/edit-invoice/edit-invoice.component';
 
 
 @NgModule({
@@ -79,6 +80,7 @@ import { CategoryDialogComponent } from './category/category-dialog/category-dia
     ProjectDashboardComponent,
     DrawNameDialogComponent,
     CategoryDialogComponent,
+    EditInvoiceComponent,
   ],
   imports: [
     AppMaterialModules,

@@ -27,60 +27,130 @@
           </span>
         </div>
         <ng-container *ngIf="drawData.length == 0">You will see Inovices and Change orders here once you input them</ng-container>
-        <ng-container *ngFor="let data of drawData">
-        <h2>{{data.name}}</h2>
-        <div class="mat-elevation-z2">
-          <table mat-table [dataSource]="data.data">
-            <ng-container matColumnDef="company">
-              <th mat-header-cell *matHeaderCellDef> Company </th>
-              <td mat-cell *matCellDef="let element"> {{element.company}} </td>
-              <td mat-footer-cell *matFooterCellDef></td>
-            </ng-container>
-            <ng-container matColumnDef="category">
-              <th mat-header-cell *matHeaderCellDef> Cateogry </th>
-              <td mat-cell *matCellDef="let element"> {{element.category}} </td>
-              <td mat-footer-cell *matFooterCellDef></td>
-            </ng-container>
-            <ng-container matColumnDef="address">
-              <th mat-header-cell *matHeaderCellDef> Address </th>
-              <td mat-cell *matCellDef="let element"> {{element.address}} </td>
-              <td mat-footer-cell *matFooterCellDef></td>
-            </ng-container>
-            <ng-container matColumnDef="invoiceNum">
-              <th mat-header-cell *matHeaderCellDef> Inovice Number </th>
-              <td mat-cell *matCellDef="let element"> {{element.invoiceNum}} </td>
-              <td mat-footer-cell *matFooterCellDef>Draw Total:</td>
-            </ng-container>
-            <ng-container matColumnDef="amount">
-              <th mat-header-cell *matHeaderCellDef> Invoice Amount </th>
-              <td mat-cell *matCellDef="let element"> {{element.invoiceAmt | currency}} </td>
-              <td mat-footer-cell *matFooterCellDef>{{ calculateTotal(data.name) | currency}}</td>
-            </ng-container>
-            <ng-container matColumnDef="taxId">
-              <th mat-header-cell *matHeaderCellDef> Tax ID </th>
-              <td mat-cell *matCellDef="let element"> {{element.taxId}} </td>
-              <td mat-footer-cell *matFooterCellDef></td>
-            </ng-container>
-            <ng-container matColumnDef="invoicePath">
-              <th mat-header-cell *matHeaderCellDef> Inovice </th>
-              <td mat-cell *matCellDef="let element">
-                <a href={{element.invoicePath}} target="_blank"><button>Click to View Invoice</button></a>
-              </td>
-              <td mat-footer-cell *matFooterCellDef></td>
+        <ng-container *ngIf="drawData.length != 0">
+        <h3>Invoices <mat-slide-toggle color="primary" [(ngModel)]="isChecked"></mat-slide-toggle> Change Orders</h3>
+        <ng-container *ngIf="isChecked == false">
+          <div class="mat-elevation-z2">
+            <table mat-table [dataSource]="drawInvoices">
+              <ng-container matColumnDef="company">
+                <th mat-header-cell *matHeaderCellDef> Company </th>
+                <td mat-cell *matCellDef="let element"> {{element.company}} </td>
+                <td mat-footer-cell *matFooterCellDef></td>
+              </ng-container>
+              <ng-container matColumnDef="category">
+                <th mat-header-cell *matHeaderCellDef> Cateogry </th>
+                <td mat-cell *matCellDef="let element"> {{element.category}} </td>
+                <td mat-footer-cell *matFooterCellDef></td>
+              </ng-container>
+              <ng-container matColumnDef="address">
+                <th mat-header-cell *matHeaderCellDef> Address </th>
+                <td mat-cell *matCellDef="let element"> {{element.address}} </td>
+                <td mat-footer-cell *matFooterCellDef></td>
+              </ng-container>
+              <ng-container matColumnDef="invoiceNum">
+                <th mat-header-cell *matHeaderCellDef> Inovice Number </th>
+                <td mat-cell *matCellDef="let element"> {{element.invoiceNum}} </td>
+                <td mat-footer-cell *matFooterCellDef>Draw Total:</td>
+              </ng-container>
+              <ng-container matColumnDef="amount">
+                <th mat-header-cell *matHeaderCellDef> Invoice Amount </th>
+                <td mat-cell *matCellDef="let element"> {{element.invoiceAmt | currency}} </td>
+                <td mat-footer-cell *matFooterCellDef>{{ calculateTotal('Invoices') | currency}}</td>
+              </ng-container>
+              <ng-container matColumnDef="taxId">
+                <th mat-header-cell *matHeaderCellDef> Tax ID </th>
+                <td mat-cell *matCellDef="let element"> {{element.taxId}} </td>
+                <td mat-footer-cell *matFooterCellDef></td>
+              </ng-container>
+              <ng-container matColumnDef="invoicePath">
+                <th mat-header-cell *matHeaderCellDef> Inovice </th>
+                <td mat-cell *matCellDef="let element">
+                  <a href={{element.invoicePath}} target="_blank"><button>Click to View Invoice</button></a>
+                </td>
+                <td mat-footer-cell *matFooterCellDef></td>
+              </ng-container>
 
-            </ng-container>
-            <ng-container matColumnDef="isPaid">
-              <th mat-header-cell *matHeaderCellDef> Is Paid? </th>
-              <td mat-cell *matCellDef="let element"><mat-checkbox [checked]="element.isPaid" (click)="changePaidStatus(element.isPaid, element._id, data.name)"></mat-checkbox></td>
-              <td mat-footer-cell *matFooterCellDef></td>
+              <ng-container matColumnDef="isPaid">
+                <th mat-header-cell *matHeaderCellDef> Is Paid? </th>
+                <td mat-cell *matCellDef="let element"><mat-checkbox [checked]="element.isPaid" (click)="changePaidStatus(element.isPaid, element._id, 'Invoices')"></mat-checkbox></td>
+                <td mat-footer-cell *matFooterCellDef></td>
+              </ng-container>
 
-            </ng-container>
-            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-            <tr mat-row class="element-row"  *matRowDef="let row; columns: displayedColumns;" ></tr>
-            <tr mat-footer-row class="footer-row" *matFooterRowDef="displayedColumns"></tr>
+              <!-- Action Column -->
+              <ng-container matColumnDef="_id">
+                <th mat-header-cell *matHeaderCellDef> Actions </th>
+                <td mat-cell *matCellDef="let element">
+                  <mat-icon class="action-items" [routerLink]="['/project/edit-invoice', this.id, this.drawId, element._id]">edit</mat-icon>
+                  <mat-icon class="action-items" (click)="deleteInvoice(element._id)">delete</mat-icon>
+                </td>
+                <td mat-footer-cell *matFooterCellDef></td>
+              </ng-container>
 
-          </table>
-        </div>
+              <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+              <tr mat-row class="element-row"  *matRowDef="let row; columns: displayedColumns;" ></tr>
+              <tr mat-footer-row class="footer-row" *matFooterRowDef="displayedColumns"></tr>
+
+            </table>
+          </div>
+        </ng-container>
+        <ng-container *ngIf="isChecked == true">
+          <div class="mat-elevation-z2">
+            <table mat-table [dataSource]="drawChangeOrders">
+              <ng-container matColumnDef="company">
+                <th mat-header-cell *matHeaderCellDef> Company </th>
+                <td mat-cell *matCellDef="let element"> {{element.company}} </td>
+                <td mat-footer-cell *matFooterCellDef></td>
+              </ng-container>
+              <ng-container matColumnDef="category">
+                <th mat-header-cell *matHeaderCellDef> Cateogry </th>
+                <td mat-cell *matCellDef="let element"> {{element.category}} </td>
+                <td mat-footer-cell *matFooterCellDef></td>
+              </ng-container>
+              <ng-container matColumnDef="address">
+                <th mat-header-cell *matHeaderCellDef> Address </th>
+                <td mat-cell *matCellDef="let element"> {{element.address}} </td>
+                <td mat-footer-cell *matFooterCellDef></td>
+              </ng-container>
+              <ng-container matColumnDef="invoiceNum">
+                <th mat-header-cell *matHeaderCellDef> Inovice Number </th>
+                <td mat-cell *matCellDef="let element"> {{element.invoiceNum}} </td>
+                <td mat-footer-cell *matFooterCellDef>Draw Total:</td>
+              </ng-container>
+              <ng-container matColumnDef="amount">
+                <th mat-header-cell *matHeaderCellDef> Invoice Amount </th>
+                <td mat-cell *matCellDef="let element"> {{element.invoiceAmt | currency}} </td>
+                <td mat-footer-cell *matFooterCellDef>{{ calculateTotal('Change Orders') | currency}}</td>
+              </ng-container>
+              <ng-container matColumnDef="taxId">
+                <th mat-header-cell *matHeaderCellDef> Tax ID </th>
+                <td mat-cell *matCellDef="let element"> {{element.taxId}} </td>
+                <td mat-footer-cell *matFooterCellDef></td>
+              </ng-container>
+              <ng-container matColumnDef="invoicePath">
+                <th mat-header-cell *matHeaderCellDef> Inovice </th>
+                <td mat-cell *matCellDef="let element">
+                  <a href={{element.invoicePath}} target="_blank"><button>Click to View Invoice</button></a>
+                </td>
+                <td mat-footer-cell *matFooterCellDef></td>
+              </ng-container>
+              <ng-container matColumnDef="isPaid">
+                <th mat-header-cell *matHeaderCellDef> Is Paid? </th>
+                <td mat-cell *matCellDef="let element"><mat-checkbox [checked]="element.isPaid" (click)="changePaidStatus(element.isPaid, element._id, 'Change Orders')"></mat-checkbox></td>
+                <td mat-footer-cell *matFooterCellDef></td>
+              </ng-container>
+              <ng-container matColumnDef="_id">
+                <th mat-header-cell *matHeaderCellDef></th>
+                <td mat-cell *matCellDef="let element"></td>
+                <td mat-footer-cell *matFooterCellDef></td>
+              </ng-container>
+
+              <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+              <tr mat-row class="element-row"  *matRowDef="let row; columns: displayedColumns;" ></tr>
+              <tr mat-footer-row class="footer-row" *matFooterRowDef="displayedColumns"></tr>
+
+            </table>
+          </div>
+        </ng-container>
       </ng-container>
 
         <div class="btn-group">

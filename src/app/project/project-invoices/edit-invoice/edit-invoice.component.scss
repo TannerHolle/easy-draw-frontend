@@ -1,0 +1,19 @@
+main {
+  width: 80%;
+  margin: 1rem auto;
+}
+
+mat-form-field,
+textarea {
+  width: 100%;
+}
+
+.remove-icon {
+  margin-right: 1%;
+  cursor: pointer;
+  vertical-align: middle;
+}
+
+.submit-button {
+  margin-top: 1rem;
+}

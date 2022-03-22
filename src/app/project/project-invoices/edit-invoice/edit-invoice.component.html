@@ -1,0 +1,69 @@
+
+<main>
+  <div>Project: {{ this.invoiceInfo.projectName }}</div>
+  <div>Draw: {{ this.invoiceInfo.drawName }}</div>
+  <div>Company: {{ this.invoiceInfo.company }}</div>
+  <div>Category: {{ this.invoiceInfo.category }}</div>
+  <mat-card>
+    <mat-spinner *ngIf="isLoading"></mat-spinner>
+    <form [formGroup]="form" (submit)="onUpdateInvoice()" *ngIf="!isLoading">
+      <!-- <mat-form-field>
+        <mat-label>Company</mat-label>
+        <mat-select formControlName="company" >
+          <mat-option *ngFor="let company of this.companies" [value]="company">
+            {{company.name}}
+          </mat-option>
+        </mat-select>
+        <mat-error *ngIf="form.get('company').invalid">Please select a company</mat-error>
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>Category</mat-label>
+        <mat-select formControlName="category">
+          <mat-option *ngFor="let category of this.categories" [value]="category.category">
+            {{category.category}}
+          </mat-option>
+        </mat-select>
+        <mat-error *ngIf="form.get('category').invalid">Please select a category</mat-error>
+      </mat-form-field> -->
+      <mat-form-field>
+        <input
+        matInput
+        type="text"
+        value="{{this.invoiceInfo.invoiceNumber}}"
+        formControlName="invoiceNum"
+        placeholder="Invoice Number" >
+        <!-- <mat-error *ngIf="form.get('invoiceNum').invalid">Please Enter an Invoice Number</mat-error> -->
+      </mat-form-field>
+      <mat-form-field>
+        <input
+        matInput
+        type="number"
+        value="{{this.invoiceInfo.invoiceAmount}}"
+        formControlName="invoiceAmt"
+        placeholder="Invoice Amount" >
+        <!-- <mat-error *ngIf="form.get('invoiceAmt').invalid">Please Enter an Invoice Amount</mat-error> -->
+      </mat-form-field>
+      <button
+      class="submit-button"
+      mat-raised-button
+      color="primary"
+      type="submit">Update Invoice</button>
+    </form>
+  </mat-card>
+</main>
+
+
+
+
+
+<!-- <h1 mat-dialog-title>Open New Draw</h1>
+<div mat-dialog-content>
+  <mat-form-field appearance="fill">
+    <mat-label>Name</mat-label>
+    <input matInput [(ngModel)]="data.drawName">
+  </mat-form-field>
+</div>
+<div mat-dialog-actions>
+  <button mat-button (click)="onNoClick()">Cancel</button>
+  <button mat-button [mat-dialog-close]="data.drawName" cdkFocusInitial>Ok</button>
+</div> -->

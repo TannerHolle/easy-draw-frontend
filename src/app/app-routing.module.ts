@@ -16,6 +16,7 @@ import { CategoryUploadComponent } from './category/category-upload/category-upl
 import { CompanyCreateComponent } from './company/company-create/company-create.component';
 import { AuthGuard } from './auth/auth.guard';
 import { ProjectDashboardComponent } from './project/project-dashboard/project-dashboard.component';
+import { EditInvoiceComponent } from './project/project-invoices/edit-invoice/edit-invoice.component';
 
 const routes: Routes = [
   {path: '', component: HomeComponent},
@@ -26,6 +27,7 @@ const routes: Routes = [
   {path: 'projects/:id', component: ProjectBudgetComponent},
   {path: 'projects/:id/draws/:drawid', component: ProjectDetailComponent},
   {path: 'project/invoices', component: ProjectInvoicesComponent},
+  {path: 'project/edit-invoice/:projectId/:drawId/:invoiceId', component: EditInvoiceComponent},
   {path: 'project/invoices/:id', component: ProjectInvoicesComponent},
   {path: 'project/invoices/:id/:drawId', component: ProjectInvoicesComponent},
   {path: 'project/create', component: ProjectCreateComponent},
