@@ -63,7 +63,6 @@ export class EditInvoiceComponent implements OnInit {
             invalid.push(name);
         }
     }
-    debugger;
     return invalid;
   }
 
@@ -72,7 +71,6 @@ export class EditInvoiceComponent implements OnInit {
 
     let invoiceNumb = this.form.value.invoiceNum;
     let invoiceAmnt = this.form.value.invoiceAmt;
-    debugger;
     if (!invoiceNumb) {
       invoiceNumb = this.invoiceInfo['invoiceNumber']
     }

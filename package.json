@@ -1,6 +1,6 @@
 {
   "name": "easy-draw",
-  "version": "0.0.0",
+  "version": "1.0.0",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
@@ -36,7 +36,6 @@
     "jspdf": "^2.5.1",
     "jszip": "^3.7.1",
     "mongoose": "^6.0.13",
-    "ngx-csv-parser": "^0.0.7",
     "ngx-papaparse": "^5.0.0",
     "node-sass": "^4.14.1",
     "nodemon": "^2.0.15",

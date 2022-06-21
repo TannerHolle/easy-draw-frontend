@@ -2,6 +2,7 @@ import { Component, DebugElement, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { ProjectService } from '../project.service';
 import { Router } from '@angular/router';
+import { debug } from 'util';
 
 @Component({
   selector: 'app-project-create',
@@ -22,6 +23,7 @@ export class ProjectCreateComponent implements OnInit {
     if (form.invalid) {
       return;
     }
+    debugger;
     this.projectService.createProject(form.value.name, form.value.draw, form.value.address, form.value.client, form.value.phone, form.value.email, form.value.budget, this.categoryArray).subscribe((response: any) => {
       this.router.navigate(['/projects']);
       console.log(response);

@@ -2,7 +2,7 @@
 <div mat-dialog-content>
   <mat-form-field appearance="fill">
     <mat-label>Name</mat-label>
-    <input matInput [(ngModel)]="data.drawName">
+    <input matInput pattern="[a-zA-Z0-9]+" [(ngModel)]="data.drawName">
   </mat-form-field>
 </div>
 <div mat-dialog-actions>

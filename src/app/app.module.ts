@@ -53,6 +53,7 @@ import { AuthInterceptor } from './auth/auth-interceptor';
 import { DrawNameDialogComponent } from './project/project-detail/draw-name-dialog/draw-name-dialog.component';
 import { CategoryDialogComponent } from './category/category-dialog/category-dialog.component';
 import { EditInvoiceComponent } from './project/project-invoices/edit-invoice/edit-invoice.component';
+import { CompanyUploadComponent } from './company/company-upload/company-upload.component';
 
 
 @NgModule({
@@ -81,6 +82,7 @@ import { EditInvoiceComponent } from './project/project-invoices/edit-invoice/ed
     DrawNameDialogComponent,
     CategoryDialogComponent,
     EditInvoiceComponent,
+    CompanyUploadComponent,
   ],
   imports: [
     AppMaterialModules,

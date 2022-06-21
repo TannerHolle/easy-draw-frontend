@@ -1,12 +1,11 @@
 
 <main>
-  <div>Project: {{ this.invoiceInfo.projectName }}</div>
-  <div>Draw: {{ this.invoiceInfo.drawName }}</div>
-  <div>Company: {{ this.invoiceInfo.company }}</div>
-  <div>Category: {{ this.invoiceInfo.category }}</div>
+  <div>Project: {{ this.invoiceInfo['projectName'] }}</div>
+  <div>Draw: {{ this.invoiceInfo['drawName'] }}</div>
+  <div>Company: {{ this.invoiceInfo['company'] }}</div>
+  <div>Category: {{ this.invoiceInfo['category'] }}</div>
   <mat-card>
-    <mat-spinner *ngIf="isLoading"></mat-spinner>
-    <form [formGroup]="form" (submit)="onUpdateInvoice()" *ngIf="!isLoading">
+    <form [formGroup]="form" (submit)="onUpdateInvoice()">
       <!-- <mat-form-field>
         <mat-label>Company</mat-label>
         <mat-select formControlName="company" >
@@ -29,7 +28,7 @@
         <input
         matInput
         type="text"
-        value="{{this.invoiceInfo.invoiceNumber}}"
+        value="{{this.invoiceInfo['invoiceNumber']}}"
         formControlName="invoiceNum"
         placeholder="Invoice Number" >
         <!-- <mat-error *ngIf="form.get('invoiceNum').invalid">Please Enter an Invoice Number</mat-error> -->
@@ -38,7 +37,7 @@
         <input
         matInput
         type="number"
-        value="{{this.invoiceInfo.invoiceAmount}}"
+        value="{{this.invoiceInfo['invoiceAmount']}}"
         formControlName="invoiceAmt"
         placeholder="Invoice Amount" >
         <!-- <mat-error *ngIf="form.get('invoiceAmt').invalid">Please Enter an Invoice Amount</mat-error> -->

@@ -24,4 +24,24 @@ button {
   cursor: pointer;
 }
 
+.action-buttons {
+  display: flex;
+  align-items: center;
+}
 
+input[type="file"] {
+  display: none;
+}
+.material-icons, .material-icons-outlined{
+  cursor: pointer;
+  float: center;
+  margin: 3px;
+  font-size: 15px;
+}
+
+.comment-tooltip{
+  cursor: pointer;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}

@@ -59,8 +59,11 @@
   </div>
   <h2 style="text-align: center;" *ngIf="companies.length==0">No companies added yet, please add a company</h2>
 
-  <div class="btn-group">
+  <div class="btn-group action-buttons">
     <button mat-raised-button [routerLink]="['/company/create']">Add Sub-Contractor/Vendor</button>
+    <button mat-raised-button class="add-project" (click)="filePicker.click()">Upload Sub-Contractor/Vendor Template</button> {{companyService.fileName}}
+    <input type="file" class="upload" (change)="companyService.changeListener($event.target.files)" #filePicker>
+    <mat-icon (click)="companyService.upload()" matTooltip="Upload CSV" class="material-icons-outlined" style="font-size: 24px" matTooltipClass="tooltip">file_upload</mat-icon>
   </div>
 </main>
 

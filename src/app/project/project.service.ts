@@ -126,7 +126,6 @@ export class ProjectService {
       invoiceId: invoiceId,
       draw: draw
     }
-    debugger;
     // const invoiceData = new FormData()
     // invoiceData.append("projectId", projectId)
     // invoiceData.append("draw", draw)
@@ -186,7 +185,7 @@ export class ProjectService {
   }
 
   openNewDraw(projectId, drawId) {
-    return this.webReqService.post(`project/open-new-draw/${projectId}/${drawId}`, {});
+    return this.webReqService.post(`project/open-new-draw/${projectId}`, {"drawId": drawId});
   }
 
   getProjectUpdateListener() {

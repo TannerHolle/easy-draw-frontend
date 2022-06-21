@@ -40,7 +40,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
     var hiddenElement = document.createElement('a');
     hiddenElement.href = 'data:text/csv;charset=utf-8,' + encodeURI(header);
     hiddenElement.target = '_blank';
-    hiddenElement.download = 'BudgetTemplate.csv';
+    hiddenElement.download = 'Budget-CategoryTemplate.csv';
     hiddenElement.click();
   }
   downloadVendorTemplate() {
@@ -48,7 +48,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
     var hiddenElement = document.createElement('a');
     hiddenElement.href = 'data:text/csv;charset=utf-8,' + encodeURI(header);
     hiddenElement.target = '_blank';
-    hiddenElement.download = 'BudgetTemplate.csv';
+    hiddenElement.download = 'VendorTemplate.csv';
     hiddenElement.click();
   }
 

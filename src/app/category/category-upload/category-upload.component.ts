@@ -23,7 +23,6 @@ export class CategoryUploadComponent implements OnInit {
   }
 
   fillCategoryArray() {
-    debugger;
     for (let category of this.categoryService.records) {
       var newCategory = {};
       newCategory["category"] = category.category;
