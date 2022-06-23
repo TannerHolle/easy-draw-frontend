@@ -47,7 +47,6 @@ export class CompanyUploadComponent implements OnInit {
   }
 
   onAddVendors() {
-    debugger;
     this.companyService.uploadCompanies(this.vendorArray, this.id).subscribe((response: any) => {
       this.router.navigate(['/companies']);
       });

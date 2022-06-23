@@ -23,7 +23,6 @@ export class ProjectCreateComponent implements OnInit {
     if (form.invalid) {
       return;
     }
-    debugger;
     this.projectService.createProject(form.value.name, form.value.draw, form.value.address, form.value.client, form.value.phone, form.value.email, form.value.budget, this.categoryArray).subscribe((response: any) => {
       this.router.navigate(['/projects']);
       console.log(response);

@@ -18,6 +18,7 @@ import { AuthGuard } from './auth/auth.guard';
 import { ProjectDashboardComponent } from './project/project-dashboard/project-dashboard.component';
 import { EditInvoiceComponent } from './project/project-invoices/edit-invoice/edit-invoice.component';
 import { CompanyUploadComponent } from './company/company-upload/company-upload.component';
+import { ForgotPasswordComponent } from './auth/forgot-password/forgot-password.component';
 
 const routes: Routes = [
   {path: '', component: HomeComponent},
@@ -40,6 +41,7 @@ const routes: Routes = [
   {path: 'project-edit/:id', component: ProjectEditComponent},
   {path: 'login', component: LoginComponent},
   {path: 'sign-up', component: SignUpComponent},
+  {path: 'forgot-password', component: ForgotPasswordComponent},
 ];
 
 @NgModule({

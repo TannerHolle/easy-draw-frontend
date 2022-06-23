@@ -43,8 +43,8 @@ export class AuthService {
     return this.authStatusListener.asObservable();
   }
 
-  createUser(name: string, company: string, email: string, password: string) {
-    const authData = { "name": name, "company": company, "email": email, "password": password }
+  createUser(name: string, company: string, email: string, password: string, answer: string) {
+    const authData = { "name": name, "company": company, "email": email, "password": password, "answer": answer }
     this.http.post(environment.apiUrl + '/user/sign-up', authData)
     .subscribe(response => {
       console.log(response)
@@ -60,6 +60,21 @@ export class AuthService {
     //   "email": email,
     //   "password": password,
     // })
+  }
+
+  resetPassword(email: string, password: string) {
+    const authData = {"email": email, "password": password }
+    this.http.post(environment.apiUrl + '/user/reset-password', authData)
+    .subscribe(response => {
+      console.log(response)
+      this.login(email,password)
+      this.router.navigate(["/projects"]);
+    },
+    error => {
+      this.authStatusListener.next(false);
+      window.alert("Please try again. If this continues to happen, please reach out to support")
+      window.location.reload();
+    });
   }
 
   login(email:string, password:string) {
@@ -152,6 +167,10 @@ export class AuthService {
       expirationDate: new Date(expirationDate),
       userId: userId
     }
+  }
+
+  getAccountInfo(email) {
+    return this.webReqService.post(`user/find`, {"email": email});
   }
 
 

@@ -54,6 +54,7 @@ import { DrawNameDialogComponent } from './project/project-detail/draw-name-dial
 import { CategoryDialogComponent } from './category/category-dialog/category-dialog.component';
 import { EditInvoiceComponent } from './project/project-invoices/edit-invoice/edit-invoice.component';
 import { CompanyUploadComponent } from './company/company-upload/company-upload.component';
+import { ForgotPasswordComponent } from './auth/forgot-password/forgot-password.component';
 
 
 @NgModule({
@@ -83,6 +84,7 @@ import { CompanyUploadComponent } from './company/company-upload/company-upload.
     CategoryDialogComponent,
     EditInvoiceComponent,
     CompanyUploadComponent,
+    ForgotPasswordComponent,
   ],
   imports: [
     AppMaterialModules,
