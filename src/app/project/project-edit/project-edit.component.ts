@@ -32,6 +32,9 @@ export class ProjectEditComponent implements OnInit {
     if (form.invalid) {
       return;
     }
+    for (let category of this.categoryArray) {
+      category["budget"] = Number(category["budget"])
+    }
     this.projectService.updateProject(this.id, form.value.name, form.value.address, form.value.client, form.value.phone, form.value.email, form.value.budget, this.categoryArray).subscribe((response: any) => {
       this.router.navigate(['/projects']);
       console.log(response);
