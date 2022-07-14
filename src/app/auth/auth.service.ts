@@ -79,7 +79,7 @@ export class AuthService {
 
   login(email:string, password:string) {
     const authData = { "email": email, "password": password }
-    this.http.post<{ token: string, expiresIn: number, userId: string }>(environment.apiUrl + '/user/login', authData)
+    this.http.post<{ token: string, expiresIn: number, userId: string }>('http://easydrawtest-env.eba-xyk5napp.us-west-2.elasticbeanstalk.com/api' + '/user/login', authData)
     .subscribe(response => {
       const token = response['token'];
       this.token = token;
