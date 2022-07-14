@@ -12,6 +12,7 @@ import { AuthService } from '../auth.service';
 export class LoginComponent implements OnInit {
 
   isLoading = false;
+  //Wanna test pipeline
 
   constructor(public authService: AuthService, private router: Router) { }
 
