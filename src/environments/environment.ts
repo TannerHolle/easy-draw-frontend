@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  apiUrl: 'http://localhost:3000/api'
+  apiUrl: 'http://easydrawapidev.eba-kwhqpdw4.us-west-1.elasticbeanstalk.com/api'
 };
 
 /*
