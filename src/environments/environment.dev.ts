@@ -1,5 +1,5 @@
 //Server URL for production
 export const environment = {
   production: true,
-  apiUrl: 'http://easydrawapidev.eba-kwhqpdw4.us-west-1.elasticbeanstalk.com/api'
+  apiUrl: 'https://easydrawapidev.eba-kwhqpdw4.us-west-1.elasticbeanstalk.com/api'
 };
