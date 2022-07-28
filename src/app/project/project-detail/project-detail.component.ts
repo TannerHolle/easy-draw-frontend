@@ -1,19 +1,15 @@
 import { BreakpointObserver } from '@angular/cdk/layout';
 import { Component, ViewChild, OnInit } from '@angular/core';
-import {ActivatedRoute, Router} from '@angular/router';
-import { saveAs } from 'file-saver';
-import { PDFDocument, StandardFonts, rgb  } from 'pdf-lib'
+import { ActivatedRoute, Router } from '@angular/router';
 import { jsPDF } from 'jspdf'
-import * as JSZip from 'jszip';
-
-
 import { MatDialog, MatSidenav } from '@angular/material';
-
 import { ProjectService } from '../project.service';
 import { AuthService } from 'src/app/auth/auth.service';
 import { DrawNameDialogComponent } from './draw-name-dialog/draw-name-dialog.component';
-import { HttpClient } from '@angular/common/http';
-
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { environment } from 'src/environments/environment';
+import { PDFService } from 'src/app/services/pdf.service';
+import { PDFDocument } from 'pdf-lib';
 
 @Component({
   selector: 'app-project-detail',
@@ -39,11 +35,10 @@ export class ProjectDetailComponent implements OnInit {
   sidenav!: MatSidenav;
 
 
-  displayedColumns: string[] = ['company','category','address','invoiceNum','amount', 'taxId', 'invoicePath', 'isPaid', '_id'];
+  displayedColumns: string[] = ['company', 'category', 'address', 'invoiceNum', 'amount', 'taxId', 'invoicePath', 'isPaid', '_id'];
   dataSource = [];
 
-
-  constructor(private route: ActivatedRoute, private http: HttpClient, public dialog: MatDialog, public projectService: ProjectService, private observer: BreakpointObserver, private authService: AuthService, private router: Router) { }
+  constructor(private route: ActivatedRoute, private http: HttpClient, public dialog: MatDialog, public projectService: ProjectService, private observer: BreakpointObserver, private authService: AuthService, private router: Router, private pdfService: PDFService) { }
 
   ngOnInit() {
     this.route.params.subscribe(routeParams => {
@@ -60,11 +55,11 @@ export class ProjectDetailComponent implements OnInit {
         this.drawInvoices = this.getInvoicesOnDraw();
         console.log(this.drawInvoices)
         if (this.drawInvoices.length > 0) {
-          this.drawData.push({name: 'Invoices', data: this.drawInvoices});
+          this.drawData.push({ name: 'Invoices', data: this.drawInvoices });
         }
         this.drawChangeOrders = this.getChangeOrdersOnDraw();
         if (this.drawChangeOrders.length > 0) {
-          this.drawData.push({name: 'Change Orders', data: this.drawChangeOrders});
+          this.drawData.push({ name: 'Change Orders', data: this.drawChangeOrders });
         }
         this.draw = this.getDraw();
         this.draws = this.getDrawInfo();
@@ -128,6 +123,50 @@ export class ProjectDetailComponent implements OnInit {
   }
 
   download() {
+    this.downloadInvoicesCSV();
+    this.generateInvoicesPDF();
+  }
+
+  generateInvoicesPDF() {
+    const filesPromiseArr = [];
+    const dataSource = this.isChecked ? this.drawChangeOrders : this.drawInvoices;
+
+    dataSource.forEach(invoice => {
+      const splitPath = invoice.invoicePath.split('/');
+      const fileName = splitPath[splitPath.length - 1];
+      const nameSplit = fileName.split('.');
+      const fileType = nameSplit[nameSplit.length - 1];
+      filesPromiseArr.push(this.downloadFileFromAWS(fileName, fileType));
+    })
+
+    Promise.all(filesPromiseArr).then(values => {
+      const pdfBufferArray = [];
+
+      values.forEach(async (fileData: any, index: number) => {
+        if (fileData.type === 'pdf') {
+          pdfBufferArray.push(fileData.arrayBuffer);
+        } else {
+          const pdf = new jsPDF('p', 'mm', 'letter');
+          const pdfWidth = pdf.internal.pageSize.getWidth();
+          const pdfHeightForImage = (fileData.height * pdfWidth) / fileData.width;
+          pdf.addImage(fileData.imageData, 0, 0, pdfWidth, pdfHeightForImage);
+          const arrayBufferOutput = pdf.output('arraybuffer');
+          pdfBufferArray.push(arrayBufferOutput);
+        }
+
+        if (index == values.length - 1) {
+          const mergedPdf = await this.pdfService.mergePdfs(pdfBufferArray);
+          const pdfUrl = URL.createObjectURL(
+            new Blob([mergedPdf], { type: 'application/pdf' }),
+          );
+          window.open(pdfUrl);
+          URL.revokeObjectURL(pdfUrl);
+        }
+      });
+    })
+  }
+
+  downloadInvoicesCSV() {
     const items = this.getInvoicesOnDraw();
     const replacer = (key, value) => value === null ? '' : value // specify how you want to handle null values here
     const header = Object.keys(items[0])
@@ -142,6 +181,49 @@ export class ProjectDetailComponent implements OnInit {
     hiddenElement.click();
   }
 
+  downloadFileFromAWS(fileName, fileType) {
+    const contentType = fileType === 'pdf' ? 'application/pdf' : 'application/json';
+    return new Promise((resolve, reject) => {
+      this.http.get(environment.apiUrl + '/invoice/get-aws-file/' + fileName, {
+        responseType: 'blob',
+        headers: new HttpHeaders().append('content-type', contentType)
+      }).subscribe((response: any) => {
+        if (fileType === 'pdf') {
+          const blob = new Blob([(response)], { type: "application/pdf" });
+          new Response(blob).arrayBuffer().then((val => {
+            resolve({ type: 'pdf', arrayBuffer: val });
+          }));
+        } else {
+          resolve(this.pdfService.blobToImageObject(response));
+        }
+      });
+    })
+  }
+
+  openInvoiceFile(invoicePath: string) {
+    const splitPath = invoicePath.split('/');
+    const fileName = splitPath[splitPath.length - 1];
+    const nameSplit = fileName.split('.');
+    const fileType = nameSplit[nameSplit.length - 1];
+
+    this.downloadFileFromAWS(fileName, fileType).then((file: any) => {
+      if (file.type === 'pdf') {
+        PDFDocument.load(file.arrayBuffer).then(async pdf => {
+          const pdfOutput = await pdf.save();
+
+          const pdfUrl = URL.createObjectURL(
+            new Blob([pdfOutput], { type: 'application/pdf' }),
+          );
+          window.open(pdfUrl);
+          URL.revokeObjectURL(pdfUrl);
+        });
+      } else {
+        const image = file.image;
+        const win = window.open("");
+        win.document.write(image.outerHTML);
+      }
+    })
+  }
 
   createDraw() {
     this.projectService.openNewDraw(this.id, this.drawId).subscribe((res: any) => {
@@ -154,7 +236,7 @@ export class ProjectDetailComponent implements OnInit {
 
     const dialogRef = this.dialog.open(DrawNameDialogComponent, {
       width: '255px',
-      data: {drawName: drawName},
+      data: { drawName: drawName },
     });
 
     dialogRef.afterClosed().subscribe(result => {
