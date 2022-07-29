@@ -10,6 +10,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import { PDFService } from 'src/app/services/pdf.service';
 import { PDFDocument } from 'pdf-lib';
+import { debug } from 'console';
 
 @Component({
   selector: 'app-project-detail',
@@ -131,6 +132,8 @@ export class ProjectDetailComponent implements OnInit {
     const filesPromiseArr = [];
     const dataSource = this.isChecked ? this.drawChangeOrders : this.drawInvoices;
 
+    console.log(JSON.stringify(dataSource))
+
     dataSource.forEach(invoice => {
       const splitPath = invoice.invoicePath.split('/');
       const fileName = splitPath[splitPath.length - 1];
@@ -167,17 +170,59 @@ export class ProjectDetailComponent implements OnInit {
   }
 
   downloadInvoicesCSV() {
-    const items = this.getInvoicesOnDraw();
+    let items;
+    let title;
+    if (this.isChecked) {
+      items = JSON.parse(JSON.stringify(this.drawChangeOrders)) 
+      title = this.project[0].name + ' ChangeOrders.csv'
+    }else {
+      items = JSON.parse(JSON.stringify(this.drawInvoices)) 
+      title = this.project[0].name + ' Invoices.csv'
+    }
+    for (let item of items) {
+      delete item['invoicePath']
+      delete item['_id']
+    }
     const replacer = (key, value) => value === null ? '' : value // specify how you want to handle null values here
-    const header = Object.keys(items[0])
+    const mappingHeader = Object.keys(items[0])
+    const prettyHeader = Object.keys(items[0])
+    for (let i = 0; i < prettyHeader.length; i++) {
+      switch(prettyHeader[i]) {
+        case 'company':
+          prettyHeader[i] = 'Company'
+          break;
+        case 'address':
+          prettyHeader[i] = 'Address'
+          break;
+        case 'taxId':
+          prettyHeader[i] = 'Tax ID'
+          break;
+        case 'category':
+          prettyHeader[i] = 'Category'
+          break;
+        case 'invoiceNum':
+          prettyHeader[i] = 'Invoice Number'
+          break;
+        case 'invoiceAmt':
+          prettyHeader[i] = 'Invoice Amount'
+          break;
+        case 'isPaid':
+          prettyHeader[i] = 'Paid?'
+          break;
+        default:
+          console.log("huh?")
+      }
+    }
     const csv = [
-      header.join(','), // header row first
-      ...items.map(row => header.map(fieldName => JSON.stringify(row[fieldName], replacer)).join(','))
+      prettyHeader.join(','), // header row first
+      ...items.map(row => mappingHeader.map(fieldName => JSON.stringify(row[fieldName], replacer)).join(','))
     ].join('\r\n')
+    this.getChangeOrdersOnDraw()
+    this.getInvoicesOnDraw()
     var hiddenElement = document.createElement('a');
     hiddenElement.href = 'data:text/csv;charset=utf-8,' + encodeURI(csv);
     hiddenElement.target = '_blank';
-    hiddenElement.download = this.project[0].name + '_invoices.csv';
+    hiddenElement.download = title;
     hiddenElement.click();
   }
 
