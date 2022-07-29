@@ -163,7 +163,7 @@ export class ProjectDetailComponent implements OnInit {
             new Blob([mergedPdf], { type: 'application/pdf' }),
           );
           window.open(pdfUrl);
-          URL.revokeObjectURL(pdfUrl);
+          // URL.revokeObjectURL(pdfUrl);
         }
       });
     })
@@ -260,7 +260,7 @@ export class ProjectDetailComponent implements OnInit {
             new Blob([pdfOutput], { type: 'application/pdf' }),
           );
           window.open(pdfUrl);
-          URL.revokeObjectURL(pdfUrl);
+          // URL.revokeObjectURL(pdfUrl);
         });
       } else {
         const image = file.image;
