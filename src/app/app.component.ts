@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, HostListener } from '@angular/core';
 import { environment } from "../environments/environment";
 import { AuthService } from './auth/auth.service';
 
@@ -15,6 +15,12 @@ export class AppComponent implements OnInit {
 
   ngOnInit() {
     this.authService.autoAuthUser()
+  }
+
+  //This makes it so the local storage (login info) is cleared when they exit browser or tab
+  @HostListener("window:beforeunload",["$event"])
+  clearLocalStorage(event){
+      localStorage.clear();
   }
 
 }

@@ -110,3 +110,11 @@ button {
 .footer-row {
   background: #f5f5f5;
 }
+
+.element-row {
+  height: 35px;
+}
+
+.element-row:nth-child(odd){
+  background-color:  lightgray;
+}

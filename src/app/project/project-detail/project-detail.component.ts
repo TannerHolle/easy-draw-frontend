@@ -163,7 +163,7 @@ export class ProjectDetailComponent implements OnInit {
             new Blob([mergedPdf], { type: 'application/pdf' }),
           );
           window.open(pdfUrl);
-          URL.revokeObjectURL(pdfUrl);
+          // URL.revokeObjectURL(pdfUrl);
         }
       });
     })
@@ -173,10 +173,10 @@ export class ProjectDetailComponent implements OnInit {
     let items;
     let title;
     if (this.isChecked) {
-      items = JSON.parse(JSON.stringify(this.drawChangeOrders)) 
+      items = JSON.parse(JSON.stringify(this.drawChangeOrders).replace('#','')) 
       title = this.project[0].name + ' ChangeOrders.csv'
     }else {
-      items = JSON.parse(JSON.stringify(this.drawInvoices)) 
+      items = JSON.parse(JSON.stringify(this.drawInvoices).replace('#','')) 
       title = this.project[0].name + ' Invoices.csv'
     }
     for (let item of items) {
@@ -260,7 +260,7 @@ export class ProjectDetailComponent implements OnInit {
             new Blob([pdfOutput], { type: 'application/pdf' }),
           );
           window.open(pdfUrl);
-          URL.revokeObjectURL(pdfUrl);
+          // URL.revokeObjectURL(pdfUrl);
         });
       } else {
         const image = file.image;

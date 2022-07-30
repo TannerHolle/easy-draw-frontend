@@ -112,12 +112,12 @@
                 <td mat-footer-cell *matFooterCellDef></td>
               </ng-container>
               <ng-container matColumnDef="invoiceNum">
-                <th mat-header-cell *matHeaderCellDef> Inovice Number </th>
+                <th mat-header-cell *matHeaderCellDef> CO Number </th>
                 <td mat-cell *matCellDef="let element"> {{element.invoiceNum}} </td>
                 <td mat-footer-cell *matFooterCellDef>Draw Total:</td>
               </ng-container>
               <ng-container matColumnDef="amount">
-                <th mat-header-cell *matHeaderCellDef> Invoice Amount </th>
+                <th mat-header-cell *matHeaderCellDef> CO Amount </th>
                 <td mat-cell *matCellDef="let element"> {{element.invoiceAmt | currency}} </td>
                 <td mat-footer-cell *matFooterCellDef>{{ calculateTotal('Change Orders') | currency}}</td>
               </ng-container>
@@ -127,9 +127,9 @@
                 <td mat-footer-cell *matFooterCellDef></td>
               </ng-container>
               <ng-container matColumnDef="invoicePath">
-                <th mat-header-cell *matHeaderCellDef> Inovice </th>
+                <th mat-header-cell *matHeaderCellDef> Attachment </th>
                 <td mat-cell *matCellDef="let element">
-                  <a (click)="openInvoiceFile(element.invoicePath)"><button>View Invoice</button></a>
+                  <a (click)="openInvoiceFile(element.invoicePath)"><button>View Change Order</button></a>
                 </td>
                 <td mat-footer-cell *matFooterCellDef></td>
               </ng-container>
