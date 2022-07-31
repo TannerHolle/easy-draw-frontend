@@ -11,6 +11,8 @@ import { Company } from 'src/app/company/company.model';
 import { AuthService } from 'src/app/auth/auth.service';
 import { MatDialog } from '@angular/material';
 import { CreateCompanyDialogComponent } from 'src/app/dialogs/create-company-dialog/create-company-dialog.component';
+import { ReplaySubject, Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 
 
 @Component({
@@ -29,8 +31,19 @@ export class ProjectInvoicesComponent implements OnInit {
   imagePreview: string;
   isLoading = false;
 
-
-
+  protected _onDestroy = new Subject();
+  //projects
+  public projectsFilterCtrl: FormControl = new FormControl();
+  public filteredProjects = new ReplaySubject(1);
+  //draws 
+  public drawsFilterCtrl: FormControl = new FormControl();
+  public filteredDraws = new ReplaySubject(1);
+  //companies 
+  public companiesFilterCtrl: FormControl = new FormControl();
+  public filteredCompanies = new ReplaySubject(1);
+  //categories
+  public categoriesFilterCtrl: FormControl = new FormControl();
+  public filteredCategories = new ReplaySubject(1);
 
   constructor(private dialog: MatDialog, public invoiceService: InvoiceService, private authService: AuthService, private router: Router, public projectService: ProjectService, public companyService: CompanyService, private route: ActivatedRoute, private domSanitizer: DomSanitizer) { }
   ngOnInit() {
@@ -64,6 +77,98 @@ export class ProjectInvoicesComponent implements OnInit {
       this.getCompanies();
     });
 
+    this.filteredProjects.next(this.projectService.projects.slice());
+    this.initFilterControls();
+  }
+
+  initFilterControls() {
+    this.projectsFilterCtrl.valueChanges
+      .pipe(takeUntil(this._onDestroy))
+      .subscribe(() => {
+        this.filterProjects();
+      });
+
+    this.drawsFilterCtrl.valueChanges
+      .pipe(takeUntil(this._onDestroy))
+      .subscribe(() => {
+        this.filterDraws();
+      });
+
+    this.companiesFilterCtrl.valueChanges
+      .pipe(takeUntil(this._onDestroy))
+      .subscribe(() => {
+        this.filterCompanies();
+      });
+
+    this.categoriesFilterCtrl.valueChanges
+      .pipe(takeUntil(this._onDestroy))
+      .subscribe(() => {
+        this.filterCategories();
+      });
+  }
+
+  protected filterProjects() {
+    if (!this.projectService.projects) {
+      return;
+    }
+    let search = this.projectsFilterCtrl.value;
+    if (!search) {
+      this.filteredProjects.next(this.projectService.projects.slice());
+      return;
+    } else {
+      search = search.toLowerCase();
+    }
+    this.filteredProjects.next(
+      this.projectService.projects.filter(project => project.name.toLowerCase().indexOf(search) > -1)
+    );
+  }
+
+  protected filterDraws() {
+    if (!this.draws) {
+      return;
+    }
+    let search = this.drawsFilterCtrl.value;
+    if (!search) {
+      this.filteredDraws.next(this.draws.slice());
+      return;
+    } else {
+      search = search.toLowerCase();
+    }
+    this.filteredDraws.next(
+      this.draws.filter(draw => draw.name.toLowerCase().indexOf(search) > -1)
+    );
+  }
+
+  protected filterCompanies() {
+    if (!this.companies) {
+      return;
+    }
+    let search = this.companiesFilterCtrl.value;
+    if (!search) {
+      this.filteredCompanies.next(this.companies.slice());
+      return;
+    } else {
+      search = search.toLowerCase();
+    }
+    this.filteredCompanies.next(
+      this.companies.filter(company => company.name.toLowerCase().indexOf(search) > -1)
+    );
+  }
+
+  protected filterCategories() {
+    if (!this.categories) {
+      return;
+    }
+    let search = this.categoriesFilterCtrl.value;
+    if (!search) {
+      this.filteredCategories.next(this.categories.slice());
+      return;
+    } else {
+      search = search.toLowerCase();
+    }
+    this.filteredCategories.next(
+      this.categories.filter(category => category.category.toLowerCase().indexOf(search) > -1)
+    );
   }
 
   openCreateCompanyDialog() {
@@ -73,9 +178,10 @@ export class ProjectInvoicesComponent implements OnInit {
         let createCompanyOption = this.companies.pop();
         this.companies = [...this.companies, company, createCompanyOption];
         this.selectedCompanies = this.companies;
-        this.form.patchValue({company})
+        this.filteredCompanies.next(this.companies.slice());
+        this.form.patchValue({ company })
       } else {
-        this.form.patchValue({company: null})
+        this.form.patchValue({ company: null })
       }
     });
   }
@@ -116,9 +222,11 @@ export class ProjectInvoicesComponent implements OnInit {
 
     if (project[0]['draws'].length > 0) {
       this.draws = project[0]['draws'];
+      this.filteredDraws.next(this.draws.slice());
     }
     if (project[0]['categories'].length > 0) {
       this.categories = project[0]['categories'];
+      this.filteredCategories.next(this.categories.slice());
     } else {
       this.categories = [];
     }
@@ -143,6 +251,7 @@ export class ProjectInvoicesComponent implements OnInit {
       });
       if (project[0]['draws'].length > 0) {
         this.draws = project[0]['draws'];
+        this.filteredDraws.next(this.draws.slice());
         return project[0]['draws'];
       }
     }
@@ -154,6 +263,7 @@ export class ProjectInvoicesComponent implements OnInit {
       Array.prototype.push.apply(companies, this.companies)
       this.companies = companies
       this.selectedCompanies = companies
+      this.filteredCompanies.next(this.companies.slice());
     });
   }
 
@@ -210,5 +320,8 @@ export class ProjectInvoicesComponent implements OnInit {
     })
   }
 
-
+  ngOnDestroy() {
+    this._onDestroy.next();
+    this._onDestroy.complete();
+  }
 }

@@ -56,6 +56,7 @@ import { EditInvoiceComponent } from './project/project-invoices/edit-invoice/ed
 import { CompanyUploadComponent } from './company/company-upload/company-upload.component';
 import { ForgotPasswordComponent } from './auth/forgot-password/forgot-password.component';
 import { CreateCompanyDialogComponent } from './dialogs/create-company-dialog/create-company-dialog.component';
+import { NgxMatSelectSearchModule } from 'ngx-mat-select-search';
 
 
 @NgModule({
@@ -110,7 +111,8 @@ import { CreateCompanyDialogComponent } from './dialogs/create-company-dialog/cr
     AppRoutingModule,
     BrowserAnimationsModule,
     HttpClientModule,
-    MatAutocompleteModule
+    MatAutocompleteModule,
+    NgxMatSelectSearchModule
     ],
   providers: [ProjectComponent, {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true}],
   bootstrap: [AppComponent],
