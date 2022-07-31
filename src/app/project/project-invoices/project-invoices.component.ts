@@ -9,6 +9,8 @@ import { debug } from 'console';
 import { DomSanitizer } from '@angular/platform-browser';
 import { Company } from 'src/app/company/company.model';
 import { AuthService } from 'src/app/auth/auth.service';
+import { MatDialog } from '@angular/material';
+import { CreateCompanyDialogComponent } from 'src/app/dialogs/create-company-dialog/create-company-dialog.component';
 
 
 @Component({
@@ -30,10 +32,10 @@ export class ProjectInvoicesComponent implements OnInit {
 
 
 
-  constructor(public invoiceService: InvoiceService, private authService: AuthService, private router: Router, public projectService: ProjectService, public companyService: CompanyService, private route: ActivatedRoute, private domSanitizer: DomSanitizer) { }
+  constructor(private dialog: MatDialog, public invoiceService: InvoiceService, private authService: AuthService, private router: Router, public projectService: ProjectService, public companyService: CompanyService, private route: ActivatedRoute, private domSanitizer: DomSanitizer) { }
   ngOnInit() {
 
-    this.companies = [{name: 'Create New Company', _id: '123'}];
+    this.companies = [{ name: 'Create New Company', _id: '123' }];
     this.form = new FormGroup({
       company: new FormControl(null, { validators: [Validators.required] }),
       draw: new FormControl(null, { validators: [Validators.required] }),
@@ -42,10 +44,10 @@ export class ProjectInvoicesComponent implements OnInit {
       projectId: new FormControl(null, { validators: [Validators.required] }),
       category: new FormControl(null, { validators: [Validators.required] }),
       changeOrder: new FormControl(null),
-      image: new FormControl(null, {validators: [Validators.required]})
+      image: new FormControl(null, { validators: [Validators.required] })
     });
     var projectID = this.route.snapshot.paramMap.get('id')
-    if(projectID) {
+    if (projectID) {
       this.form.get('projectId').setValue(projectID);
       var drawId = this.route.snapshot.paramMap.get('drawId')
       if (drawId) {
@@ -64,10 +66,24 @@ export class ProjectInvoicesComponent implements OnInit {
 
   }
 
+  openCreateCompanyDialog() {
+    const dialogRef = this.dialog.open(CreateCompanyDialogComponent);
+    dialogRef.afterClosed().subscribe((company: any) => {
+      if (company) {
+        let createCompanyOption = this.companies.pop();
+        this.companies = [...this.companies, company, createCompanyOption];
+        this.selectedCompanies = this.companies;
+        this.form.patchValue({company})
+      } else {
+        this.form.patchValue({company: null})
+      }
+    });
+  }
+
   onImagePicked(event: Event) {
     const file = (event.target as HTMLInputElement).files[0];
     this.fileName = file.name
-    this.form.patchValue({image: file});
+    this.form.patchValue({ image: file });
     this.form.get('image').updateValueAndValidity();
     const reader = new FileReader();
     reader.onload = () => {
@@ -90,7 +106,7 @@ export class ProjectInvoicesComponent implements OnInit {
 
   showOptions(event) {
     console.log(event.checked);
-}
+  }
 
   getDrawsAndCategories(projectId) {
     this.selectedProjectId = projectId;
@@ -98,10 +114,10 @@ export class ProjectInvoicesComponent implements OnInit {
       return obj._id === this.form.value.projectId;
     });
 
-    if(project[0]['draws'].length > 0) {
+    if (project[0]['draws'].length > 0) {
       this.draws = project[0]['draws'];
     }
-    if(project[0]['categories'].length > 0) {
+    if (project[0]['categories'].length > 0) {
       this.categories = project[0]['categories'];
     } else {
       this.categories = [];
@@ -114,7 +130,7 @@ export class ProjectInvoicesComponent implements OnInit {
       const project = this.projectService.projects.filter(obj => {
         return obj._id === this.form.value.projectId;
       });
-      if(project[0]['categories'].length > 0) {
+      if (project[0]['categories'].length > 0) {
         return project[0]['categories'];
       }
     }
@@ -125,7 +141,7 @@ export class ProjectInvoicesComponent implements OnInit {
       const project = this.projectService.projects.filter(obj => {
         return obj._id === this.form.value.projectId;
       });
-      if(project[0]['draws'].length > 0) {
+      if (project[0]['draws'].length > 0) {
         this.draws = project[0]['draws'];
         return project[0]['draws'];
       }
@@ -135,7 +151,7 @@ export class ProjectInvoicesComponent implements OnInit {
 
   getCompanies() {
     this.companyService.getCompaniesForUser(this.authService.getUserID()).subscribe((companies: any[]) => {
-      Array.prototype.push.apply(companies,this.companies)
+      Array.prototype.push.apply(companies, this.companies)
       this.companies = companies
       this.selectedCompanies = companies
     });
@@ -153,7 +169,7 @@ export class ProjectInvoicesComponent implements OnInit {
 
   createNewCompany(id) {
     if (id === '123') {
-      this.router.navigate(['company/create', id]);
+      this.openCreateCompanyDialog();
     } else {
       this.selectedCompanies = this.companies;
     }
@@ -167,7 +183,7 @@ export class ProjectInvoicesComponent implements OnInit {
     if (draw.name === 'Open New Draw') {
       let draws = this.getDraws();
       let lastDraw = draws.slice(-2)[0];
-      this.projectService.openNewDraw(this.form.value.projectId,lastDraw.name).subscribe(() => {
+      this.projectService.openNewDraw(this.form.value.projectId, lastDraw.name).subscribe(() => {
         this.router.navigate(['projects']);
       });
     }
@@ -182,7 +198,7 @@ export class ProjectInvoicesComponent implements OnInit {
   //   let filter = value.toLowerCase();
   //   return this.companies.filter(option => option.name.toLowerCase().match(filter));
   // }
-  public searchInput:String = '';
+  public searchInput: String = '';
   public searchResult: Array<any> = [];
 
   fetchSeries(value: any) {
