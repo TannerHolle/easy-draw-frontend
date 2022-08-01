@@ -1,5 +1,5 @@
 import { BreakpointObserver } from '@angular/cdk/layout';
-import { Component, ViewChild, OnInit } from '@angular/core';
+import { Component, ViewChild, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { jsPDF } from 'jspdf'
 import { MatDialog, MatSidenav } from '@angular/material';
@@ -17,7 +17,7 @@ import { debug } from 'console';
   templateUrl: './project-detail.component.html',
   styleUrls: ['./project-detail.component.scss']
 })
-export class ProjectDetailComponent implements OnInit {
+export class ProjectDetailComponent implements OnInit, OnDestroy {
   id: string;
   drawId: string;
   drawIdCapital: string;
@@ -47,6 +47,8 @@ export class ProjectDetailComponent implements OnInit {
       this.drawData = [];
       this.id = routeParams.id;
       this.drawId = routeParams.drawid;
+      this.authService.addInvoiceRouterSubject.next(['/project/invoices', this.id, this.drawId])
+
       this.projectService.getProjectsForUser(this.authService.getUserID()).subscribe((projects: any[]) => {
         this.projectService.projects = projects;
       });
@@ -308,8 +310,10 @@ export class ProjectDetailComponent implements OnInit {
       window.alert("the invoice would've been deleted")
     }
   }
-
-
+  
+  ngOnDestroy(): void {
+    this.authService.addInvoiceRouterSubject.next(['/project/invoices'])
+  }
 }
 
 
