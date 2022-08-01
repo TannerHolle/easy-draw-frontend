@@ -1,7 +1,7 @@
 <main>
   <mat-card>
     <mat-spinner *ngIf="isLoading"></mat-spinner>
-    <form [formGroup]="form" (submit)="onAddInvoice()" *ngIf="!isLoading">
+    <form [formGroup]="form" *ngIf="!isLoading">
       <mat-form-field>
         <mat-label>Project</mat-label>
         <mat-select formControlName="projectId">
@@ -83,7 +83,14 @@
         class="submit-button"
         mat-raised-button
         color="primary"
-        type="submit">Save Invoice</button>
+        (click)="onAddInvoice(true)"
+        type="submit">Save Invoice and Return</button>
+        <button
+        class="submit-button"
+        mat-raised-button
+        color="primary"
+        (click)="onAddInvoice()"
+        type="submit">Save Invoice and Create Another</button>
     </form>
   </mat-card>
 
