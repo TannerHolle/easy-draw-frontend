@@ -55,6 +55,8 @@ import { CategoryDialogComponent } from './category/category-dialog/category-dia
 import { EditInvoiceComponent } from './project/project-invoices/edit-invoice/edit-invoice.component';
 import { CompanyUploadComponent } from './company/company-upload/company-upload.component';
 import { ForgotPasswordComponent } from './auth/forgot-password/forgot-password.component';
+import { CreateCompanyDialogComponent } from './dialogs/create-company-dialog/create-company-dialog.component';
+import { NgxMatSelectSearchModule } from 'ngx-mat-select-search';
 
 
 @NgModule({
@@ -85,6 +87,7 @@ import { ForgotPasswordComponent } from './auth/forgot-password/forgot-password.
     EditInvoiceComponent,
     CompanyUploadComponent,
     ForgotPasswordComponent,
+    CreateCompanyDialogComponent
   ],
   imports: [
     AppMaterialModules,
@@ -108,10 +111,11 @@ import { ForgotPasswordComponent } from './auth/forgot-password/forgot-password.
     AppRoutingModule,
     BrowserAnimationsModule,
     HttpClientModule,
-    MatAutocompleteModule
+    MatAutocompleteModule,
+    NgxMatSelectSearchModule
     ],
   providers: [ProjectComponent, {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true}],
   bootstrap: [AppComponent],
-  entryComponents: [DrawNameDialogComponent, CategoryDialogComponent]
+  entryComponents: [DrawNameDialogComponent, CategoryDialogComponent, CreateCompanyDialogComponent]
 })
 export class AppModule { }
