@@ -26,11 +26,11 @@
     <button mat-menu-item (click)="downloadVendorTemplate()">Sub-Contractor/Vendor Template</button>
   </mat-menu>
 
-  <button *ngIf='userIsAuthenticated' mat-button (click)="navigateToAddInvoice()">Add Invoice</button>
 
   <div class="spacer"></div>
   <a *ngIf='!userIsAuthenticated' mat-button>About Us</a>
-  <a *ngIf='userIsAuthenticated' mat-button>Settings</a>
+  <!-- <a *ngIf='userIsAuthenticated' mat-button>Settings</a> -->
+  <button *ngIf='userIsAuthenticated' mat-button (click)="navigateToAddInvoice()">Add Invoice</button>
   <a *ngIf='!userIsAuthenticated' mat-button routerLink="/sign-up">Sign Up</a>
   <a *ngIf='!userIsAuthenticated' mat-button routerLink="/login">Login</a>
   <a *ngIf='userIsAuthenticated' mat-button (click)="onLogout()">Logout</a>
