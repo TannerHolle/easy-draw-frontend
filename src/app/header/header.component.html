@@ -26,6 +26,7 @@
     <button mat-menu-item (click)="downloadVendorTemplate()">Sub-Contractor/Vendor Template</button>
   </mat-menu>
 
+  <button *ngIf='userIsAuthenticated' mat-button (click)="navigateToAddInvoice()">Add Invoice</button>
 
   <div class="spacer"></div>
   <a *ngIf='!userIsAuthenticated' mat-button>About Us</a>

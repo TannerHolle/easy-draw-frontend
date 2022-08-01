@@ -1,11 +1,15 @@
 <main>
   <mat-card>
     <mat-spinner *ngIf="isLoading"></mat-spinner>
-    <form [formGroup]="form" (submit)="onAddInvoice()" *ngIf="!isLoading">
+    <form [formGroup]="form" *ngIf="!isLoading">
       <mat-form-field>
         <mat-label>Project</mat-label>
         <mat-select formControlName="projectId">
-          <mat-option *ngFor="let project of this.projectService.projects" [value]="project._id" (blur)="getDrawsAndCategories(project._id)">
+          <mat-option>
+            <ngx-mat-select-search [formControl]="projectsFilterCtrl"  placeholderLabel="Find Projects" 
+            noEntriesFoundLabel="No matching project found"></ngx-mat-select-search>
+          </mat-option>
+          <mat-option *ngFor="let project of filteredProjects | async" [value]="project._id" (blur)="getDrawsAndCategories(project._id)">
             {{project.name}}
           </mat-option>
         </mat-select>
@@ -14,7 +18,12 @@
       <mat-form-field>
         <mat-label>Draw</mat-label>
         <mat-select formControlName="draw">
-          <mat-option *ngFor="let draw of this.draws" [value]="draw.name" (blur)="openNewDraw(draw)">
+          <mat-option>
+            <ngx-mat-select-search [formControl]="drawsFilterCtrl"  placeholderLabel="Find Draws" 
+            noEntriesFoundLabel="No matching draw found"></ngx-mat-select-search>
+          </mat-option>
+
+          <mat-option *ngFor="let draw of filteredDraws | async" [value]="draw.name" (blur)="openNewDraw(draw)">
             {{draw.name}}
           </mat-option>
         </mat-select>
@@ -23,7 +32,11 @@
       <mat-form-field>
         <mat-label>Company</mat-label>
         <mat-select formControlName="company" >
-          <mat-option *ngFor="let company of this.companies" [value]="company" (blur)="createNewCompany(company._id)">
+          <mat-option>
+            <ngx-mat-select-search [formControl]="companiesFilterCtrl"  placeholderLabel="Find Companies" 
+            noEntriesFoundLabel="No matching company found"></ngx-mat-select-search>
+          </mat-option>
+          <mat-option *ngFor="let company of filteredCompanies | async" [value]="company" (blur)="createNewCompany(company._id)">
             {{company.name}}
           </mat-option>
         </mat-select>
@@ -32,7 +45,11 @@
       <mat-form-field>
         <mat-label>Category</mat-label>
         <mat-select formControlName="category">
-          <mat-option *ngFor="let category of this.categories" [value]="category.category">
+          <mat-option>
+            <ngx-mat-select-search [formControl]="categoriesFilterCtrl"  placeholderLabel="Find Categories" 
+            noEntriesFoundLabel="No matching category found"></ngx-mat-select-search>
+          </mat-option>
+          <mat-option *ngFor="let category of filteredCategories | async" [value]="category.category">
             {{category.category}}
           </mat-option>
         </mat-select>
@@ -66,7 +83,14 @@
         class="submit-button"
         mat-raised-button
         color="primary"
-        type="submit">Save Invoice</button>
+        (click)="onAddInvoice(true)"
+        type="submit">Save Invoice and Return</button>
+        <button
+        class="submit-button"
+        mat-raised-button
+        color="primary"
+        (click)="onAddInvoice()"
+        type="submit">Save Invoice and Create Another</button>
     </form>
   </mat-card>
 
