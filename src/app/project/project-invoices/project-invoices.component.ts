@@ -198,17 +198,37 @@ export class ProjectInvoicesComponent implements OnInit {
     reader.readAsDataURL(file);
   }
 
-  onAddInvoice() {
+  onAddInvoice(isReturn?: boolean) {
     if (this.form.invalid) {
       return;
     }
     this.isLoading = true;
     if (!this.form.value.changeOrder) {
-      this.projectService.createInvoice(this.form.value.projectId, this.form.value.company, this.form.value.category, this.form.value.invoiceNum, this.form.value.invoiceAmt, this.form.value.draw, this.form.value.image)
+      this.projectService.createInvoice(this.form.value.projectId, this.form.value.company, this.form.value.category, this.form.value.invoiceNum, this.form.value.invoiceAmt, this.form.value.draw, this.form.value.image).then(res => {
+        this.isLoading = false;
+        if (isReturn) {
+          this.router.navigate(['/projects', this.form.value.projectId]);
+        } else {
+          this.resetComponentState();
+        }
+      })
     } else {
-      this.projectService.createChangeOrder(this.form.value.projectId, this.form.value.company, this.form.value.category, this.form.value.invoiceNum, this.form.value.invoiceAmt, this.form.value.draw, this.form.value.image)
+      this.projectService.createChangeOrder(this.form.value.projectId, this.form.value.company, this.form.value.category, this.form.value.invoiceNum, this.form.value.invoiceAmt, this.form.value.draw, this.form.value.image).then(res => {
+        this.isLoading = false;
+        if (isReturn) {
+          this.router.navigate(['/projects', this.form.value.projectId]);
+        } else {
+          this.resetComponentState();
+        }
+      })
     }
   };
+
+  resetComponentState() {
+    this.form.reset();
+    this.fileName = '';
+    this.ngOnInit();
+  }
 
   showOptions(event) {
     console.log(event.checked);

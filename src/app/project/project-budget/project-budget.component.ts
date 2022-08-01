@@ -1,6 +1,6 @@
-import { Component, OnInit, ViewChild, ElementRef, AfterViewInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, AfterViewInit, OnDestroy } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import {ActivatedRoute, Router} from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ProjectService } from '../project.service';
 import { MatDialog, MatSidenav } from '@angular/material';
 import { BreakpointObserver } from '@angular/cdk/layout';
@@ -20,7 +20,7 @@ export class CsvData {
   templateUrl: './project-budget.component.html',
   styleUrls: ['./project-budget.component.scss']
 })
-export class ProjectBudgetComponent implements OnInit, AfterViewInit {
+export class ProjectBudgetComponent implements OnInit, AfterViewInit, OnDestroy {
   id: string;
   budgetData = [];
   projectName = '';
@@ -37,21 +37,19 @@ export class ProjectBudgetComponent implements OnInit, AfterViewInit {
 
   public records: any[] = [];
   @ViewChild('csvReader') csvReader: any;
-  jsondatadisplay:any;
+  jsondatadisplay: any;
   public fileName: string;
-
-
 
   @ViewChild('downloadTemplate') downloadTemplate: ElementRef;
   @ViewChild(MatSidenav) sidenav!: MatSidenav;
-
-
 
   constructor(private route: ActivatedRoute, public dialog: MatDialog, public categoryService: CategoryService, public projectService: ProjectService, private observer: BreakpointObserver, private router: Router, private authService: AuthService) { }
 
   ngOnInit() {
     this.route.params.subscribe(routeParams => {
       this.id = this.route.snapshot.paramMap.get('id');
+      this.authService.addInvoiceRouterSubject.next(['/project/invoices', this.id])
+
       this.projectService.getProjectsForUser(this.authService.getUserID()).subscribe((projects: any[]) => {
         this.projects = projects;
         this.projectService.projects = projects;
@@ -61,7 +59,7 @@ export class ProjectBudgetComponent implements OnInit, AfterViewInit {
         this.budgetData = this.formatData(this.project);
         this.projectName = this.project[0].name;
         this.draws = this.project[0].draws;
-        if(this.budgetData.length > 0) {
+        if (this.budgetData.length > 0) {
           this.displayedColumns = Object.keys(this.budgetData[0])
         }
       });
@@ -154,8 +152,8 @@ export class ProjectBudgetComponent implements OnInit, AfterViewInit {
 
   changeListener(files: FileList) {
     this.fileName = files.item(0).name
-    if(files && files.length > 0  && files.item(0).name.endsWith(".csv")) {
-      let file : File = files.item(0);
+    if (files && files.length > 0 && files.item(0).name.endsWith(".csv")) {
+      let file: File = files.item(0);
       let reader: FileReader = new FileReader();
       reader.readAsText(file);
 
@@ -186,7 +184,7 @@ export class ProjectBudgetComponent implements OnInit, AfterViewInit {
     for (let i = 1; i < csvRecordsArray.length; i++) {
       let curruntRecord = (csvRecordsArray[i]).split(',');
       if (curruntRecord.length == headerLength) {
-        let csvRecord= {};
+        let csvRecord = {};
         csvRecord["costCode"] = curruntRecord[0].trim().replace(/["]+/g, '');
         csvRecord["category"] = curruntRecord[1].trim().replace(/["]+/g, '');
         csvRecord["budget"] = Number(curruntRecord[2].trim());
@@ -212,7 +210,7 @@ export class ProjectBudgetComponent implements OnInit, AfterViewInit {
 
     const dialogRef = this.dialog.open(CategoryDialogComponent, {
       width: '255px',
-      data: {category: category, costCode: costCode, budget: budget},
+      data: { category: category, costCode: costCode, budget: budget },
     });
 
     dialogRef.afterClosed().subscribe(result => {
@@ -224,4 +222,7 @@ export class ProjectBudgetComponent implements OnInit, AfterViewInit {
     });
   }
 
+  ngOnDestroy(): void {
+    this.authService.addInvoiceRouterSubject.next(['/project/invoices'])
+  }
 }

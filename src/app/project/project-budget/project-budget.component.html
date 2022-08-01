@@ -99,9 +99,6 @@
               <tr mat-footer-row class="footer-row" *matFooterRowDef="displayedColumns"></tr>
 
             </table>
-            <div class="btn-group">
-              <button mat-raised-button [routerLink]="['/project/invoices', id]">Add Invoice</button>
-            </div>
           </ng-container>
           <div *ngIf='this.budgetData.length == 0'>
             You must add at least one category before you are able to add invoices to this project

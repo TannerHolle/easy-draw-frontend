@@ -16,6 +16,7 @@ export class AuthService {
   private userName: string;
   private isAuthenticated = false;
   public authStatusListener = new Subject<boolean>();
+  public addInvoiceRouterSubject = new Subject();
 
   constructor(private webReqService: WebRequestService, private router: Router, private http: HttpClient) {}
 

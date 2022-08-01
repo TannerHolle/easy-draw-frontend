@@ -1,4 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { AuthService } from '../auth/auth.service';
 
@@ -14,8 +15,9 @@ export class HeaderComponent implements OnInit, OnDestroy {
   private authListenerSubs: Subscription;
   managementOptions = ['Projects', 'Companies']
   userId: string;
+  addInvoiceRouterLink = ['/project/invoices'];
 
-  constructor(private authService: AuthService) { }
+  constructor(private authService: AuthService, private router: Router) { }
 
   ngOnInit() {
     this.userIsAuthenticated = this.authService.getIsAuth();
@@ -25,6 +27,14 @@ export class HeaderComponent implements OnInit, OnDestroy {
         this.userIsAuthenticated = isAuthenticated;
         this.userId = this.authService.getUserID()
       });
+
+      this.authService.addInvoiceRouterSubject.subscribe((linkValue : any) => {
+        this.addInvoiceRouterLink = linkValue;
+      });
+  }
+
+  navigateToAddInvoice(){
+    this.router.navigate(this.addInvoiceRouterLink);
   }
 
   onLogout() {

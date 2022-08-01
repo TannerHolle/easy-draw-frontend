@@ -89,7 +89,7 @@ export class ProjectService {
 
   download(filename){
     const fileObj = {
-        filename : filename
+      filename : filename
     };
     console.log(fileObj);
     return this.webReqService.postImages(`project/download`, fileObj);
@@ -102,19 +102,20 @@ export class ProjectService {
   }
 
   createInvoice(projectId: string, company: {}, category: string, invoiceNum: string, invoiceAmt: Number, draw: string, image: File) {
-    const invoiceData = new FormData()
-    invoiceData.append("projectId", projectId)
-    invoiceData.append("draw", draw)
-    invoiceData.append("category", category)
-    invoiceData.append("company", company['name'])
-    invoiceData.append("address", company['address'])
-    invoiceData.append("taxId", company['taxId'])
-    invoiceData.append("invoiceNum", invoiceNum)
-    invoiceData.append("invoiceAmt", invoiceAmt.toString())
-    invoiceData.append("image", image, invoiceNum)
-    this.http.post(environment.apiUrl + '/invoice/create', invoiceData).subscribe(responseData => {
-      console.log(responseData)
-      this.router.navigate(['/projects', projectId]);
+    return new Promise((resolve, reject) => {
+      const invoiceData = new FormData()
+      invoiceData.append("projectId", projectId)
+      invoiceData.append("draw", draw)
+      invoiceData.append("category", category)
+      invoiceData.append("company", company['name'])
+      invoiceData.append("address", company['address'])
+      invoiceData.append("taxId", company['taxId'])
+      invoiceData.append("invoiceNum", invoiceNum)
+      invoiceData.append("invoiceAmt", invoiceAmt.toString())
+      invoiceData.append("image", image, invoiceNum)
+      this.http.post(environment.apiUrl + '/invoice/create', invoiceData).subscribe(responseData => {
+        resolve(responseData)
+      });
     });
   }
 
@@ -141,19 +142,20 @@ export class ProjectService {
   }
 
   createChangeOrder(projectId: string, company: {}, category: string, invoiceNum: string, invoiceAmt: Number, draw: string, image: File) {
-    const changeOrderData = new FormData()
-    changeOrderData.append("projectId", projectId)
-    changeOrderData.append("draw", draw)
-    changeOrderData.append("category", category)
-    changeOrderData.append("company", company['name'])
-    changeOrderData.append("address", company['address'])
-    changeOrderData.append("taxId", company['taxId'])
-    changeOrderData.append("invoiceNum", invoiceNum)
-    changeOrderData.append("invoiceAmt", invoiceAmt.toString())
-    changeOrderData.append("image", image, invoiceNum)
-    this.http.post(environment.apiUrl + '/invoice/create-change-order', changeOrderData).subscribe(responseData => {
-      console.log(responseData)
-      this.router.navigate(['/projects', projectId]);
+    return new Promise((resolve, reject) => {
+      const changeOrderData = new FormData()
+      changeOrderData.append("projectId", projectId)
+      changeOrderData.append("draw", draw)
+      changeOrderData.append("category", category)
+      changeOrderData.append("company", company['name'])
+      changeOrderData.append("address", company['address'])
+      changeOrderData.append("taxId", company['taxId'])
+      changeOrderData.append("invoiceNum", invoiceNum)
+      changeOrderData.append("invoiceAmt", invoiceAmt.toString())
+      changeOrderData.append("image", image, invoiceNum)
+      this.http.post(environment.apiUrl + '/invoice/create-change-order', changeOrderData).subscribe(responseData => {
+        resolve(responseData);
+      });
     });
   }
 
