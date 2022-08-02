@@ -9,7 +9,7 @@
             <ngx-mat-select-search [formControl]="projectsFilterCtrl"  placeholderLabel="Find Projects" 
             noEntriesFoundLabel="No matching project found"></ngx-mat-select-search>
           </mat-option>
-          <mat-option *ngFor="let project of filteredProjects | async" [value]="project._id" (blur)="getDrawsAndCategories(project._id)">
+          <mat-option *ngFor="let project of filteredProjects | async" [value]="project._id" (blur)="onProjectSelect(project._id)">
             {{project.name}}
           </mat-option>
         </mat-select>
@@ -23,7 +23,7 @@
             noEntriesFoundLabel="No matching draw found"></ngx-mat-select-search>
           </mat-option>
 
-          <mat-option *ngFor="let draw of filteredDraws | async" [value]="draw.name" (blur)="openNewDraw(draw)">
+          <mat-option *ngFor="let draw of filteredDraws | async" [value]="draw.name" (blur)="openDrawSelect(draw)">
             {{draw.name}}
           </mat-option>
         </mat-select>
@@ -49,7 +49,7 @@
             <ngx-mat-select-search [formControl]="categoriesFilterCtrl"  placeholderLabel="Find Categories" 
             noEntriesFoundLabel="No matching category found"></ngx-mat-select-search>
           </mat-option>
-          <mat-option *ngFor="let category of filteredCategories | async" [value]="category.category">
+          <mat-option *ngFor="let category of filteredCategories | async" [value]="category.category" (blur)="onCategorySelect(category)">
             {{category.category}}
           </mat-option>
         </mat-select>
