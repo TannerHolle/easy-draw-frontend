@@ -175,15 +175,17 @@ export class ProjectDetailComponent implements OnInit, OnDestroy {
     let items;
     let title;
     let totalType;
+    this.draw;
     if (this.isChecked) {
       items = JSON.parse(JSON.stringify(this.drawChangeOrders)) 
       title = this.project[0].name + ' ChangeOrders.csv'
       totalType = 'Change Orders'
     }else {
       items = JSON.parse(JSON.stringify(this.drawInvoices)) 
-      title = this.project[0].name + ' Invoices.csv'
+      title = this.project[0].name + '-' + this.draw['name'] + ' Invoices.csv'
       totalType = 'Invoices'
     }
+    debugger;
     for (let item of items) {
       delete item['invoicePath']
       delete item['_id']
@@ -227,7 +229,7 @@ export class ProjectDetailComponent implements OnInit, OnDestroy {
     ].join('\r\n')
     var hiddenElement = document.createElement('a');
     let preChangedData = 'data:text/csv;charset=utf-8,' + encodeURI(csv);
-    hiddenElement.href = preChangedData.replaceAll('#','%23');
+    hiddenElement.href = preChangedData.split('#').join('%23');
     hiddenElement.target = '_blank';
     hiddenElement.download = title;
     hiddenElement.click();
