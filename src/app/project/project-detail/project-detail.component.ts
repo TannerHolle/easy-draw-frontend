@@ -174,20 +174,27 @@ export class ProjectDetailComponent implements OnInit, OnDestroy {
   downloadInvoicesCSV() {
     let items;
     let title;
+    let totalType;
+    this.draw;
     if (this.isChecked) {
-      items = JSON.parse(JSON.stringify(this.drawChangeOrders).replace('#','')) 
+      items = JSON.parse(JSON.stringify(this.drawChangeOrders)) 
       title = this.project[0].name + ' ChangeOrders.csv'
+      totalType = 'Change Orders'
     }else {
-      items = JSON.parse(JSON.stringify(this.drawInvoices).replace('#','')) 
-      title = this.project[0].name + ' Invoices.csv'
+      items = JSON.parse(JSON.stringify(this.drawInvoices)) 
+      title = this.project[0].name + '-' + this.draw['name'] + ' Invoices.csv'
+      totalType = 'Invoices'
     }
+    debugger;
     for (let item of items) {
       delete item['invoicePath']
       delete item['_id']
+      delete item['isPaid']
     }
     const replacer = (key, value) => value === null ? '' : value // specify how you want to handle null values here
     const mappingHeader = Object.keys(items[0])
     const prettyHeader = Object.keys(items[0])
+    debugger;
     for (let i = 0; i < prettyHeader.length; i++) {
       switch(prettyHeader[i]) {
         case 'company':
@@ -208,8 +215,8 @@ export class ProjectDetailComponent implements OnInit, OnDestroy {
         case 'invoiceAmt':
           prettyHeader[i] = 'Invoice Amount'
           break;
-        case 'isPaid':
-          prettyHeader[i] = 'Paid?'
+        case 'costCode':
+          prettyHeader[i] = 'Cost Code'
           break;
         default:
           console.log("huh?")
@@ -217,12 +224,12 @@ export class ProjectDetailComponent implements OnInit, OnDestroy {
     }
     const csv = [
       prettyHeader.join(','), // header row first
-      ...items.map(row => mappingHeader.map(fieldName => JSON.stringify(row[fieldName], replacer)).join(','))
+      ...items.map(row => mappingHeader.map(fieldName => JSON.stringify(row[fieldName], replacer)).join(',')),
+      `,,,,Total,${this.calculateTotal(totalType)},`
     ].join('\r\n')
-    this.getChangeOrdersOnDraw()
-    this.getInvoicesOnDraw()
     var hiddenElement = document.createElement('a');
-    hiddenElement.href = 'data:text/csv;charset=utf-8,' + encodeURI(csv);
+    let preChangedData = 'data:text/csv;charset=utf-8,' + encodeURI(csv);
+    hiddenElement.href = preChangedData.split('#').join('%23');
     hiddenElement.target = '_blank';
     hiddenElement.download = title;
     hiddenElement.click();

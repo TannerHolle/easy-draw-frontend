@@ -18,9 +18,9 @@ export class AppComponent implements OnInit {
   }
 
   //This makes it so the local storage (login info) is cleared when they exit browser or tab
-  @HostListener("window:beforeunload",["$event"])
-  clearLocalStorage(event){
-      localStorage.clear();
-  }
+  // @HostListener("window:beforeunload",["$event"])
+  // clearLocalStorage(event){
+  //     localStorage.clear();
+  // }
 
 }
