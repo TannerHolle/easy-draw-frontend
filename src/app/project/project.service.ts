@@ -101,17 +101,18 @@ export class ProjectService {
     return this.webReqService.delete(`project/delete/${projectId}`)
   }
 
-  createInvoice(projectId: string, company: {}, category: string, invoiceNum: string, invoiceAmt: Number, draw: string, image: File) {
+  createInvoice(projectId: string, company: {}, category: {}, invoiceNum: string, invoiceAmt: Number, draw: string, image: File) {
     return new Promise((resolve, reject) => {
       const invoiceData = new FormData()
       invoiceData.append("projectId", projectId)
       invoiceData.append("draw", draw)
-      invoiceData.append("category", category)
+      invoiceData.append("costCode", category['costCode'])
+      invoiceData.append("category", category['category'])
       invoiceData.append("company", company['name'])
       invoiceData.append("address", company['address'])
-      invoiceData.append("taxId", company['taxId'])
       invoiceData.append("invoiceNum", invoiceNum)
       invoiceData.append("invoiceAmt", invoiceAmt.toString())
+      invoiceData.append("taxId", company['taxId'])
       invoiceData.append("image", image, invoiceNum)
       this.http.post(environment.apiUrl + '/invoice/create', invoiceData).subscribe(responseData => {
         resolve(responseData)
@@ -146,7 +147,8 @@ export class ProjectService {
       const changeOrderData = new FormData()
       changeOrderData.append("projectId", projectId)
       changeOrderData.append("draw", draw)
-      changeOrderData.append("category", category)
+      changeOrderData.append("costCode", category['costCode'])
+      changeOrderData.append("category", category['category'])
       changeOrderData.append("company", company['name'])
       changeOrderData.append("address", company['address'])
       changeOrderData.append("taxId", company['taxId'])
