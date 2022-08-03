@@ -206,14 +206,14 @@ export class ProjectInvoicesComponent implements OnInit {
       this.selectedProject.draws.forEach(draw => {
         if (draw.changeOrders) {
           draw.changeOrders.forEach(changeOrder => {
-            if (changeOrder.company == company.name && changeOrder.invoiceNum == invoiceNum) {
+            if (changeOrder.company == company.name && changeOrder.invoiceNum.toLowerCase() == invoiceNum.toLowerCase()) {
               isExist = true;
             }
           })
         }
         if (draw.invoices) {
           draw.invoices.forEach(invoice => {
-            if (invoice.company == company.name && invoice.invoiceNum == invoiceNum) {
+            if (invoice.company == company.name && invoice.invoiceNum.toLowerCase() == invoiceNum.toLowerCase()) {
               isExist = true;
             }
           })
@@ -221,7 +221,7 @@ export class ProjectInvoicesComponent implements OnInit {
       });
     }
     if (isExist) {
-      this.openWarningDialog(`This invoice number already exists for the project ${this.selectedProject.name} and company ${company.name}`);
+      this.openWarningDialog(`Invoice Number: '${invoiceNum}' from ${company.name} already exists on ${this.selectedProject.name}. Review past invoices and if this is expected, proceed.`);
     }
   }
 
