@@ -383,13 +383,13 @@ export class ProjectInvoicesComponent implements OnInit {
     this.selectedProject = project[0];
 
     if (project[0]['draws'].length > 0) {
-      this.draws = project[0]['draws'];
-      this.draws.push({ name: 'Create New Draw', _id: '123' });
+      this.draws = [{ name: 'Create New Draw', _id: '123' }];
+      Array.prototype.push.apply(this.draws, project[0]['draws'])
       this.filteredDraws.next(this.draws.slice());
     }
     if (project[0]['categories'].length > 0) {
-      this.categories = project[0]['categories'];
-      this.categories.push({ category: 'Create New Category', _id: '123' });
+      this.categories = [{ category: 'Create New Category', _id: '123' }];
+      Array.prototype.push.apply(this.categories, project[0]['categories'])
       this.filteredCategories.next(this.categories.slice());
     } else {
       this.categories = [];
@@ -397,36 +397,13 @@ export class ProjectInvoicesComponent implements OnInit {
 
   }
 
-  getCategories() {
-    if (this.form.value.projectId) {
-      const project = this.projects.filter(obj => {
-        return obj._id === this.form.value.projectId;
-      });
-      if (project[0]['categories'].length > 0) {
-        return project[0]['categories'];
-      }
-    }
-  }
 
-  getDraws() {
-    if (this.form.value.projectId) {
-      const project = this.projects.filter(obj => {
-        return obj._id === this.form.value.projectId;
-      });
-      if (project[0]['draws'].length > 0) {
-        this.draws = project[0]['draws'];
-        this.draws.push({ name: 'Create New Draw', _id: '123' });
-        this.filteredDraws.next(this.draws.slice());
-        return project[0]['draws'];
-      }
-    }
-  }
 
   getCompanies() {
     this.companyService.getCompaniesForUser(this.authService.getUserID()).subscribe((companies: any[]) => {
-      Array.prototype.push.apply(companies, this.companies)
-      this.companies = companies
-      this.selectedCompanies = companies
+      Array.prototype.push.apply(this.companies, companies)
+      // this.companies = companies
+      this.selectedCompanies = this.companies
       this.filteredCompanies.next(this.companies.slice());
     });
   }
@@ -472,6 +449,33 @@ export class ProjectInvoicesComponent implements OnInit {
   //   let filter = value.toLowerCase();
   //   return this.companies.filter(option => option.name.toLowerCase().match(filter));
   // }
+
+  // getCategories() {
+  //   if (this.form.value.projectId) {
+  //     const project = this.projects.filter(obj => {
+  //       return obj._id === this.form.value.projectId;
+  //     });
+  //     if (project[0]['categories'].length > 0) {
+  //       return project[0]['categories'];
+  //     }
+  //   }
+  // }
+
+  // getDraws() {
+  //   if (this.form.value.projectId) {
+  //     const project = this.projects.filter(obj => {
+  //       return obj._id === this.form.value.projectId;
+  //     });
+  //     if (project[0]['draws'].length > 0) {
+  //       this.draws = project[0]['draws'];
+  //       this.draws.push({ name: 'Create New Draw', _id: '123' });
+  //       this.filteredDraws.next(this.draws.slice());
+  //       return project[0]['draws'];
+  //     }
+  //   }
+  // }
+
+
   public searchInput: String = '';
   public searchResult: Array<any> = [];
 
