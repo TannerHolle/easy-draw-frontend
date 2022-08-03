@@ -16,6 +16,7 @@ import { takeUntil } from 'rxjs/operators';
 import { CreateProjectDialogComponent } from 'src/app/dialogs/create-project-dialog/create-project-dialog.component';
 import { DrawNameDialogComponent } from '../project-detail/draw-name-dialog/draw-name-dialog.component';
 import { CategoryDialogComponent } from 'src/app/category/category-dialog/category-dialog.component';
+import { WarningDialogComponent } from 'src/app/dialogs/warning-dialog/warning-dialog.component';
 
 
 @Component({
@@ -29,6 +30,7 @@ export class ProjectInvoicesComponent implements OnInit {
   public draws = []
   public categories = []
   selectedCompanies;
+  selectedProject;
   selectedProjectId = '';
   fileName = '';
   form: FormGroup;
@@ -96,6 +98,8 @@ export class ProjectInvoicesComponent implements OnInit {
   subscribeToProjectValueChanges() {
     this.form.controls['projectId'].valueChanges.subscribe(newValue => {
       if (newValue == null) {
+        this.selectedProjectId = undefined;
+        this.selectedProject = undefined;
         this.draws = [];
         this.filteredDraws.next(this.draws.slice());
         this.categories = [];
@@ -192,6 +196,40 @@ export class ProjectInvoicesComponent implements OnInit {
     this.filteredCategories.next(
       this.categories.filter(category => category.category.toLowerCase().indexOf(search) > -1)
     );
+  }
+
+  invoiceNumberPut(invoiceNum) {
+    let company = this.form.get('company').value;
+    let isExist = false;
+
+    if (invoiceNum && company && this.selectedProject) {
+      this.selectedProject.draws.forEach(draw => {
+        if (draw.changeOrders) {
+          draw.changeOrders.forEach(changeOrder => {
+            if (changeOrder.company == company.name && changeOrder.invoiceNum == invoiceNum) {
+              isExist = true;
+            }
+          })
+        }
+        if (draw.invoices) {
+          draw.invoices.forEach(invoice => {
+            if (invoice.company == company.name && invoice.invoiceNum == invoiceNum) {
+              isExist = true;
+            }
+          })
+        }
+      });
+    }
+    if (isExist) {
+      this.openWarningDialog(`This invoice number already exists for the project ${this.selectedProject.name} and company ${company.name}`);
+    }
+  }
+
+  openWarningDialog(message) {
+    const dialogRef = this.dialog.open(WarningDialogComponent, {
+      width: '500px',
+      data: { message },
+    });
   }
 
   openCreateCompanyDialog() {
@@ -341,6 +379,8 @@ export class ProjectInvoicesComponent implements OnInit {
     const project = this.projects.filter(obj => {
       return obj._id === this.form.value.projectId;
     });
+
+    this.selectedProject = project[0];
 
     if (project[0]['draws'].length > 0) {
       this.draws = project[0]['draws'];

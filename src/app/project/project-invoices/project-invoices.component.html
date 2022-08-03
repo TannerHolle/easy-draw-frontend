@@ -59,6 +59,7 @@
         <input
         matInput
         type="text"
+        (blur)="invoiceNumberPut(form.get('invoiceNum').value)"
         formControlName="invoiceNum"
         placeholder="Invoice Number" >
         <mat-error *ngIf="form.get('invoiceNum').invalid">Please Enter an Invoice Number</mat-error>
