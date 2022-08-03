@@ -1,0 +1,16 @@
+::ng-deep {
+    .mat-dialog-content {
+        main {
+            width: 100% !important;
+            margin: 0px !important;
+        }
+
+        .mat-card:not([class*=mat-elevation-z]) {
+            box-shadow: none !important;
+        }
+
+        .mat-card {
+            padding: 0px !important;
+        }
+    }
+}

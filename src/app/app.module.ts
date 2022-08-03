@@ -57,6 +57,8 @@ import { CompanyUploadComponent } from './company/company-upload/company-upload.
 import { ForgotPasswordComponent } from './auth/forgot-password/forgot-password.component';
 import { CreateCompanyDialogComponent } from './dialogs/create-company-dialog/create-company-dialog.component';
 import { NgxMatSelectSearchModule } from 'ngx-mat-select-search';
+import { CreateProjectDialogComponent } from './dialogs/create-project-dialog/create-project-dialog.component';
+import { WarningDialogComponent } from './dialogs/warning-dialog/warning-dialog.component';
 
 
 @NgModule({
@@ -87,7 +89,9 @@ import { NgxMatSelectSearchModule } from 'ngx-mat-select-search';
     EditInvoiceComponent,
     CompanyUploadComponent,
     ForgotPasswordComponent,
-    CreateCompanyDialogComponent
+    CreateCompanyDialogComponent,
+    CreateProjectDialogComponent,
+    WarningDialogComponent
   ],
   imports: [
     AppMaterialModules,
@@ -116,6 +120,6 @@ import { NgxMatSelectSearchModule } from 'ngx-mat-select-search';
     ],
   providers: [ProjectComponent, {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true}],
   bootstrap: [AppComponent],
-  entryComponents: [DrawNameDialogComponent, CategoryDialogComponent, CreateCompanyDialogComponent]
+  entryComponents: [DrawNameDialogComponent, CategoryDialogComponent, CreateCompanyDialogComponent, CreateProjectDialogComponent, WarningDialogComponent]
 })
 export class AppModule { }
