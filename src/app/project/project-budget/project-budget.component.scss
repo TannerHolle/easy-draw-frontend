@@ -30,6 +30,7 @@ table {
   border-bottom: 1px solid #c6c6c6;
   margin-bottom: 20px;
   height: 40px;
+
 }
 
 span.plain-text {
@@ -117,4 +118,8 @@ button {
 
 .element-row:nth-child(odd){
   background-color:  lightgray;
+}
+
+.mat-raised-button {
+  padding: 2px;
 }

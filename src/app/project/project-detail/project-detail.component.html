@@ -22,8 +22,15 @@
           <span>
             <button mat-button (click)="openDialog()">Open New Draw</button>
           </span>
-          <span class="action-buttons">
-            <mat-icon (click)="download()" matTooltip="Download Draw Sheet" class="material-icons-outlined" style="font-size: 24px" matTooltipClass="tooltip">file_download</mat-icon>
+          <span *ngIf="drawData.length != 0" class="action-buttons">
+            <button mat-button [matMenuTriggerFor]="menu">Download</button>
+            <mat-menu #menu="matMenu">
+              <button mat-menu-item (click)="downloadInvoicesCSV()">Draw Sheet</button>
+              <button *ngIf="isChecked == false" mat-menu-item (click)="generateInvoicesPDF()">Invoice PDF Packet</button>
+              <button *ngIf="isChecked == true" mat-menu-item (click)="generateInvoicesPDF()">Change Order PDF Packet</button>
+              <button mat-menu-item (click)="downloadBoth()">Draw Sheet and PDF Packet</button>
+            </mat-menu>
+            <!-- <mat-icon (click)="download()" matTooltip="Download Draw Sheet" class="material-icons-outlined" style="font-size: 24px" matTooltipClass="tooltip">file_download</mat-icon> -->
           </span>
         </div>
         <ng-container *ngIf="drawData.length == 0">You will see Inovices and Change orders here once you input them</ng-container>
@@ -48,7 +55,7 @@
                 <td mat-footer-cell *matFooterCellDef></td>
               </ng-container>
               <ng-container matColumnDef="invoiceNum">
-                <th mat-header-cell *matHeaderCellDef> Inovice Number </th>
+                <th mat-header-cell *matHeaderCellDef> Invoice Number </th>
                 <td mat-cell *matCellDef="let element"> {{element.invoiceNum}} </td>
                 <td mat-footer-cell *matFooterCellDef>Draw Total:</td>
               </ng-container>
@@ -63,7 +70,7 @@
                 <td mat-footer-cell *matFooterCellDef></td>
               </ng-container>
               <ng-container matColumnDef="invoicePath">
-                <th mat-header-cell *matHeaderCellDef> Inovice </th>
+                <th mat-header-cell *matHeaderCellDef> Attachment </th>
                 <td mat-cell *matCellDef="let element">
                   <a (click)="openInvoiceFile(element.invoicePath)"><button>View Invoice</button></a>
                 </td>
@@ -112,12 +119,12 @@
                 <td mat-footer-cell *matFooterCellDef></td>
               </ng-container>
               <ng-container matColumnDef="invoiceNum">
-                <th mat-header-cell *matHeaderCellDef> CO Number </th>
+                <th mat-header-cell *matHeaderCellDef> Change Order # </th>
                 <td mat-cell *matCellDef="let element"> {{element.invoiceNum}} </td>
                 <td mat-footer-cell *matFooterCellDef>Draw Total:</td>
               </ng-container>
               <ng-container matColumnDef="amount">
-                <th mat-header-cell *matHeaderCellDef> CO Amount </th>
+                <th mat-header-cell *matHeaderCellDef> Change Order Amt </th>
                 <td mat-cell *matCellDef="let element"> {{element.invoiceAmt | currency}} </td>
                 <td mat-footer-cell *matFooterCellDef>{{ calculateTotal('Change Orders') | currency}}</td>
               </ng-container>

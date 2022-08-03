@@ -17,7 +17,9 @@
               <span class="search-term-text">{{projectName}}</span><br>
             </div>
             <div class="action-buttons">
-              <mat-icon (click)="download()" matTooltip="Download Project Budget" class="material-icons-outlined" style="font-size: 24px" matTooltipClass="tooltip">file_download</mat-icon>
+              <button mat-button class="menu-button" (click)="download()">Download Project Budget</button>
+
+              <!-- <mat-icon (click)="download()" matTooltip="Download Project Budget" class="material-icons-outlined" style="font-size: 24px" matTooltipClass="tooltip">file_download</mat-icon> -->
             </div>
           </div>
           <div class="search-results-header">
@@ -25,12 +27,25 @@
               <span class="plain-text">Categories: </span>
             </div>
             <div class="action-buttons">
-              <button mat-raised-button class="add-project" (click)="openDialog()">Add Single Category</button>
+              <button mat-button class="add-project" (click)="openDialog()">Add Category</button>
               <!-- <button mat-raised-button class="add-project" [routerLink]="['/project/category', id]">Add Single Category</button> -->
-              <button mat-raised-button class="add-project" (click)="filePicker.click()">Upload CSV of Categories</button> {{categoryService.fileName}}
+              <button mat-button class="add-project" (click)="filePicker.click()">Upload CSV of Categories</button> 
+              <!-- <span *ngIf="categoryService.showUpload == true" style="padding: 10px">{{categoryService.fileName}} </span>     -->
               <input type="file" class="upload" (change)="categoryService.changeListener($event.target.files)" #filePicker>
-              <mat-icon (click)="categoryService.upload(id)" matTooltip="Upload CSV" class="material-icons-outlined" style="font-size: 24px" matTooltipClass="tooltip">file_upload</mat-icon>
+              <!-- <mat-icon *ngIf="categoryService.showUpload == true" (click)="categoryService.upload(id)" matTooltip="Upload CSV" class="material-icons-outlined" style="font-size: 24px" matTooltipClass="tooltip">file_upload</mat-icon>  -->
             </div>
+          </div>
+          <div *ngIf="categoryService.showUpload == true" class="search-results-header">
+            <div>
+              <span class="plain-text"></span>
+            </div>
+            <div class="action-buttons">
+              <span>{{categoryService.fileName}}</span>    
+              <mat-icon (click)="categoryService.upload(id)" matTooltip="Upload CSV" class="material-icons-outlined" style="font-size: 24px" matTooltipClass="tooltip">file_upload</mat-icon>
+
+            </div>
+            <!-- <input type="file" class="upload" (change)="categoryService.changeListener($event.target.files)" #filePicker> -->
+            <!-- <mat-icon *ngIf="categoryService.showUpload == true" (click)="categoryService.upload(id)" matTooltip="Upload CSV" class="material-icons-outlined" style="font-size: 24px" matTooltipClass="tooltip">file_upload</mat-icon> -->
           </div>
           <ng-container *ngIf='this.budgetData.length > 0'>
             <table class="mat-elevation-z2" mat-table [dataSource]="budgetData">

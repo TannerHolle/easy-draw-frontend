@@ -64,7 +64,7 @@ export class ProjectBudgetComponent implements OnInit, AfterViewInit, OnDestroy 
         }
       });
     });
-
+    this.categoryService.showUpload = false;
   }
 
   ngAfterViewInit() {
