@@ -125,7 +125,7 @@ export class ProjectDetailComponent implements OnInit, OnDestroy {
     return newStr.charAt(0).toUpperCase() + newStr.slice(1);
   }
 
-  download() {
+  downloadBoth() {
     this.downloadInvoicesCSV();
     this.generateInvoicesPDF();
   }
@@ -185,7 +185,6 @@ export class ProjectDetailComponent implements OnInit, OnDestroy {
       title = this.project[0].name + '-' + this.draw['name'] + ' Invoices.csv'
       totalType = 'Invoices'
     }
-    debugger;
     for (let item of items) {
       delete item['invoicePath']
       delete item['_id']
@@ -194,7 +193,6 @@ export class ProjectDetailComponent implements OnInit, OnDestroy {
     const replacer = (key, value) => value === null ? '' : value // specify how you want to handle null values here
     const mappingHeader = Object.keys(items[0])
     const prettyHeader = Object.keys(items[0])
-    debugger;
     for (let i = 0; i < prettyHeader.length; i++) {
       switch(prettyHeader[i]) {
         case 'company':

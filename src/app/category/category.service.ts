@@ -15,6 +15,7 @@ export class CategoryService {
   public categories: {} = [];
   public companies: {} = [];
   public records: any[] = [];
+  public showUpload = false;
 
   @ViewChild('csvReader') csvReader: any;
   jsondatadisplay:any;
@@ -46,6 +47,7 @@ export class CategoryService {
   }
 
   changeListener(files: FileList) {
+    debugger;
     this.fileName = files.item(0).name
     if(files && files.length > 0  && files.item(0).name.endsWith(".csv")) {
       let file : File = files.item(0);
@@ -64,6 +66,7 @@ export class CategoryService {
       reader.onerror = function () {
         console.log('error is occured while reading file!');
       };
+      this.showUpload = true;
     } else {
       alert("Please import valid .csv file.");
       this.csvReader.nativeElement.value = "";
