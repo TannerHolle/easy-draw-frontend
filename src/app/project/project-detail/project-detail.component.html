@@ -22,7 +22,7 @@
           <span>
             <button mat-button (click)="openDialog()">Open New Draw</button>
           </span>
-          <span class="action-buttons">
+          <span *ngIf="drawData.length != 0" class="action-buttons">
             <button mat-button [matMenuTriggerFor]="menu">Download</button>
             <mat-menu #menu="matMenu">
               <button mat-menu-item (click)="downloadInvoicesCSV()">Draw Sheet</button>
