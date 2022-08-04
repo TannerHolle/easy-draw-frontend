@@ -181,7 +181,6 @@ export class ProjectService {
   }
 
   uploadInvoicesOnDraw(projectId, draw, invoicesArray: Array<any> = []){
-    debugger;
     return this.webReqService.post(`invoice/upload/${projectId}/${draw}`, invoicesArray);
   }
 
