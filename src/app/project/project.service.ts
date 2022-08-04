@@ -101,6 +101,10 @@ export class ProjectService {
     return this.webReqService.delete(`project/delete/${projectId}`)
   }
 
+  deleteInvoice(projectId, draw, invoice) {    
+    return this.webReqService.post(`invoice/delete/${projectId}/${draw}`, invoice)
+  }
+
   createInvoice(projectId: string, company: {}, category: {}, invoiceNum: string, invoiceAmt: Number, draw: string, image: File) {
     return new Promise((resolve, reject) => {
       const invoiceData = new FormData()
@@ -128,14 +132,6 @@ export class ProjectService {
       invoiceId: invoiceId,
       draw: draw
     }
-    // const invoiceData = new FormData()
-    // invoiceData.append("projectId", projectId)
-    // invoiceData.append("draw", draw)
-    // invoiceData.append("category", category)
-    // invoiceData.append("company", company['name'])
-    // invoiceData.append("invoiceNum", invoiceNum)
-    // invoiceData.append("invoiceAmt", invoiceAmt.toString())
-    // invoiceData.append("invoiceId", invoiceId)
     this.http.post(environment.apiUrl + '/invoice/update', updateData).subscribe(responseData => {
       console.log(responseData)
       this.router.navigate(['/projects', projectId]);

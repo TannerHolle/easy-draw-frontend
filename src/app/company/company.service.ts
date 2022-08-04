@@ -34,7 +34,6 @@ export class CompanyService {
   }
 
   uploadCompanies(vendorArray: Array<any> = [], id: String){
-    debugger;
     return this.webReqService.post(`company/upload`, vendorArray);
   }
 

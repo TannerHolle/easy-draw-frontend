@@ -309,11 +309,18 @@ export class ProjectDetailComponent implements OnInit, OnDestroy {
     });
   }
 
-  deleteInvoice() {
+  deleteInvoice(invoice) {
     var result = confirm("Are you sure you want to delete this In? THIS CANNOT BE UNDONE");
     if (result) {
-      window.alert("the invoice would've been deleted")
+      this.projectService.deleteInvoice(this.project[0]._id, this.draw["name"], invoice).subscribe((res: any) => {
+        console.log(res)
+      });
+      window.location.reload();
     }
+  }
+
+  addChecks() {
+    window.alert("you will be able to add checks for this draw here")
   }
   
   ngOnDestroy(): void {
