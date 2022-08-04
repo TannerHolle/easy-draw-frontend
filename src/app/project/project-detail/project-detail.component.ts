@@ -302,13 +302,10 @@ export class ProjectDetailComponent implements OnInit, OnDestroy {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      const isAlphaNumeric = /^[a-z0-9]+$/gi.test(result)
       if (result) {
         this.projectService.openNewDraw(this.id, result).subscribe((res: any) => {
           this.router.navigate(['/projects', this.id, 'draws', result]);
         });
-      } else {
-        alert("Please only use AlphaNumeric Characters (Letters, Numbers, and Spaces")
       }
     });
   };
