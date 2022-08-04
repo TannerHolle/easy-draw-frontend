@@ -180,6 +180,11 @@ export class ProjectService {
     return this.webReqService.post(`category/upload/${id}`, categoryArray);
   }
 
+  uploadInvoicesOnDraw(projectId, draw, invoicesArray: Array<any> = []){
+    debugger;
+    return this.webReqService.post(`invoice/upload/${projectId}/${draw}`, invoicesArray);
+  }
+
   closeDraw(projectId, drawId) {
     return this.webReqService.post(`project/close-draw/${projectId}/${drawId}`, {});
   }

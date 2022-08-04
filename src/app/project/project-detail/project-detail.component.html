@@ -72,7 +72,8 @@
               <ng-container matColumnDef="invoicePath">
                 <th mat-header-cell *matHeaderCellDef> Attachment </th>
                 <td mat-cell *matCellDef="let element">
-                  <a (click)="openInvoiceFile(element.invoicePath)"><button>View Invoice</button></a>
+                  <a *ngIf="element.invoicePath != ''" (click)="openInvoiceFile(element.invoicePath)"><button>View Invoice</button></a>
+                  <!-- <a *ngIf="element.invoicePath == ''" (click)="attachInvoice()"><button>Attach Invoice</button></a> -->
                 </td>
                 <td mat-footer-cell *matFooterCellDef></td>
               </ng-container>
@@ -159,6 +160,12 @@
           </div>
         </ng-container>
       </ng-container>
+      <div class="btn-group">
+        <button mat-button class="add-project" (click)="filePicker.click()">Upload Historical Draw Information</button> 
+        <span *ngIf="showUpload == true">{{fileName}}</span>
+        <input type="file" class="upload" (change)="changeListener($event.target.files)" #filePicker>
+        <mat-icon *ngIf="showUpload == true" (click)="uploadInvoices()" matTooltip="Upload CSV" class="material-icons-outlined" style="font-size: 24px" matTooltipClass="tooltip">file_upload</mat-icon>
+      </div>
       <!-- <div class="btn-group">
         <button mat-raised-button (click)="addChecks()">Add Checks for Draw</button>
       </div> -->

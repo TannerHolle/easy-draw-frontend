@@ -30,10 +30,16 @@ export class ProjectDetailComponent implements OnInit, OnDestroy {
   name: string;
   imgUrls = []
   isChecked = false;
+  fileName;
+  records = [];
+  showUpload = false;
 
 
   @ViewChild(MatSidenav)
   sidenav!: MatSidenav;
+
+  @ViewChild('csvReader') csvReader: any;
+  jsondatadisplay:any;
 
 
   displayedColumns: string[] = ['company', 'category', 'address', 'invoiceNum', 'amount', 'taxId', 'invoicePath', 'isPaid', '_id'];
@@ -68,6 +74,7 @@ export class ProjectDetailComponent implements OnInit, OnDestroy {
         this.draws = this.getDrawInfo();
       });
     });
+    this.showUpload = false;
   }
 
   ngAfterViewInit() {
@@ -137,6 +144,9 @@ export class ProjectDetailComponent implements OnInit, OnDestroy {
     console.log(JSON.stringify(dataSource))
 
     dataSource.forEach(invoice => {
+      if (invoice.invoicePath == '') {
+        return;
+      }
       const splitPath = invoice.invoicePath.split('/');
       const fileName = splitPath[splitPath.length - 1];
       const nameSplit = fileName.split('.');
@@ -177,11 +187,11 @@ export class ProjectDetailComponent implements OnInit, OnDestroy {
     let totalType;
     this.draw;
     if (this.isChecked) {
-      items = JSON.parse(JSON.stringify(this.drawChangeOrders)) 
+      items = JSON.parse(JSON.stringify(this.drawChangeOrders))
       title = this.project[0].name + ' ChangeOrders.csv'
       totalType = 'Change Orders'
-    }else {
-      items = JSON.parse(JSON.stringify(this.drawInvoices)) 
+    } else {
+      items = JSON.parse(JSON.stringify(this.drawInvoices))
       title = this.project[0].name + '-' + this.draw['name'] + ' Invoices.csv'
       totalType = 'Invoices'
     }
@@ -194,7 +204,7 @@ export class ProjectDetailComponent implements OnInit, OnDestroy {
     const mappingHeader = Object.keys(items[0])
     const prettyHeader = Object.keys(items[0])
     for (let i = 0; i < prettyHeader.length; i++) {
-      switch(prettyHeader[i]) {
+      switch (prettyHeader[i]) {
         case 'company':
           prettyHeader[i] = 'Company'
           break;
@@ -309,6 +319,9 @@ export class ProjectDetailComponent implements OnInit, OnDestroy {
     });
   }
 
+  attachInvoice() {
+    window.alert('this would allow you to attach an invoice')
+  }
   deleteInvoice(invoice) {
     var result = confirm("Are you sure you want to delete this In? THIS CANNOT BE UNDONE");
     if (result) {
@@ -322,7 +335,72 @@ export class ProjectDetailComponent implements OnInit, OnDestroy {
   addChecks() {
     window.alert("you will be able to add checks for this draw here")
   }
-  
+
+  uploadInvoices() {
+    this.projectService.uploadInvoicesOnDraw(this.project[0]._id, this.draw["name"], this.records).subscribe((response: any) => {
+      this.router.navigate(['/projects', this.id]);
+      });
+  }
+
+  changeListener(files: FileList) {
+    this.fileName = files.item(0).name
+    if (files && files.length > 0 && files.item(0).name.endsWith(".csv")) {
+      let file: File = files.item(0);
+      let reader: FileReader = new FileReader();
+      reader.readAsText(file);
+
+      reader.onload = (e) => {
+        let csvData = reader.result;
+        let csvRecordsArray = (<string>csvData).split(/\r\n|\n/);
+        let headersRow = this.getHeaderArray(csvRecordsArray);
+
+        this.records = this.getDataRecordsArrayFromCSVFile(csvRecordsArray, headersRow.length);
+      };
+      this.showUpload = true;
+
+      reader.onerror = function () {
+        console.log('error is occured while reading file!');
+      };
+    } else {
+      alert("Please import valid draw file. Download template if needed.");
+      this.csvReader.nativeElement.value = "";
+      this.records = [];
+      this.jsondatadisplay = '';
+    }
+  }
+
+  getDataRecordsArrayFromCSVFile(csvRecordsArray: any, headerLength: any) {
+    let csvArr = [];
+
+    for (let i = 1; i < csvRecordsArray.length; i++) {
+      let currentRecord = (csvRecordsArray[i]).split(',');
+      if (currentRecord.length == headerLength) {
+        let csvRecord = {};
+        csvRecord["company"] = currentRecord[0].trim().replace(/["]+/g, '');
+        csvRecord["address"] = currentRecord[1].trim().replace(/["]+/g, '');
+        csvRecord["costCode"] = currentRecord[2].trim().replace(/["]+/g, '');
+        csvRecord["category"] = currentRecord[3].trim().replace(/["]+/g, '');
+        csvRecord["invoiceNum"] = currentRecord[4].trim().replace(/["]+/g, '');
+        csvRecord["invoiceAmt"] = Number(currentRecord[5].trim());
+        csvRecord["taxId"] = currentRecord[6].trim().replace(/["]+/g, '');
+        csvRecord["invoicePath"] = '';
+        csvRecord["isPaid"] = false;
+        csvArr.push(csvRecord);
+      }
+    }
+    return csvArr;
+  }
+
+  getHeaderArray(csvRecordsArr: any) {
+    let headers = (csvRecordsArr[0]).split(',');
+    let headerArray = [];
+    for (let j = 0; j < headers.length; j++) {
+      headerArray.push(headers[j]);
+    }
+    return headerArray;
+  }
+
+
   ngOnDestroy(): void {
     this.authService.addInvoiceRouterSubject.next(['/project/invoices'])
   }
