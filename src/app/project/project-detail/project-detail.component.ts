@@ -11,6 +11,7 @@ import { environment } from 'src/environments/environment';
 import { PDFService } from 'src/app/services/pdf.service';
 import { PDFDocument } from 'pdf-lib';
 import { debug } from 'console';
+import { DomSanitizer } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-project-detail',
@@ -31,6 +32,7 @@ export class ProjectDetailComponent implements OnInit, OnDestroy {
   imgUrls = []
   isChecked = false;
   fileName;
+  checkFile;
   records = [];
   showUpload = false;
 
@@ -45,7 +47,7 @@ export class ProjectDetailComponent implements OnInit, OnDestroy {
   displayedColumns: string[] = ['company', 'category', 'address', 'invoiceNum', 'amount', 'taxId', 'invoicePath', 'isPaid', '_id'];
   dataSource = [];
 
-  constructor(private route: ActivatedRoute, private http: HttpClient, public dialog: MatDialog, public projectService: ProjectService, private observer: BreakpointObserver, private authService: AuthService, private router: Router, private pdfService: PDFService) { }
+  constructor(private route: ActivatedRoute, private http: HttpClient, public dialog: MatDialog, public projectService: ProjectService, private observer: BreakpointObserver, private authService: AuthService, private router: Router, private domSanitizer: DomSanitizer, private pdfService: PDFService) { }
 
   ngOnInit() {
     this.route.params.subscribe(routeParams => {
@@ -319,6 +321,7 @@ export class ProjectDetailComponent implements OnInit, OnDestroy {
   attachInvoice() {
     window.alert('this would allow you to attach an invoice')
   }
+
   deleteInvoice(invoice) {
     var result = confirm("Are you sure you want to delete this In? THIS CANNOT BE UNDONE");
     if (result) {
@@ -329,8 +332,35 @@ export class ProjectDetailComponent implements OnInit, OnDestroy {
     }
   }
 
-  addChecks() {
-    window.alert("you will be able to add checks for this draw here")
+  addDrawFiles(event: Event, type) {
+    const file = (event.target as HTMLInputElement).files[0];
+    this.checkFile = file.name
+    const reader = new FileReader();
+    reader.onload = () => {
+      this.domSanitizer.bypassSecurityTrustUrl(reader.result as string)
+    };
+    reader.readAsDataURL(file)
+    if (type == 'checks') {
+      this.projectService.addCheckFile(this.project[0]._id, this.draw["name"], file)
+    }
+    if (type == 'signedDraw') {
+      this.projectService.addSignedDraw(this.project[0]._id, this.draw["name"], file)
+    }
+    window.location.reload();
+  }
+
+  viewDrawFiles(type) {
+    if (type =='checks') {
+      this.openInvoiceFile(this.draw['checks'])
+    }
+    if (type =='signedDraw') {
+      this.openInvoiceFile(this.draw['signedDraw'])
+    }
+
+  }
+
+  addSignedDrawForm() {
+    window.alert("you will be able to attach signed Draw form here")
   }
 
   uploadInvoices() {

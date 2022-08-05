@@ -34,7 +34,9 @@ export class ProjectService {
           "name": draw,
           "isOpen": true,
           "invoices": [],
-          "changeOrders": []
+          "changeOrders": [],
+          "checks": "",
+          "signedDraw": ""
         }
       ]
     });
@@ -190,6 +192,25 @@ export class ProjectService {
 
   openNewDraw(projectId, drawId) {
     return this.webReqService.post(`project/open-new-draw/${projectId}`, {"drawId": drawId});
+  }
+
+  addCheckFile(projectId, draw, image) {
+    return new Promise((resolve, reject) => {
+      const check = new FormData()
+      check.append("image", image)
+      this.http.post(environment.apiUrl + `/invoice/checks/${projectId}/${draw}`, check).subscribe(responseData => {
+        resolve(responseData);
+      });
+    });
+  }
+  addSignedDraw(projectId, draw, image) {
+    return new Promise((resolve, reject) => {
+      const signedDraw = new FormData()
+      signedDraw.append("image", image)
+      this.http.post(environment.apiUrl + `/invoice/signedDraw/${projectId}/${draw}`, signedDraw).subscribe(responseData => {
+        resolve(responseData);
+      });
+    });
   }
 
   getProjectUpdateListener() {
