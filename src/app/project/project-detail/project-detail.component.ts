@@ -349,6 +349,7 @@ export class ProjectDetailComponent implements OnInit, OnDestroy {
     window.location.reload();
   }
 
+  //view draw
   viewDrawFiles(type) {
     if (type =='checks') {
       this.openInvoiceFile(this.draw['checks'])
