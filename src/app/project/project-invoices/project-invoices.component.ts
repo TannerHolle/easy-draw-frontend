@@ -36,6 +36,7 @@ export class ProjectInvoicesComponent implements OnInit {
   form: FormGroup;
   imagePreview: string;
   isLoading = false;
+  isSavePressed: boolean = false;
 
   protected _onDestroy = new Subject();
   //projects
@@ -319,6 +320,7 @@ export class ProjectInvoicesComponent implements OnInit {
   }
 
   onAddInvoice(isReturn?: boolean) {
+    this.isSavePressed = true;
     if (this.form.invalid) {
       return;
     }
