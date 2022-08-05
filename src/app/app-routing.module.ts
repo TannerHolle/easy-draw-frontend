@@ -33,7 +33,7 @@ const routes: Routes = [
   {path: 'project/invoices/:id', component: ProjectInvoicesComponent},
   {path: 'project/invoices/:id/:drawId', component: ProjectInvoicesComponent},
   // {path: 'project/create', component: ProjectCreateComponent},
-  {path: 'company/create', component: CompanyCreateComponent, canActivate: [AuthGuard]},
+  // {path: 'company/create', component: CompanyCreateComponent, canActivate: [AuthGuard]},
   {path: 'company/create/:id', component: CompanyCreateComponent},
   // {path: 'project/category/:id', component: ProjectCategoryComponent},
   {path: 'project/category-upload/:id', component: CategoryUploadComponent},
