@@ -45,7 +45,7 @@
         <th mat-header-cell *matHeaderCellDef> Actions </th>
         <td mat-cell *matCellDef="let element">
           <mat-icon class="action-items" [routerLink]="['/project-edit', element._id]">edit</mat-icon>
-          <mat-icon class="action-items" (click)="deleteProject(element._id)">delete</mat-icon>
+          <mat-icon class="action-items" (click)="deleteProject(element._id); $event.stopPropagation();">delete</mat-icon>
         </td>
       </ng-container>
 
