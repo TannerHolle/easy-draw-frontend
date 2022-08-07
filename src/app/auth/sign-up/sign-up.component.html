@@ -18,11 +18,6 @@
         <input matInput type="password" placeholder="Password" name="password" ngModel #passwordInput="ngModel" required password>
         <mat-error *ngIf="passwordInput.invalid">Please Enter a Password</mat-error>
       </mat-form-field>
-        <span>Security Question: What city were you born in? (For password reset purposes)</span>
-      <mat-form-field>
-        <input matInput type="text" placeholder="Answer" name="answer" ngModel #answerInput="ngModel" required>
-        <mat-error *ngIf="answerInput.invalid">Please Enter an Answer</mat-error>
-      </mat-form-field>
       <button
         *ngIf="!isLoading"
         mat-raised-button

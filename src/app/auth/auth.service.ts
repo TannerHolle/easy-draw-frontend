@@ -44,13 +44,12 @@ export class AuthService {
     return this.authStatusListener.asObservable();
   }
 
-  createUser(name: string, company: string, email: string, password: string, answer: string) {
-    const authData = { "name": name, "company": company, "email": email, "password": password, "answer": answer }
+  createUser(name: string, company: string, email: string, password: string) {
+    const authData = { "name": name, "company": company, "email": email, "password": password }
     this.http.post(environment.apiUrl + '/user/sign-up', authData)
-      .subscribe(response => {
-        console.log(response)
-        this.login(email, password)
-        this.router.navigate(["/projects"]);
+      .subscribe((response: any) => {
+        alert(response.message)
+        this.router.navigate(["login"]);
       },
         error => {
           this.authStatusListener.next(false);
@@ -99,7 +98,7 @@ export class AuthService {
       },
         error => {
           this.authStatusListener.next(false);
-          window.alert("Invalid email or password, Try again")
+          window.alert(error.error['message'] || "Invalid email or password, Try again")
           window.location.reload();
         });
     // return this.webReqService.post('user/login', {
