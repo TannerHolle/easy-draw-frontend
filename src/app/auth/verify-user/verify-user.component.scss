@@ -1,0 +1,12 @@
+.container {
+    display: flex;
+    justify-content: space-around;
+    align-content: flex-end;
+    height: 100%;
+    .content {
+        display: flex;
+        align-content: stretch;
+        justify-content: space-evenly;
+        flex-direction: column;
+    }
+}

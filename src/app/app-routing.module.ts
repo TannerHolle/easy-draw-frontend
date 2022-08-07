@@ -42,6 +42,16 @@ const routes: Routes = [
   {path: 'login', component: LoginComponent},
   {path: 'sign-up', component: SignUpComponent},
   {path: 'forgot-password', component: ForgotPasswordComponent},
+
+  {
+    path: 'reset-password/verify',
+    loadChildren: () => import('./auth/reset-password/reset-password.module').then(mod => mod.ResetPasswordModule),
+  },
+  {
+    path: 'sign-up/verify',
+    loadChildren: () => import('./auth/verify-user/verify-user.module').then(mod => mod.VerifyUserModule),
+  },
+
 ];
 
 @NgModule({
