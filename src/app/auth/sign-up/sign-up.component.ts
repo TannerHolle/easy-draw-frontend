@@ -59,6 +59,12 @@ export class SignUpComponent {
     if (form.invalid) {
       return;
     }
+
+    if (form.value.password !== form.value.confirmPassword) {
+      alert('Passwords do not match')
+      return false;
+    }
+
     this.isLoading = true;
     this.authService.createUser(form.value.name, form.value.company, form.value.email, form.value.password)
   }

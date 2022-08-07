@@ -18,6 +18,11 @@
         <input matInput type="password" placeholder="Password" name="password" ngModel #passwordInput="ngModel" (input)="onPasswordChange($event.target.value)" required password>
         <mat-error *ngIf="passwordInput.invalid || (signupForm.form.controls['password']?.errors && signupForm.form.controls['password']?.errors['incorrect'])">Please Enter a Valid Password</mat-error>
       </mat-form-field>
+
+      <mat-form-field>
+        <input matInput type="password" placeholder="Confirm Password" name="confirmPassword" ngModel #confirmPasswordInput="ngModel" required password>
+        <mat-error *ngIf="confirmPasswordInput.invalid">Please Enter Confirm Password</mat-error>
+      </mat-form-field>
       
       <div id="password-validation-box">
         <mat-label>Password Checklist:</mat-label>
