@@ -18,7 +18,7 @@ export class AuthService {
   public authStatusListener = new Subject<boolean>();
   public addInvoiceRouterSubject = new Subject();
 
-  constructor(private webReqService: WebRequestService, private router: Router, private http: HttpClient) {}
+  constructor(private webReqService: WebRequestService, private router: Router, private http: HttpClient) { }
 
   getToken() {
     return this.token;
@@ -47,62 +47,61 @@ export class AuthService {
   createUser(name: string, company: string, email: string, password: string, answer: string) {
     const authData = { "name": name, "company": company, "email": email, "password": password, "answer": answer }
     this.http.post(environment.apiUrl + '/user/sign-up', authData)
-    .subscribe(response => {
-      console.log(response)
-      this.login(email,password)
-      this.router.navigate(["/projects"]);
-    },
-    error => {
-      this.authStatusListener.next(false);
-      window.alert("Please try again. If this continues to happen, please reach out to support")
-      window.location.reload();
-    });
+      .subscribe(response => {
+        console.log(response)
+        this.login(email, password)
+        this.router.navigate(["/projects"]);
+      },
+        error => {
+          this.authStatusListener.next(false);
+          window.alert("Please try again. If this continues to happen, please reach out to support")
+          window.location.reload();
+        });
     // return this.webReqService.post('user/sign-up', {
     //   "email": email,
     //   "password": password,
     // })
   }
 
-  resetPassword(email: string, password: string) {
-    const authData = {"email": email, "password": password }
-    this.http.post(environment.apiUrl + '/user/reset-password', authData)
-    .subscribe(response => {
-      console.log(response)
-      this.login(email,password)
-      this.router.navigate(["/projects"]);
-    },
-    error => {
-      this.authStatusListener.next(false);
-      window.alert("Please try again. If this continues to happen, please reach out to support")
-      window.location.reload();
-    });
+  resetPassword(email: string) {
+    const authData = { "email": email }
+    this.http.post(environment.apiUrl + '/user/send-reset-password-link', authData)
+      .subscribe((response: any) => {
+        window.alert(response.message);
+        window.location.reload();
+      },
+        error => {
+          this.authStatusListener.next(false);
+          window.alert("Please try again. If this continues to happen, please reach out to support")
+          window.location.reload();
+        });
   }
 
-  login(email:string, password:string) {
+  login(email: string, password: string) {
     const authData = { "email": email, "password": password }
     this.http.post<{ token: string, expiresIn: number, userId: string }>(environment.apiUrl + '/user/login', authData)
-    .subscribe(response => {
-      const token = response['token'];
-      this.token = token;
-      if (token) {
-        const expiresInDuration = response['expiresIn'];
-        this.setAuthTimer(expiresInDuration);
-        this.isAuthenticated = true;
-        this.userId = response.userId;
-        this.userName = response['userName'];
-        this.authStatusListener.next(true);
-        const now = new Date();
-        const expirationDate = new Date(now.getTime() + expiresInDuration * 1000);
-        console.log(expirationDate);
-        this.saveAuthData(token, expirationDate, this.userId, this.userName);
-        this.router.navigate(["/projects"]);
-      }
-    },
-    error => {
-      this.authStatusListener.next(false);
-      window.alert("Invalid email or password, Try again")
-      window.location.reload();
-    });
+      .subscribe(response => {
+        const token = response['token'];
+        this.token = token;
+        if (token) {
+          const expiresInDuration = response['expiresIn'];
+          this.setAuthTimer(expiresInDuration);
+          this.isAuthenticated = true;
+          this.userId = response.userId;
+          this.userName = response['userName'];
+          this.authStatusListener.next(true);
+          const now = new Date();
+          const expirationDate = new Date(now.getTime() + expiresInDuration * 1000);
+          console.log(expirationDate);
+          this.saveAuthData(token, expirationDate, this.userId, this.userName);
+          this.router.navigate(["/projects"]);
+        }
+      },
+        error => {
+          this.authStatusListener.next(false);
+          window.alert("Invalid email or password, Try again")
+          window.location.reload();
+        });
     // return this.webReqService.post('user/login', {
     //   "email": email,
     //   "password": password,
@@ -171,7 +170,7 @@ export class AuthService {
   }
 
   getAccountInfo(email) {
-    return this.webReqService.post(`user/find`, {"email": email});
+    return this.webReqService.post(`user/find`, { "email": email });
   }
 
 
