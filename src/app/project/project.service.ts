@@ -21,6 +21,7 @@ export class ProjectService {
   constructor(private webReqService: WebRequestService, public http: HttpClient, public router: Router, public CompanyService: CompanyService) {}
 
   createProject(name: string, draw: string, address: string, client: string, phone: string, email: string, budget: number, categoryArray: any[]) {
+    const currentDateTime = new Date().toISOString();
     return this.webReqService.post('project/create/', {
       "name": name,
       "address": address,
@@ -36,7 +37,8 @@ export class ProjectService {
           "invoices": [],
           "changeOrders": [],
           "checks": "",
-          "signedDraw": ""
+          "signedDraw": "",
+          "dateOpened": currentDateTime
         }
       ]
     });
