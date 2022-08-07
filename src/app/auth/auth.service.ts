@@ -53,13 +53,9 @@ export class AuthService {
       },
         error => {
           this.authStatusListener.next(false);
-          window.alert("Please try again. If this continues to happen, please reach out to support")
+          window.alert(error.error.message)
           window.location.reload();
         });
-    // return this.webReqService.post('user/sign-up', {
-    //   "email": email,
-    //   "password": password,
-    // })
   }
 
   resetPassword(email: string) {
