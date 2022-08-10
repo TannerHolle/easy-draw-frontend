@@ -1,7 +1,7 @@
 <main>
-  <app-project-dashboard></app-project-dashboard>
+  <app-project-dashboard [projectUpdateSubject]="projectUpdateSubject"></app-project-dashboard>
   <div class="btn-group">
-    <button mat-raised-button [routerLink]="['/project/create']">Add Project</button>
+    <button mat-raised-button (click)="openCreateProjectDialog()">Add Project</button>
   </div>
 </main>
 

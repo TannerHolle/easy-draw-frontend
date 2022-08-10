@@ -21,6 +21,7 @@ export class ProjectService {
   constructor(private webReqService: WebRequestService, public http: HttpClient, public router: Router, public CompanyService: CompanyService) {}
 
   createProject(name: string, draw: string, address: string, client: string, phone: string, email: string, budget: number, categoryArray: any[]) {
+    const currentDateTime = new Date().toISOString();
     return this.webReqService.post('project/create/', {
       "name": name,
       "address": address,
@@ -34,7 +35,10 @@ export class ProjectService {
           "name": draw,
           "isOpen": true,
           "invoices": [],
-          "changeOrders": []
+          "changeOrders": [],
+          "checks": "",
+          "signedDraw": "",
+          "dateOpened": currentDateTime
         }
       ]
     });
@@ -101,6 +105,10 @@ export class ProjectService {
     return this.webReqService.delete(`project/delete/${projectId}`)
   }
 
+  deleteInvoice(projectId, draw, invoice) {    
+    return this.webReqService.post(`invoice/delete/${projectId}/${draw}`, invoice)
+  }
+
   createInvoice(projectId: string, company: {}, category: {}, invoiceNum: string, invoiceAmt: Number, draw: string, image: File) {
     return new Promise((resolve, reject) => {
       const invoiceData = new FormData()
@@ -128,14 +136,6 @@ export class ProjectService {
       invoiceId: invoiceId,
       draw: draw
     }
-    // const invoiceData = new FormData()
-    // invoiceData.append("projectId", projectId)
-    // invoiceData.append("draw", draw)
-    // invoiceData.append("category", category)
-    // invoiceData.append("company", company['name'])
-    // invoiceData.append("invoiceNum", invoiceNum)
-    // invoiceData.append("invoiceAmt", invoiceAmt.toString())
-    // invoiceData.append("invoiceId", invoiceId)
     this.http.post(environment.apiUrl + '/invoice/update', updateData).subscribe(responseData => {
       console.log(responseData)
       this.router.navigate(['/projects', projectId]);
@@ -184,12 +184,35 @@ export class ProjectService {
     return this.webReqService.post(`category/upload/${id}`, categoryArray);
   }
 
+  uploadInvoicesOnDraw(projectId, draw, invoicesArray: Array<any> = []){
+    return this.webReqService.post(`invoice/upload/${projectId}/${draw}`, invoicesArray);
+  }
+
   closeDraw(projectId, drawId) {
     return this.webReqService.post(`project/close-draw/${projectId}/${drawId}`, {});
   }
 
   openNewDraw(projectId, drawId) {
     return this.webReqService.post(`project/open-new-draw/${projectId}`, {"drawId": drawId});
+  }
+
+  addCheckFile(projectId, draw, image) {
+    return new Promise((resolve, reject) => {
+      const check = new FormData()
+      check.append("image", image)
+      this.http.post(environment.apiUrl + `/invoice/checks/${projectId}/${draw}`, check).subscribe(responseData => {
+        resolve(responseData);
+      });
+    });
+  }
+  addSignedDraw(projectId, draw, image) {
+    return new Promise((resolve, reject) => {
+      const signedDraw = new FormData()
+      signedDraw.append("image", image)
+      this.http.post(environment.apiUrl + `/invoice/signedDraw/${projectId}/${draw}`, signedDraw).subscribe(responseData => {
+        resolve(responseData);
+      });
+    });
   }
 
   getProjectUpdateListener() {

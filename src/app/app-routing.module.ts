@@ -32,8 +32,8 @@ const routes: Routes = [
   {path: 'project/edit-invoice/:projectId/:drawId/:invoiceId', component: EditInvoiceComponent},
   {path: 'project/invoices/:id', component: ProjectInvoicesComponent},
   {path: 'project/invoices/:id/:drawId', component: ProjectInvoicesComponent},
-  {path: 'project/create', component: ProjectCreateComponent},
-  {path: 'company/create', component: CompanyCreateComponent, canActivate: [AuthGuard]},
+  // {path: 'project/create', component: ProjectCreateComponent},
+  // {path: 'company/create', component: CompanyCreateComponent, canActivate: [AuthGuard]},
   {path: 'company/create/:id', component: CompanyCreateComponent},
   // {path: 'project/category/:id', component: ProjectCategoryComponent},
   {path: 'project/category-upload/:id', component: CategoryUploadComponent},
@@ -42,6 +42,16 @@ const routes: Routes = [
   {path: 'login', component: LoginComponent},
   {path: 'sign-up', component: SignUpComponent},
   {path: 'forgot-password', component: ForgotPasswordComponent},
+
+  {
+    path: 'reset-password/verify',
+    loadChildren: () => import('./auth/reset-password/reset-password.module').then(mod => mod.ResetPasswordModule),
+  },
+  {
+    path: 'sign-up/verify',
+    loadChildren: () => import('./auth/verify-user/verify-user.module').then(mod => mod.VerifyUserModule),
+  },
+
 ];
 
 @NgModule({

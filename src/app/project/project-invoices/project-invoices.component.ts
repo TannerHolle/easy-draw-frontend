@@ -13,6 +13,10 @@ import { MatDialog } from '@angular/material';
 import { CreateCompanyDialogComponent } from 'src/app/dialogs/create-company-dialog/create-company-dialog.component';
 import { ReplaySubject, Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
+import { CreateProjectDialogComponent } from 'src/app/dialogs/create-project-dialog/create-project-dialog.component';
+import { DrawNameDialogComponent } from '../project-detail/draw-name-dialog/draw-name-dialog.component';
+import { CategoryDialogComponent } from 'src/app/category/category-dialog/category-dialog.component';
+import { WarningDialogComponent } from 'src/app/dialogs/warning-dialog/warning-dialog.component';
 
 
 @Component({
@@ -22,14 +26,17 @@ import { takeUntil } from 'rxjs/operators';
 })
 export class ProjectInvoicesComponent implements OnInit {
   public companies = []
+  public projects = [];
   public draws = []
   public categories = []
   selectedCompanies;
+  selectedProject;
   selectedProjectId = '';
   fileName = '';
   form: FormGroup;
   imagePreview: string;
   isLoading = false;
+  isSavePressed: boolean = false;
 
   protected _onDestroy = new Subject();
   //projects
@@ -47,8 +54,9 @@ export class ProjectInvoicesComponent implements OnInit {
 
   constructor(private dialog: MatDialog, public invoiceService: InvoiceService, private authService: AuthService, private router: Router, public projectService: ProjectService, public companyService: CompanyService, private route: ActivatedRoute, private domSanitizer: DomSanitizer) { }
   ngOnInit() {
-
     this.companies = [{ name: 'Create New Company', _id: '123' }];
+    this.projects = [{ name: 'Create New Project', _id: '123' }];
+
     this.form = new FormGroup({
       company: new FormControl(null, { validators: [Validators.required] }),
       draw: new FormControl(null, { validators: [Validators.required] }),
@@ -67,18 +75,38 @@ export class ProjectInvoicesComponent implements OnInit {
         this.form.get('draw').setValue(drawId);
       }
       this.projectService.getProjectsForUser(this.authService.getUserID()).subscribe((projects: any[]) => {
-        this.projectService.projects = projects;
+        this.assignProjectValue(projects);
         this.getDrawsAndCategories(projectID);
       });
+    } else {
+      this.projectService.getProjectsForUser(this.authService.getUserID()).subscribe((projects: any[]) => {
+        this.assignProjectValue(projects);
+      });
     }
-    this.projectService.getProjectsForUser(this.authService.getUserID()).subscribe((projects: any[]) => {
-      this.projectService.projects = projects;
-      this.getDraws();
-      this.getCompanies();
-    });
 
-    this.filteredProjects.next(this.projectService.projects.slice());
+    this.getCompanies();
+    this.subscribeToProjectValueChanges();
     this.initFilterControls();
+  }
+
+  assignProjectValue(projects) {
+    this.projectService.projects = projects;
+    Array.prototype.push.apply(projects, this.projects);
+    this.projects = projects;
+    this.filteredProjects.next(this.projects.slice());
+  }
+
+  subscribeToProjectValueChanges() {
+    this.form.controls['projectId'].valueChanges.subscribe(newValue => {
+      if (newValue == null) {
+        this.selectedProjectId = undefined;
+        this.selectedProject = undefined;
+        this.draws = [];
+        this.filteredDraws.next(this.draws.slice());
+        this.categories = [];
+        this.filteredCategories.next(this.categories.slice());
+      }
+    });
   }
 
   initFilterControls() {
@@ -108,18 +136,18 @@ export class ProjectInvoicesComponent implements OnInit {
   }
 
   protected filterProjects() {
-    if (!this.projectService.projects) {
+    if (!this.projects) {
       return;
     }
     let search = this.projectsFilterCtrl.value;
     if (!search) {
-      this.filteredProjects.next(this.projectService.projects.slice());
+      this.filteredProjects.next(this.projects.slice());
       return;
     } else {
       search = search.toLowerCase();
     }
     this.filteredProjects.next(
-      this.projectService.projects.filter(project => project.name.toLowerCase().indexOf(search) > -1)
+      this.projects.filter(project => project.name.toLowerCase().indexOf(search) > -1)
     );
   }
 
@@ -171,6 +199,40 @@ export class ProjectInvoicesComponent implements OnInit {
     );
   }
 
+  invoiceNumberPut(invoiceNum) {
+    let company = this.form.get('company').value;
+    let isExist = false;
+
+    if (invoiceNum && company && this.selectedProject) {
+      this.selectedProject.draws.forEach(draw => {
+        if (draw.changeOrders) {
+          draw.changeOrders.forEach(changeOrder => {
+            if (changeOrder.company == company.name && changeOrder.invoiceNum.toLowerCase() == invoiceNum.toLowerCase()) {
+              isExist = true;
+            }
+          })
+        }
+        if (draw.invoices) {
+          draw.invoices.forEach(invoice => {
+            if (invoice.company == company.name && invoice.invoiceNum.toLowerCase() == invoiceNum.toLowerCase()) {
+              isExist = true;
+            }
+          })
+        }
+      });
+    }
+    if (isExist) {
+      this.openWarningDialog(`Invoice Number: '${invoiceNum}' from ${company.name} already exists on ${this.selectedProject.name}. Review past invoices and if this is expected, proceed.`);
+    }
+  }
+
+  openWarningDialog(message) {
+    const dialogRef = this.dialog.open(WarningDialogComponent, {
+      width: '500px',
+      data: { message },
+    });
+  }
+
   openCreateCompanyDialog() {
     const dialogRef = this.dialog.open(CreateCompanyDialogComponent);
     dialogRef.afterClosed().subscribe((company: any) => {
@@ -182,6 +244,65 @@ export class ProjectInvoicesComponent implements OnInit {
         this.form.patchValue({ company })
       } else {
         this.form.patchValue({ company: null })
+      }
+    });
+  }
+
+  openCreateProjectDialog() {
+    const dialogRef = this.dialog.open(CreateProjectDialogComponent);
+    dialogRef.afterClosed().subscribe((project: any) => {
+      if (project) {
+        let createProjectOption = this.projects.pop();
+        this.projects = [...this.projects, project, createProjectOption];
+        this.filteredProjects.next(this.projects.slice());
+        this.form.get('projectId').setValue(project._id);
+        this.getDrawsAndCategories(project._id);
+      } else {
+        this.form.get('projectId').setValue(null);
+      }
+    });
+  }
+
+  openCreateDrawDialog() {
+    let drawName: string;
+    const dialogRef = this.dialog.open(DrawNameDialogComponent, {
+      width: '255px',
+      data: { drawName: drawName },
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.projectService.openNewDraw(this.selectedProjectId, result).subscribe((res: any) => {
+          let draw = { name: result, isOpen: true, invoices: [], changeOrders: [] };
+          let createDrawOption = this.draws.pop();
+          this.draws = [...this.draws, draw, createDrawOption];
+          this.filteredDraws.next(this.draws.slice());
+          this.form.get('draw').setValue(draw.name);
+        });
+      } else {
+        this.form.get('draw').setValue(null);
+      }
+    });
+  }
+
+  openCreateCategoryDialog() {
+    let category: string;
+    let costCode: string;
+    let budget: string;
+    const dialogRef = this.dialog.open(CategoryDialogComponent, {
+      width: '255px',
+      data: { category: category, costCode: costCode, budget: budget },
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.projectService.addCategory(result.category, result.costCode, result.budget, this.selectedProjectId).subscribe((response: any) => {
+          let category = { category: result.category, costCode: result.costCode, budget: result.budget };
+          let createCategoryOption = this.categories.pop();
+          this.categories = [...this.categories, category, createCategoryOption];
+          this.filteredCategories.next(this.categories.slice());
+          this.form.get('category').setValue(category.category);
+        });
+      } else {
+        this.form.get('category').setValue(null);
       }
     });
   }
@@ -199,6 +320,7 @@ export class ProjectInvoicesComponent implements OnInit {
   }
 
   onAddInvoice(isReturn?: boolean) {
+    this.isSavePressed = true;
     if (this.form.invalid) {
       return;
     }
@@ -234,18 +356,42 @@ export class ProjectInvoicesComponent implements OnInit {
     console.log(event.checked);
   }
 
+  onProjectSelect(projectId) {
+    if (projectId === '123') {
+      this.openCreateProjectDialog();
+    } else {
+      this.getDrawsAndCategories(projectId);
+    }
+  }
+
+  openDrawSelect(draw) {
+    if (draw._id === '123') {
+      this.openCreateDrawDialog();
+    }
+  }
+
+  onCategorySelect(category) {
+    if (category._id == '123') {
+      this.openCreateCategoryDialog();
+    }
+  }
+
   getDrawsAndCategories(projectId) {
     this.selectedProjectId = projectId;
-    const project = this.projectService.projects.filter(obj => {
+    const project = this.projects.filter(obj => {
       return obj._id === this.form.value.projectId;
     });
 
+    this.selectedProject = project[0];
+
     if (project[0]['draws'].length > 0) {
-      this.draws = project[0]['draws'];
+      this.draws = [{ name: 'Create New Draw', _id: '123' }];
+      Array.prototype.push.apply(this.draws, project[0]['draws'])
       this.filteredDraws.next(this.draws.slice());
     }
     if (project[0]['categories'].length > 0) {
-      this.categories = project[0]['categories'];
+      this.categories = [{ category: 'Create New Category', _id: '123' }];
+      Array.prototype.push.apply(this.categories, project[0]['categories'])
       this.filteredCategories.next(this.categories.slice());
     } else {
       this.categories = [];
@@ -253,42 +399,19 @@ export class ProjectInvoicesComponent implements OnInit {
 
   }
 
-  getCategories() {
-    if (this.form.value.projectId) {
-      const project = this.projectService.projects.filter(obj => {
-        return obj._id === this.form.value.projectId;
-      });
-      if (project[0]['categories'].length > 0) {
-        return project[0]['categories'];
-      }
-    }
-  }
-
-  getDraws() {
-    if (this.form.value.projectId) {
-      const project = this.projectService.projects.filter(obj => {
-        return obj._id === this.form.value.projectId;
-      });
-      if (project[0]['draws'].length > 0) {
-        this.draws = project[0]['draws'];
-        this.filteredDraws.next(this.draws.slice());
-        return project[0]['draws'];
-      }
-    }
-  }
 
 
   getCompanies() {
     this.companyService.getCompaniesForUser(this.authService.getUserID()).subscribe((companies: any[]) => {
-      Array.prototype.push.apply(companies, this.companies)
-      this.companies = companies
-      this.selectedCompanies = companies
+      Array.prototype.push.apply(this.companies, companies)
+      // this.companies = companies
+      this.selectedCompanies = this.companies
       this.filteredCompanies.next(this.companies.slice());
     });
   }
 
   getOpenDraw() {
-    const project = this.projectService.projects.filter(obj => {
+    const project = this.projects.filter(obj => {
       return obj._id === this.form.value.projectId;
     });
     const draw = project[0].draws.filter(obj => {
@@ -309,15 +432,15 @@ export class ProjectInvoicesComponent implements OnInit {
     this.selectedCompanies = this.companies;
   }
 
-  openNewDraw(draw) {
-    if (draw.name === 'Open New Draw') {
-      let draws = this.getDraws();
-      let lastDraw = draws.slice(-2)[0];
-      this.projectService.openNewDraw(this.form.value.projectId, lastDraw.name).subscribe(() => {
-        this.router.navigate(['projects']);
-      });
-    }
-  }
+  // openNewDraw(draw) {
+  //   if (draw.name === 'Open New Draw') {
+  //     let draws = this.getDraws();
+  //     let lastDraw = draws.slice(-2)[0];
+  //     this.projectService.openNewDraw(this.form.value.projectId, lastDraw.name).subscribe(() => {
+  //       this.router.navigate(['projects']);
+  //     });
+  //   }
+  // }
 
   // onKey(value) {
   //   this.selectedCompanies = this.search(value);
@@ -328,6 +451,33 @@ export class ProjectInvoicesComponent implements OnInit {
   //   let filter = value.toLowerCase();
   //   return this.companies.filter(option => option.name.toLowerCase().match(filter));
   // }
+
+  // getCategories() {
+  //   if (this.form.value.projectId) {
+  //     const project = this.projects.filter(obj => {
+  //       return obj._id === this.form.value.projectId;
+  //     });
+  //     if (project[0]['categories'].length > 0) {
+  //       return project[0]['categories'];
+  //     }
+  //   }
+  // }
+
+  // getDraws() {
+  //   if (this.form.value.projectId) {
+  //     const project = this.projects.filter(obj => {
+  //       return obj._id === this.form.value.projectId;
+  //     });
+  //     if (project[0]['draws'].length > 0) {
+  //       this.draws = project[0]['draws'];
+  //       this.draws.push({ name: 'Create New Draw', _id: '123' });
+  //       this.filteredDraws.next(this.draws.slice());
+  //       return project[0]['draws'];
+  //     }
+  //   }
+  // }
+
+
   public searchInput: String = '';
   public searchResult: Array<any> = [];
 

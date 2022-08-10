@@ -47,7 +47,6 @@ export class CategoryService {
   }
 
   changeListener(files: FileList) {
-    debugger;
     this.fileName = files.item(0).name
     if(files && files.length > 0  && files.item(0).name.endsWith(".csv")) {
       let file : File = files.item(0);

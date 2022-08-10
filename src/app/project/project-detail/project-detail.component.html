@@ -22,15 +22,31 @@
           <span>
             <button mat-button (click)="openDialog()">Open New Draw</button>
           </span>
-          <span *ngIf="drawData.length != 0" class="action-buttons">
-            <button mat-button [matMenuTriggerFor]="menu">Download</button>
+          <span class="action-buttons">
+            <button mat-button [matMenuTriggerFor]="attachmentMenu">Draw Attachments</button>
+            <mat-menu #attachmentMenu="matMenu">
+              <span *ngIf="draw['checks'] == ''">
+                <button mat-menu-item (click)="filePicker.click()">Attach Copy of Checks for Draw</button>
+                <input type="file" (change)="addDrawFiles($event, 'checks')" #filePicker>
+              </span>
+              <span *ngIf="draw['signedDraw'] == ''">
+                <button mat-menu-item (click)="filePicker.click()">Attach Signed Draw Form</button>
+                <input type="file" (change)="addDrawFiles($event, 'signedDraw')" #filePicker>
+              </span>
+              <span *ngIf="draw['checks'] != ''">
+                <button mat-menu-item (click)="viewDrawFiles('checks')">View Copy of Checks</button>
+              </span>
+              <span *ngIf="draw['signedDraw'] != ''">
+                <button mat-menu-item (click)="viewDrawFiles('signedDraw')">View Signed Draw</button>
+              </span>
+            </mat-menu>
+            <button  *ngIf="drawData.length != 0"  mat-button [matMenuTriggerFor]="menu">Download</button>
             <mat-menu #menu="matMenu">
               <button mat-menu-item (click)="downloadInvoicesCSV()">Draw Sheet</button>
               <button *ngIf="isChecked == false" mat-menu-item (click)="generateInvoicesPDF()">Invoice PDF Packet</button>
               <button *ngIf="isChecked == true" mat-menu-item (click)="generateInvoicesPDF()">Change Order PDF Packet</button>
               <button mat-menu-item (click)="downloadBoth()">Draw Sheet and PDF Packet</button>
             </mat-menu>
-            <!-- <mat-icon (click)="download()" matTooltip="Download Draw Sheet" class="material-icons-outlined" style="font-size: 24px" matTooltipClass="tooltip">file_download</mat-icon> -->
           </span>
         </div>
         <ng-container *ngIf="drawData.length == 0">You will see Inovices and Change orders here once you input them</ng-container>
@@ -72,7 +88,8 @@
               <ng-container matColumnDef="invoicePath">
                 <th mat-header-cell *matHeaderCellDef> Attachment </th>
                 <td mat-cell *matCellDef="let element">
-                  <a (click)="openInvoiceFile(element.invoicePath)"><button>View Invoice</button></a>
+                  <a *ngIf="element.invoicePath != ''" (click)="openInvoiceFile(element.invoicePath)"><button>View Invoice</button></a>
+                  <!-- <a *ngIf="element.invoicePath == ''" (click)="attachInvoice()"><button>Attach Invoice</button></a> -->
                 </td>
                 <td mat-footer-cell *matFooterCellDef></td>
               </ng-container>
@@ -88,7 +105,7 @@
                 <th mat-header-cell *matHeaderCellDef> Actions </th>
                 <td mat-cell *matCellDef="let element">
                   <mat-icon class="action-items" [routerLink]="['/project/edit-invoice', this.id, this.drawId, element._id]">edit</mat-icon>
-                  <mat-icon class="action-items" (click)="deleteInvoice(element._id)">delete</mat-icon>
+                  <mat-icon class="action-items" (click)="deleteInvoice(element)">delete</mat-icon>
                 </td>
                 <td mat-footer-cell *matFooterCellDef></td>
               </ng-container>
@@ -159,6 +176,15 @@
           </div>
         </ng-container>
       </ng-container>
+      <div class="btn-group">
+        <button mat-button class="add-project" (click)="filePicker.click()">Upload Historical Draw Information</button> 
+        <span *ngIf="showUpload == true">{{fileName}}</span>
+        <input type="file" class="upload" (change)="changeListener($event.target.files)" #filePicker>
+        <mat-icon *ngIf="showUpload == true" (click)="uploadInvoices()" matTooltip="Upload CSV" class="material-icons-outlined" style="font-size: 24px" matTooltipClass="tooltip">file_upload</mat-icon>
+      </div>
+      <!-- <div class="btn-group">
+        <button mat-raised-button (click)="addChecks()">Add Checks for Draw</button>
+      </div> -->
       </div>
     </div>
   </mat-sidenav-content>
