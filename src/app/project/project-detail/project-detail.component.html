@@ -29,12 +29,12 @@
                 <button mat-menu-item (click)="filePicker.click()">Attach Copy of Checks for Draw</button>
                 <input type="file" (change)="addDrawFiles($event, 'checks')" #filePicker>
               </span>
+              <span *ngIf="draw['checks'] != ''">
+                <button mat-menu-item (click)="viewDrawFiles('checks')">View Copy of Checks</button>
+              </span>
               <span *ngIf="draw['signedDraw'] == ''">
                 <button mat-menu-item (click)="filePicker.click()">Attach Signed Draw Form</button>
                 <input type="file" (change)="addDrawFiles($event, 'signedDraw')" #filePicker>
-              </span>
-              <span *ngIf="draw['checks'] != ''">
-                <button mat-menu-item (click)="viewDrawFiles('checks')">View Copy of Checks</button>
               </span>
               <span *ngIf="draw['signedDraw'] != ''">
                 <button mat-menu-item (click)="viewDrawFiles('signedDraw')">View Signed Draw</button>
