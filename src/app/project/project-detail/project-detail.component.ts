@@ -401,7 +401,7 @@ export class ProjectDetailComponent implements OnInit, OnDestroy {
     let csvArr = [];
 
     for (let i = 1; i < csvRecordsArray.length; i++) {
-      let currentRecord = (csvRecordsArray[i]).split(',');
+      let currentRecord = (csvRecordsArray[i]).split(/,(?=(?:(?:[^"]*"){2})*[^"]*$)/);
       if (currentRecord.length == headerLength) {
         let csvRecord = {};
         csvRecord["company"] = currentRecord[0].trim().replace(/["]+/g, '');

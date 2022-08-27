@@ -111,14 +111,14 @@ export class CompanyService {
     let csvArr = [];
 
     for (let i = 1; i < csvRecordsArray.length; i++) {
-      let curruntRecord = (csvRecordsArray[i]).split(/,(?=(?:(?:[^"]*"){2})*[^"]*$)/);
-      if (curruntRecord.length == headerLength) {
+      let currentRecord = (csvRecordsArray[i]).split(/,(?=(?:(?:[^"]*"){2})*[^"]*$)/);
+      if (currentRecord.length == headerLength) {
         let csvRecord= {};
-        csvRecord["Name"] = curruntRecord[0].trim().replace(/["]+/g, '');
-        csvRecord["Address"] = curruntRecord[1].trim().replace(/["]+/g, '');
-        csvRecord["Email"] = curruntRecord[2].trim().replace(/["]+/g, '');
-        csvRecord["Phone"] = curruntRecord[3].trim().replace(/["]+/g, '');
-        csvRecord["Taxid"] = curruntRecord[4].trim().replace(/["]+/g, '');
+        csvRecord["Name"] = currentRecord[0].trim().replace(/["]+/g, '');
+        csvRecord["Address"] = currentRecord[1].trim().replace(/["]+/g, '');
+        csvRecord["Email"] = currentRecord[2].trim().replace(/["]+/g, '');
+        csvRecord["Phone"] = currentRecord[3].trim().replace(/["]+/g, '');
+        csvRecord["Taxid"] = currentRecord[4].trim().replace(/["]+/g, '');
         csvArr.push(csvRecord);
       }
     }

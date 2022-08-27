@@ -79,12 +79,12 @@ export class CategoryService {
     let csvArr = [];
 
     for (let i = 1; i < csvRecordsArray.length; i++) {
-      let curruntRecord = (csvRecordsArray[i]).split(',');
-      if (curruntRecord.length == headerLength) {
+      let currentRecord = (csvRecordsArray[i]).split(/,(?=(?:(?:[^"]*"){2})*[^"]*$)/);
+      if (currentRecord.length == headerLength) {
         let csvRecord= {};
-        csvRecord["costCode"] = curruntRecord[0].trim().replace(/["]+/g, '');
-        csvRecord["category"] = curruntRecord[1].trim().replace(/["]+/g, '');
-        csvRecord["budget"] = Number(curruntRecord[2].trim());
+        csvRecord["costCode"] = currentRecord[0].trim().replace(/["]+/g, '');
+        csvRecord["category"] = currentRecord[1].trim().replace(/["]+/g, '');
+        csvRecord["budget"] = Number(currentRecord[2].trim());
         csvArr.push(csvRecord);
       }
     }
