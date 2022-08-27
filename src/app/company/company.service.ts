@@ -111,7 +111,7 @@ export class CompanyService {
     let csvArr = [];
 
     for (let i = 1; i < csvRecordsArray.length; i++) {
-      let curruntRecord = (csvRecordsArray[i]).split(',');
+      let curruntRecord = (csvRecordsArray[i]).split(/,(?=(?:(?:[^"]*"){2})*[^"]*$)/);
       if (curruntRecord.length == headerLength) {
         let csvRecord= {};
         csvRecord["Name"] = curruntRecord[0].trim().replace(/["]+/g, '');
