@@ -4,25 +4,25 @@
     <table *ngFor="let field of vendorArray; let i = index">
       <td>
         <mat-form-field>
-          <input matInput [(ngModel)]="field.name" name="{{field.name}}" placeholder="Name" readonly [ngModelOptions]="{standalone: true}">
+          <input matInput [(ngModel)]="field.name" name="{{field.name}}" placeholder="Name" [ngModelOptions]="{standalone: true}">
         </mat-form-field>
       </td>
       <td>
         <mat-form-field >
-          <input matInput [(ngModel)]="field.address" name="{{field.address}}" placeholder="Address" readonly>
+          <input matInput [(ngModel)]="field.address" name="{{field.address}}" placeholder="Address">
         </mat-form-field>
       <td>
         <mat-form-field >
-          <input matInput [(ngModel)]="field.email" name="{{field.email}}" placeholder="Email" readonly>
+          <input matInput [(ngModel)]="field.email" name="{{field.email}}" placeholder="Email">
         </mat-form-field>
       </td>
       <td>
         <mat-form-field >
-          <input matInput [(ngModel)]="field.phone" name="{{field.phone}}" placeholder="Phone" readonly>
+          <input matInput [(ngModel)]="field.phone" name="{{field.phone}}" placeholder="Phone">
         </mat-form-field>
       <td>
         <mat-form-field >
-          <input matInput [(ngModel)]="field.taxId" name="{{field.taxId}}" placeholder="Tax ID" readonly>
+          <input matInput [(ngModel)]="field.taxId" name="{{field.taxId}}" placeholder="Tax ID">
         </mat-form-field>
       </td>
       <td>
