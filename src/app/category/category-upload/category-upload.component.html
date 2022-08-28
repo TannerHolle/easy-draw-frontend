@@ -1,19 +1,18 @@
-
 <main>
   <mat-card>
     <table *ngFor="let field of categoryArray; let i = index">
       <td>
         <mat-form-field>
-          <input matInput [(ngModel)]="field.category" name="{{field.category}}" placeholder="Category" readonly [ngModelOptions]="{standalone: true}">
+          <input matInput [(ngModel)]="field.category" name="{{field.category}}" placeholder="Category" [ngModelOptions]="{standalone: true}">
         </mat-form-field>
       </td>
       <td>
         <mat-form-field >
-          <input matInput [(ngModel)]="field.costCode" name="{{field.costCode}}" placeholder="Cost Code" readonly>
+          <input matInput [(ngModel)]="field.costCode" name="{{field.costCode}}" placeholder="Cost Code">
         </mat-form-field>
       <td>
         <mat-form-field >
-          <input matInput [(ngModel)]="field.budget" name="{{field.budget}}" placeholder="Budget" readonly>
+          <input matInput [(ngModel)]="field.budget" name="{{field.budget}}" placeholder="Budget">
         </mat-form-field>
       </td>
       <td>
