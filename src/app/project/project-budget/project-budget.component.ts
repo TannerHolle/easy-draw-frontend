@@ -99,13 +99,13 @@ export class ProjectBudgetComponent implements OnInit, AfterViewInit, OnDestroy 
           categoryInfo[draws.name] = 0;
         }
         for (var d of draws.invoices) {
-          if (d.category == c.category) {
+          if (d.costCode == c.costCode) {
             categoryInfo[draws.name] = categoryInfo[draws.name] + d.invoiceAmt;
             spend = spend + d.invoiceAmt;
           }
         }
         for (var d of draws.changeOrders) {
-          if (d.category == c.category) {
+          if (d.costCode == c.costCode) {
             changeOrders = changeOrders + d.invoiceAmt;
           }
         }
