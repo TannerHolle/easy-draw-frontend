@@ -12,6 +12,7 @@ import { PDFService } from 'src/app/services/pdf.service';
 import { PDFDocument } from 'pdf-lib';
 import { debug } from 'console';
 import { DomSanitizer } from '@angular/platform-browser';
+import { CompanyService } from 'src/app/company/company.service';
 
 @Component({
   selector: 'app-project-detail',
@@ -47,7 +48,7 @@ export class ProjectDetailComponent implements OnInit, OnDestroy {
   displayedColumns: string[] = ['company', 'category', 'address', 'invoiceNum', 'amount', 'taxId', 'invoicePath', 'isPaid', '_id'];
   dataSource = [];
 
-  constructor(private route: ActivatedRoute, private http: HttpClient, public dialog: MatDialog, public projectService: ProjectService, private observer: BreakpointObserver, private authService: AuthService, private router: Router, private domSanitizer: DomSanitizer, private pdfService: PDFService) { }
+  constructor(private route: ActivatedRoute, private http: HttpClient, public dialog: MatDialog, public projectService: ProjectService, private observer: BreakpointObserver, private authService: AuthService, private router: Router, private domSanitizer: DomSanitizer, private pdfService: PDFService, private companyService: CompanyService) { }
 
   ngOnInit() {
     this.route.params.subscribe(routeParams => {
@@ -365,9 +366,8 @@ export class ProjectDetailComponent implements OnInit, OnDestroy {
   }
 
   uploadInvoices() {
-    this.projectService.uploadInvoicesOnDraw(this.project[0]._id, this.draw["name"], this.records).subscribe((response: any) => {
-      this.router.navigate(['/projects', this.id]);
-      });
+    this.companyService.drawInvoicesArray = this.records;
+    this.router.navigate([`projects/${this.project[0]._id}/draws/${this.draw["name"]}/upload`])
   }
 
   changeListener(files: FileList) {

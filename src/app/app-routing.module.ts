@@ -19,6 +19,7 @@ import { ProjectDashboardComponent } from './project/project-dashboard/project-d
 import { EditInvoiceComponent } from './project/project-invoices/edit-invoice/edit-invoice.component';
 import { CompanyUploadComponent } from './company/company-upload/company-upload.component';
 import { ForgotPasswordComponent } from './auth/forgot-password/forgot-password.component';
+import { DrawInvoicesUploadComponent } from './project/project-detail/draw-invoices-upload/draw-invoices-upload.component';
 
 const routes: Routes = [
   {path: '', component: HomeComponent},
@@ -28,6 +29,7 @@ const routes: Routes = [
   // {path: 'project-list', component: ProjectListComponent},
   {path: 'projects/:id', component: ProjectBudgetComponent},
   {path: 'projects/:id/draws/:drawid', component: ProjectDetailComponent},
+  {path: 'projects/:id/draws/:drawid/upload', component: DrawInvoicesUploadComponent},
   {path: 'project/invoices', component: ProjectInvoicesComponent},
   {path: 'project/edit-invoice/:projectId/:drawId/:invoiceId', component: EditInvoiceComponent},
   {path: 'project/invoices/:id', component: ProjectInvoicesComponent},

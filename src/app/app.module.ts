@@ -59,6 +59,7 @@ import { CreateCompanyDialogComponent } from './dialogs/create-company-dialog/cr
 import { NgxMatSelectSearchModule } from 'ngx-mat-select-search';
 import { CreateProjectDialogComponent } from './dialogs/create-project-dialog/create-project-dialog.component';
 import { WarningDialogComponent } from './dialogs/warning-dialog/warning-dialog.component';
+import { DrawInvoicesUploadComponent } from './project/project-detail/draw-invoices-upload/draw-invoices-upload.component';
 
 
 @NgModule({
@@ -91,6 +92,7 @@ import { WarningDialogComponent } from './dialogs/warning-dialog/warning-dialog.
     ForgotPasswordComponent,
     CreateCompanyDialogComponent,
     CreateProjectDialogComponent,
+    DrawInvoicesUploadComponent,
     WarningDialogComponent
   ],
   imports: [

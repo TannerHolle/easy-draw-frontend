@@ -15,6 +15,7 @@ export class CompanyService {
   public categories: {} = [];
   public records: any[] = [];
   public vendorArray: any[] = [];
+  public drawInvoicesArray: any[] = [];
 
   @ViewChild('csvReader') csvReader: any;
   jsondatadisplay:any;

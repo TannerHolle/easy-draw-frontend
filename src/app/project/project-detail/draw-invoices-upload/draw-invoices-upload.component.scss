@@ -1,9 +1,5 @@
-table {
-  width: 100%;
-}
-
 main {
-    width: 80%;
+    width: 94%;
     margin: 1rem auto;
     padding-bottom: 1rem;
   }
@@ -13,3 +9,6 @@ main {
     width: 100%;
   }
   
+  .remove-icon {
+    cursor: pointer;
+  }
