@@ -15,7 +15,7 @@ export class SignUpComponent {
     aNumber: false,
     minimumEightChars: false
   }
-  @ViewChild('signupForm') signupForm: NgForm;
+  @ViewChild('signupForm', { static: false }) signupForm: NgForm;
 
   constructor(public authService: AuthService) { }
 

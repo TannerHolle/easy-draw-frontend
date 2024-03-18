@@ -38,10 +38,10 @@ export class ProjectDetailComponent implements OnInit, OnDestroy {
   showUpload = false;
 
 
-  @ViewChild(MatSidenav)
+  @ViewChild(MatSidenav, { static: true })
   sidenav!: MatSidenav;
 
-  @ViewChild('csvReader') csvReader: any;
+  @ViewChild('csvReader', { static: false }) csvReader: any;
   jsondatadisplay:any;
 
 

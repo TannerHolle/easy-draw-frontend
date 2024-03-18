@@ -17,7 +17,7 @@ export class CompanyService {
   public vendorArray: any[] = [];
   public drawInvoicesArray: any[] = [];
 
-  @ViewChild('csvReader') csvReader: any;
+  @ViewChild('csvReader', /* TODO: add static flag */ {}) csvReader: any;
   jsondatadisplay:any;
 
   constructor(private http: HttpClient, private webReqService: WebRequestService, private router: Router) {}

@@ -17,7 +17,7 @@ export class CategoryService {
   public records: any[] = [];
   public showUpload = false;
 
-  @ViewChild('csvReader') csvReader: any;
+  @ViewChild('csvReader', /* TODO: add static flag */ {}) csvReader: any;
   jsondatadisplay:any;
   public fileName: string;
 
