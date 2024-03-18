@@ -9,7 +9,7 @@ import { debug } from 'console';
 import { DomSanitizer } from '@angular/platform-browser';
 import { Company } from 'src/app/company/company.model';
 import { AuthService } from 'src/app/auth/auth.service';
-import { MatDialog } from '@angular/material';
+import { MatDialog } from '@angular/material/dialog';
 import { CreateCompanyDialogComponent } from 'src/app/dialogs/create-company-dialog/create-company-dialog.component';
 import { ReplaySubject, Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';

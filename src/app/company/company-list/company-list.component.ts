@@ -4,7 +4,8 @@ import { Company } from '../company.model'
 import { CompanyService } from '../company.service';
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/auth/auth.service';
-import { MatDialog, MatTableDataSource } from '@angular/material';
+import { MatDialog } from '@angular/material/dialog';
+import { MatTableDataSource } from '@angular/material/table';
 import { CreateCompanyDialogComponent } from 'src/app/dialogs/create-company-dialog/create-company-dialog.component';
 
 

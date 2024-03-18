@@ -2,7 +2,8 @@ import { BreakpointObserver } from '@angular/cdk/layout';
 import { Component, ViewChild, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { jsPDF } from 'jspdf'
-import { MatDialog, MatSidenav } from '@angular/material';
+import { MatDialog } from '@angular/material/dialog';
+import { MatSidenav } from '@angular/material/sidenav';
 import { ProjectService } from '../project.service';
 import { AuthService } from 'src/app/auth/auth.service';
 import { DrawNameDialogComponent } from './draw-name-dialog/draw-name-dialog.component';
