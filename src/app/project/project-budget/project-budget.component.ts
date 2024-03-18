@@ -37,11 +37,11 @@ export class ProjectBudgetComponent implements OnInit, AfterViewInit, OnDestroy 
   dataSource = [];
 
   public records: any[] = [];
-  @ViewChild('csvReader', { static: false }) csvReader: any;
+  @ViewChild('csvReader') csvReader: any;
   jsondatadisplay: any;
   public fileName: string;
 
-  @ViewChild('downloadTemplate', { static: false }) downloadTemplate: ElementRef;
+  @ViewChild('downloadTemplate') downloadTemplate: ElementRef;
   @ViewChild(MatSidenav, { static: true }) sidenav!: MatSidenav;
 
   constructor(private route: ActivatedRoute, public dialog: MatDialog, public categoryService: CategoryService, public projectService: ProjectService, private observer: BreakpointObserver, private router: Router, private authService: AuthService) { }

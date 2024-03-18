@@ -1,4 +1,4 @@
-import { Injectable, ViewChild } from '@angular/core';
+import { Injectable, ViewChild, Directive } from '@angular/core';
 import { Subject } from 'rxjs';
 import { WebRequestService } from '../services/web-request.service';
 import { environment } from "../../environments/environment";
@@ -9,6 +9,7 @@ import {ActivatedRoute, Router} from '@angular/router';
 import { Project } from '../models/project.model';
 
 
+@Directive()
 @Injectable({providedIn: 'root'})
 export class CategoryService {
   public projects: Project[] = [];
@@ -17,7 +18,7 @@ export class CategoryService {
   public records: any[] = [];
   public showUpload = false;
 
-  @ViewChild('csvReader', {static: false}) csvReader: any;
+  @ViewChild('csvReader') csvReader: any;
   jsondatadisplay:any;
   public fileName: string;
 

@@ -1,4 +1,4 @@
-import { Injectable, ViewChild } from '@angular/core';
+import { Injectable, ViewChild, Directive } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Subject } from 'rxjs';
 
@@ -7,6 +7,7 @@ import { WebRequestService } from '../services/web-request.service';
 import { Router } from '@angular/router';
 import { debug } from 'console';
 
+@Directive()
 @Injectable({providedIn: 'root'})
 export class CompanyService {
   public companies: Company[] = [];
@@ -17,7 +18,7 @@ export class CompanyService {
   public vendorArray: any[] = [];
   public drawInvoicesArray: any[] = [];
 
-  @ViewChild('csvReader', {static: false}) csvReader: any;
+  @ViewChild('csvReader') csvReader: any;
   jsondatadisplay:any;
 
   constructor(private http: HttpClient, private webReqService: WebRequestService, private router: Router) {}
