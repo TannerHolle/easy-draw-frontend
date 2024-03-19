@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { environment } from 'src/environments/environment';
 
@@ -12,7 +12,7 @@ import { environment } from 'src/environments/environment';
 })
 export class ResetPasswordComponent implements OnInit {
   isLoaded: boolean = false;
-  form: FormGroup;
+  form: UntypedFormGroup;
   secretId;
   message = 'Please wait while we verify link!';
   email;
@@ -26,9 +26,9 @@ export class ResetPasswordComponent implements OnInit {
   constructor(private http: HttpClient, private route: ActivatedRoute, private router: Router) { }
 
   ngOnInit(): void {
-    this.form = new FormGroup({
-      password: new FormControl(null, { validators: [Validators.required] }),
-      confirmPassword: new FormControl(null, { validators: [Validators.required] }),
+    this.form = new UntypedFormGroup({
+      password: new UntypedFormControl(null, { validators: [Validators.required] }),
+      confirmPassword: new UntypedFormControl(null, { validators: [Validators.required] }),
     });
 
     this.route.queryParams.subscribe(params => {

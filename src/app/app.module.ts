@@ -6,24 +6,21 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AppMaterialModules } from './material.module';
 
-import {
-  MatInputModule,
-  MatCardModule,
-  MatButtonModule,
-  MatToolbarModule,
-  MatExpansionModule,
-  MatSelectModule,
-  MatTableModule,
-  MatIconModule,
-  MatSlideToggleModule,
-  MatDialogModule,
-  MatSidenavModule,
-  MatDividerModule,
-  MatMenuModule,
-  MatAutocompleteModule,
-  MatProgressSpinnerModule,
-  MatFooterRow
-} from '@angular/material';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { MatButtonModule } from '@angular/material/button';
+import { MatCardModule } from '@angular/material/card';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatDividerModule } from '@angular/material/divider';
+import { MatExpansionModule } from '@angular/material/expansion';
+import { MatIconModule } from '@angular/material/icon';
+import { MatInputModule } from '@angular/material/input';
+import { MatMenuModule } from '@angular/material/menu';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatSelectModule } from '@angular/material/select';
+import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { MatTableModule, MatFooterRow } from '@angular/material/table';
+import { MatToolbarModule } from '@angular/material/toolbar';
 
 
 import { AppRoutingModule } from './app-routing.module';
@@ -63,65 +60,64 @@ import { DrawInvoicesUploadComponent } from './project/project-detail/draw-invoi
 
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    HeaderComponent,
-    CompanyCreateComponent,
-    CompanyListComponent,
-    InvoiceCreateComponent,
-    InvoiceListComponent,
-    InvoiceComponent,
-    HomeComponent,
-    ProjectComponent,
-    // ProjectListComponent,
-    ProjectCreateComponent,
-    ProjectDetailComponent,
-    CompanyComponent,
-    ProjectBudgetComponent,
-    ProjectInvoicesComponent,
-    // ProjectCategoryComponent,
-    ProjectEditComponent,
-    LoginComponent,
-    SignUpComponent,
-    CategoryUploadComponent,
-    ProjectDashboardComponent,
-    DrawNameDialogComponent,
-    CategoryDialogComponent,
-    EditInvoiceComponent,
-    CompanyUploadComponent,
-    ForgotPasswordComponent,
-    CreateCompanyDialogComponent,
-    CreateProjectDialogComponent,
-    DrawInvoicesUploadComponent,
-    WarningDialogComponent
-  ],
-  imports: [
-    AppMaterialModules,
-    BrowserModule,
-    FormsModule,
-    ReactiveFormsModule,
-    MatInputModule,
-    MatTableModule,
-    MatCardModule,
-    MatButtonModule,
-    MatIconModule,
-    MatDialogModule,
-    MatToolbarModule,
-    MatSidenavModule,
-    MatDividerModule,
-    MatProgressSpinnerModule,
-    MatMenuModule,
-    MatSlideToggleModule,
-    MatExpansionModule,
-    MatSelectModule,
-    AppRoutingModule,
-    BrowserAnimationsModule,
-    HttpClientModule,
-    MatAutocompleteModule,
-    NgxMatSelectSearchModule
+    declarations: [
+        AppComponent,
+        HeaderComponent,
+        CompanyCreateComponent,
+        CompanyListComponent,
+        InvoiceCreateComponent,
+        InvoiceListComponent,
+        InvoiceComponent,
+        HomeComponent,
+        ProjectComponent,
+        // ProjectListComponent,
+        ProjectCreateComponent,
+        ProjectDetailComponent,
+        CompanyComponent,
+        ProjectBudgetComponent,
+        ProjectInvoicesComponent,
+        // ProjectCategoryComponent,
+        ProjectEditComponent,
+        LoginComponent,
+        SignUpComponent,
+        CategoryUploadComponent,
+        ProjectDashboardComponent,
+        DrawNameDialogComponent,
+        CategoryDialogComponent,
+        EditInvoiceComponent,
+        CompanyUploadComponent,
+        ForgotPasswordComponent,
+        CreateCompanyDialogComponent,
+        CreateProjectDialogComponent,
+        DrawInvoicesUploadComponent,
+        WarningDialogComponent
     ],
-  providers: [ProjectComponent, {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true}],
-  bootstrap: [AppComponent],
-  entryComponents: [DrawNameDialogComponent, CategoryDialogComponent, CreateCompanyDialogComponent, CreateProjectDialogComponent, WarningDialogComponent]
+    imports: [
+        AppMaterialModules,
+        BrowserModule,
+        FormsModule,
+        ReactiveFormsModule,
+        MatInputModule,
+        MatTableModule,
+        MatCardModule,
+        MatButtonModule,
+        MatIconModule,
+        MatDialogModule,
+        MatToolbarModule,
+        MatSidenavModule,
+        MatDividerModule,
+        MatProgressSpinnerModule,
+        MatMenuModule,
+        MatSlideToggleModule,
+        MatExpansionModule,
+        MatSelectModule,
+        AppRoutingModule,
+        BrowserAnimationsModule,
+        HttpClientModule,
+        MatAutocompleteModule,
+        NgxMatSelectSearchModule
+    ],
+    providers: [ProjectComponent, { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }],
+    bootstrap: [AppComponent]
 })
 export class AppModule { }

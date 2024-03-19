@@ -1,4 +1,4 @@
-import { NgForm, FormGroup, FormControl, Validators } from '@angular/forms';
+import { NgForm, UntypedFormGroup, UntypedFormControl, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ActivatedRoute } from '@angular/router';
 import { ProjectService } from '../../project.service';
@@ -17,7 +17,7 @@ export class EditInvoiceComponent implements OnInit {
   projectId;
   drawId;
   invoiceId;
-  form: FormGroup;
+  form: UntypedFormGroup;
   project = [];
   draws;
   public updatedProject: any = {};
@@ -35,14 +35,14 @@ export class EditInvoiceComponent implements OnInit {
     this.projectId = this.route.snapshot.paramMap.get('projectId');
     this.drawId = this.route.snapshot.paramMap.get('drawId');
     this.invoiceId = this.route.snapshot.paramMap.get('invoiceId');
-    this.form = new FormGroup({
-      company: new FormControl(null, { validators: [Validators.required] }),
-      draw: new FormControl(null, { validators: [Validators.required] }),
-      invoiceNum: new FormControl(null, { validators: [Validators.required] }),
-      invoiceAmt: new FormControl(null, { validators: [Validators.required] }),
-      category: new FormControl(null, { validators: [Validators.required] }),
-      changeOrder: new FormControl(null),
-      image: new FormControl(null)
+    this.form = new UntypedFormGroup({
+      company: new UntypedFormControl(null, { validators: [Validators.required] }),
+      draw: new UntypedFormControl(null, { validators: [Validators.required] }),
+      invoiceNum: new UntypedFormControl(null, { validators: [Validators.required] }),
+      invoiceAmt: new UntypedFormControl(null, { validators: [Validators.required] }),
+      category: new UntypedFormControl(null, { validators: [Validators.required] }),
+      changeOrder: new UntypedFormControl(null),
+      image: new UntypedFormControl(null)
     });
     this.projectService.getOneProject(this.projectId).subscribe((project: any[]) => {
       this.project = project;

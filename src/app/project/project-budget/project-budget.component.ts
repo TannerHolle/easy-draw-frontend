@@ -2,7 +2,8 @@ import { Component, OnInit, ViewChild, ElementRef, AfterViewInit, OnDestroy } fr
 import { HttpClient } from '@angular/common/http';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ProjectService } from '../project.service';
-import { MatDialog, MatSidenav } from '@angular/material';
+import { MatDialog } from '@angular/material/dialog';
+import { MatSidenav } from '@angular/material/sidenav';
 import { BreakpointObserver } from '@angular/cdk/layout';
 import { AuthService } from 'src/app/auth/auth.service';
 import { CategoryDialogComponent } from '../../category/category-dialog/category-dialog.component';
@@ -41,7 +42,7 @@ export class ProjectBudgetComponent implements OnInit, AfterViewInit, OnDestroy 
   public fileName: string;
 
   @ViewChild('downloadTemplate') downloadTemplate: ElementRef;
-  @ViewChild(MatSidenav) sidenav!: MatSidenav;
+  @ViewChild(MatSidenav, { static: true }) sidenav!: MatSidenav;
 
   constructor(private route: ActivatedRoute, public dialog: MatDialog, public categoryService: CategoryService, public projectService: ProjectService, private observer: BreakpointObserver, private router: Router, private authService: AuthService) { }
 

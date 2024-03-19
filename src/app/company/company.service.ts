@@ -1,12 +1,11 @@
-import { Injectable, ViewChild } from '@angular/core';
+import { Injectable, ViewChild, Directive } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Subject } from 'rxjs';
-
 import { Company } from './company.model';
 import { WebRequestService } from '../services/web-request.service';
 import { Router } from '@angular/router';
-import { debug } from 'console';
 
+@Directive()
 @Injectable({providedIn: 'root'})
 export class CompanyService {
   public companies: Company[] = [];
