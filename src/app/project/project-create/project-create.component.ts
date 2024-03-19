@@ -2,7 +2,6 @@ import { Component, DebugElement, EventEmitter, Input, OnInit, Output } from '@a
 import { NgForm } from '@angular/forms';
 import { ProjectService } from '../project.service';
 import { Router } from '@angular/router';
-import { debug } from 'util';
 
 @Component({
   selector: 'app-project-create',
