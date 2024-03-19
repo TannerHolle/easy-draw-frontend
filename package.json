@@ -24,7 +24,7 @@
     "@angular/router": "^14.3.0",
     "core-js": "^2.5.4",
     "jspdf": "^2.5.1",
-    "ngx-mat-select-search": "3.3.3",
+    "ngx-mat-select-search": "5.0.0",
     "nodemon": "^2.0.15",
     "pdf-lib": "^1.17.1",
     "rxjs": "~6.6.7",
