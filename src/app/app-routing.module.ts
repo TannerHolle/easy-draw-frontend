@@ -47,17 +47,17 @@ const routes: Routes = [
 
   {
     path: 'reset-password/verify',
-    loadChildren: './auth/reset-password/reset-password.module#ResetPasswordModule'
+    loadChildren: () => import('./auth/reset-password/reset-password.module').then(m => m.ResetPasswordModule)
   },
   {
     path: 'sign-up/verify',
-    loadChildren: './auth/verify-user/verify-user.module#VerifyUserModule'
+    loadChildren: () => import('./auth/verify-user/verify-user.module').then(m => m.VerifyUserModule)
   },
 
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
+  imports: [RouterModule.forRoot(routes, { relativeLinkResolution: 'legacy' })],
   exports: [RouterModule],
   providers: [AuthGuard]
 })

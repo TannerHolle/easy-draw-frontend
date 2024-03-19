@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { NgForm, FormGroup, FormControl, Validators } from '@angular/forms';
+import { NgForm, UntypedFormGroup, UntypedFormControl, Validators } from '@angular/forms';
 import { InvoiceService } from '../../invoice/invoice.service';
 import { ProjectService } from '../project.service';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -9,7 +9,7 @@ import { debug } from 'console';
 import { DomSanitizer } from '@angular/platform-browser';
 import { Company } from 'src/app/company/company.model';
 import { AuthService } from 'src/app/auth/auth.service';
-import { MatDialog } from '@angular/material';
+import { MatDialog } from '@angular/material/dialog';
 import { CreateCompanyDialogComponent } from 'src/app/dialogs/create-company-dialog/create-company-dialog.component';
 import { ReplaySubject, Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
@@ -33,23 +33,23 @@ export class ProjectInvoicesComponent implements OnInit {
   selectedProject;
   selectedProjectId = '';
   fileName = '';
-  form: FormGroup;
+  form: UntypedFormGroup;
   imagePreview: string;
   isLoading = false;
   isSavePressed: boolean = false;
 
   protected _onDestroy = new Subject();
   //projects
-  public projectsFilterCtrl: FormControl = new FormControl();
+  public projectsFilterCtrl: UntypedFormControl = new UntypedFormControl();
   public filteredProjects = new ReplaySubject(1);
   //draws 
-  public drawsFilterCtrl: FormControl = new FormControl();
+  public drawsFilterCtrl: UntypedFormControl = new UntypedFormControl();
   public filteredDraws = new ReplaySubject(1);
   //companies 
-  public companiesFilterCtrl: FormControl = new FormControl();
+  public companiesFilterCtrl: UntypedFormControl = new UntypedFormControl();
   public filteredCompanies = new ReplaySubject(1);
   //categories
-  public categoriesFilterCtrl: FormControl = new FormControl();
+  public categoriesFilterCtrl: UntypedFormControl = new UntypedFormControl();
   public filteredCategories = new ReplaySubject(1);
 
   constructor(private dialog: MatDialog, public invoiceService: InvoiceService, private authService: AuthService, private router: Router, public projectService: ProjectService, public companyService: CompanyService, private route: ActivatedRoute, private domSanitizer: DomSanitizer) { }
@@ -57,15 +57,15 @@ export class ProjectInvoicesComponent implements OnInit {
     this.companies = [{ name: 'Create New Company', _id: '123' }];
     this.projects = [{ name: 'Create New Project', _id: '123' }];
 
-    this.form = new FormGroup({
-      company: new FormControl(null, { validators: [Validators.required] }),
-      draw: new FormControl(null, { validators: [Validators.required] }),
-      invoiceNum: new FormControl(null, { validators: [Validators.required] }),
-      invoiceAmt: new FormControl(null, { validators: [Validators.required] }),
-      projectId: new FormControl(null, { validators: [Validators.required] }),
-      category: new FormControl(null, { validators: [Validators.required] }),
-      changeOrder: new FormControl(null),
-      image: new FormControl(null, { validators: [Validators.required] })
+    this.form = new UntypedFormGroup({
+      company: new UntypedFormControl(null, { validators: [Validators.required] }),
+      draw: new UntypedFormControl(null, { validators: [Validators.required] }),
+      invoiceNum: new UntypedFormControl(null, { validators: [Validators.required] }),
+      invoiceAmt: new UntypedFormControl(null, { validators: [Validators.required] }),
+      projectId: new UntypedFormControl(null, { validators: [Validators.required] }),
+      category: new UntypedFormControl(null, { validators: [Validators.required] }),
+      changeOrder: new UntypedFormControl(null),
+      image: new UntypedFormControl(null, { validators: [Validators.required] })
     });
     var projectID = this.route.snapshot.paramMap.get('id')
     if (projectID) {
