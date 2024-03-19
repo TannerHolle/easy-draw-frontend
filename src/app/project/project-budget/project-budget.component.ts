@@ -2,7 +2,8 @@ import { Component, OnInit, ViewChild, ElementRef, AfterViewInit, OnDestroy } fr
 import { HttpClient } from '@angular/common/http';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ProjectService } from '../project.service';
-import { MatDialog, MatSidenav } from '@angular/material';
+import { MatDialog } from '@angular/material/dialog';
+import { MatSidenav } from '@angular/material/sidenav';
 import { BreakpointObserver } from '@angular/cdk/layout';
 import { AuthService } from 'src/app/auth/auth.service';
 import { CategoryDialogComponent } from '../../category/category-dialog/category-dialog.component';
@@ -41,7 +42,7 @@ export class ProjectBudgetComponent implements OnInit, AfterViewInit, OnDestroy 
   public fileName: string;
 
   @ViewChild('downloadTemplate') downloadTemplate: ElementRef;
-  @ViewChild(MatSidenav) sidenav!: MatSidenav;
+  @ViewChild(MatSidenav, { static: true }) sidenav!: MatSidenav;
 
   constructor(private route: ActivatedRoute, public dialog: MatDialog, public categoryService: CategoryService, public projectService: ProjectService, private observer: BreakpointObserver, private router: Router, private authService: AuthService) { }
 
@@ -99,13 +100,13 @@ export class ProjectBudgetComponent implements OnInit, AfterViewInit, OnDestroy 
           categoryInfo[draws.name] = 0;
         }
         for (var d of draws.invoices) {
-          if (d.category == c.category) {
+          if (d.costCode == c.costCode) {
             categoryInfo[draws.name] = categoryInfo[draws.name] + d.invoiceAmt;
             spend = spend + d.invoiceAmt;
           }
         }
         for (var d of draws.changeOrders) {
-          if (d.category == c.category) {
+          if (d.costCode == c.costCode) {
             changeOrders = changeOrders + d.invoiceAmt;
           }
         }
@@ -182,12 +183,12 @@ export class ProjectBudgetComponent implements OnInit, AfterViewInit, OnDestroy 
     let csvArr = [];
 
     for (let i = 1; i < csvRecordsArray.length; i++) {
-      let curruntRecord = (csvRecordsArray[i]).split(',');
-      if (curruntRecord.length == headerLength) {
+      let currentRecord = (csvRecordsArray[i]).split(/,(?=(?:(?:[^"]*"){2})*[^"]*$)/);
+      if (currentRecord.length == headerLength) {
         let csvRecord = {};
-        csvRecord["costCode"] = curruntRecord[0].trim().replace(/["]+/g, '');
-        csvRecord["category"] = curruntRecord[1].trim().replace(/["]+/g, '');
-        csvRecord["budget"] = Number(curruntRecord[2].trim());
+        csvRecord["costCode"] = currentRecord[0].trim().replace(/["]+/g, '');
+        csvRecord["category"] = currentRecord[1].trim().replace(/["]+/g, '');
+        csvRecord["budget"] = Number(currentRecord[2].trim());
         csvArr.push(csvRecord);
       }
     }

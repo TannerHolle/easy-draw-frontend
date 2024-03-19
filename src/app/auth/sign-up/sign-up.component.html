@@ -8,21 +8,30 @@
       </mat-form-field>
       <mat-form-field>
         <input matInput type="text" placeholder="Company" name="company" ngModel #companyInput="ngModel" required>
-        <mat-error *ngIf="passwordInput.invalid">Please Enter a Company Name</mat-error>
+        <mat-error *ngIf="companyInput.invalid">Please Enter a Company Name</mat-error>
       </mat-form-field>
       <mat-form-field>
         <input matInput type="email" placeholder="Email" name="email" ngModel #emailInput="ngModel" required email>
         <mat-error *ngIf="emailInput.invalid">Please Enter a Valid Email</mat-error>
       </mat-form-field>
       <mat-form-field>
-        <input matInput type="password" placeholder="Password" name="password" ngModel #passwordInput="ngModel" required password>
-        <mat-error *ngIf="passwordInput.invalid">Please Enter a Password</mat-error>
+        <input matInput type="password" placeholder="Password" name="password" ngModel #passwordInput="ngModel" (input)="onPasswordChange($event.target.value)" required password>
+        <mat-error *ngIf="passwordInput.invalid || (signupForm.form.controls['password']?.errors && signupForm.form.controls['password']?.errors['incorrect'])">Please Enter a Valid Password</mat-error>
       </mat-form-field>
-        <span>Security Question: What city were you born in? (For password reset purposes)</span>
+
       <mat-form-field>
-        <input matInput type="text" placeholder="Answer" name="answer" ngModel #answerInput="ngModel" required>
-        <mat-error *ngIf="answerInput.invalid">Please Enter an Answer</mat-error>
+        <input matInput type="password" placeholder="Confirm Password" name="confirmPassword" ngModel #confirmPasswordInput="ngModel" required password>
+        <mat-error *ngIf="confirmPasswordInput.invalid">Please Enter Confirm Password</mat-error>
       </mat-form-field>
+      
+      <div id="password-validation-box">
+        <mat-label>Password Checklist:</mat-label>
+        <mat-error class="custom-validation-text" [class.valid]="passwordValidations.uppercaseLetter" >A capital letter</mat-error>
+        <mat-error class="custom-validation-text" [class.valid]="passwordValidations.lowercaseLetter" >A lowercase letter</mat-error>
+        <mat-error class="custom-validation-text" [class.valid]="passwordValidations.aNumber" >A number</mat-error>
+        <mat-error class="custom-validation-text" [class.valid]="passwordValidations.minimumEightChars" >Minimum 8 characters</mat-error>
+      </div>
+
       <button
         *ngIf="!isLoading"
         mat-raised-button

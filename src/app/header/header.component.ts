@@ -46,11 +46,11 @@ export class HeaderComponent implements OnInit, OnDestroy {
   }
 
   downloadBudgetTemplate() {
-    const header = "costCode,category,budget"
+    const header = "Cost Code,Category,Budget"
     var hiddenElement = document.createElement('a');
     hiddenElement.href = 'data:text/csv;charset=utf-8,' + encodeURI(header);
     hiddenElement.target = '_blank';
-    hiddenElement.download = 'Budget-CategoryTemplate.csv';
+    hiddenElement.download = 'Budget-Template.csv';
     hiddenElement.click();
   }
   downloadVendorTemplate() {
@@ -58,7 +58,15 @@ export class HeaderComponent implements OnInit, OnDestroy {
     var hiddenElement = document.createElement('a');
     hiddenElement.href = 'data:text/csv;charset=utf-8,' + encodeURI(header);
     hiddenElement.target = '_blank';
-    hiddenElement.download = 'VendorTemplate.csv';
+    hiddenElement.download = 'Vendor-Template.csv';
+    hiddenElement.click();
+  }
+  downloadDrawTemplate() {
+    const header = "Company,Address,Cost Code,Category,Invoice Number,Invoice Amount,TaxId"
+    var hiddenElement = document.createElement('a');
+    hiddenElement.href = 'data:text/csv;charset=utf-8,' + encodeURI(header);
+    hiddenElement.target = '_blank';
+    hiddenElement.download = 'Draw-Template.csv';
     hiddenElement.click();
   }
 

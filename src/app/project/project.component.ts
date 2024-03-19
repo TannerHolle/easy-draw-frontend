@@ -1,11 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-
-import { Subscription } from 'rxjs';
+import { MatDialog } from '@angular/material/dialog';
+import { Subject } from 'rxjs';
 import { AuthService } from '../auth/auth.service';
 import { CompanyService } from '../company/company.service';
-import { Project } from '../models/project.model'
+import { CreateProjectDialogComponent } from '../dialogs/create-project-dialog/create-project-dialog.component';
 import { ProjectService } from './project.service';
-
 
 @Component({
   selector: 'app-project',
@@ -13,26 +12,24 @@ import { ProjectService } from './project.service';
   styleUrls: ['./project.component.scss']
 })
 export class ProjectComponent implements OnInit {
-
   projectInvoices = [];
-  projects: Project[] = [];
-  private projectsSub: Subscription;
+  projectUpdateSubject = new Subject();
 
-  constructor(public projectService: ProjectService, public companyService: CompanyService, private authService: AuthService) { }
+  constructor(private dialog: MatDialog, public projectService: ProjectService, public companyService: CompanyService, private authService: AuthService) { }
 
   ngOnInit() {
-    this.projectService.getProjectsForUser(this.authService.getUserID());
-    this.projectsSub = this.projectService.getProjectUpdateListener()
-      .subscribe((projects: Project[]) => {
-        this.projects = projects;
-
-    });
     this.companyService.getCompaniesForUser(this.authService.getUserID()).subscribe((companies: any[]) => {
       this.companyService.companies = companies;
     });
   }
 
-  ngOnDestroy() {
-    this.projectsSub.unsubscribe()
+  openCreateProjectDialog() {
+    const dialogRef = this.dialog.open(CreateProjectDialogComponent);
+    dialogRef.afterClosed().subscribe((project: any) => {
+      if (project) {
+        this.projectUpdateSubject.next(project)
+      }
+    });
   }
+
 }

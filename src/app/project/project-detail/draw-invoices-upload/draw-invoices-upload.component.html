@@ -1,0 +1,46 @@
+<main>
+  <mat-card>
+    <table *ngFor="let field of drawInvoicesArray; let i = index">
+      <td>
+        <mat-form-field>
+          <input matInput [(ngModel)]="field.company" name="{{field.company}}" placeholder="Company"
+            [ngModelOptions]="{standalone: true}">
+        </mat-form-field>
+      </td>
+      <td>
+        <mat-form-field>
+          <input matInput [(ngModel)]="field.address" name="{{field.address}}" placeholder="Address">
+        </mat-form-field>
+      </td>
+      <td>
+        <mat-form-field>
+          <input matInput [(ngModel)]="field.costCode" name="{{field.costCode}}" placeholder="Cost Code">
+        </mat-form-field>
+      </td>
+      <td>
+        <mat-form-field>
+          <input matInput [(ngModel)]="field.category" name="{{field.category}}" placeholder="Category">
+        </mat-form-field>
+      </td>
+      <td>
+        <mat-form-field>
+          <input matInput [(ngModel)]="field.invoiceNum" name="{{field.invoiceNum}}" placeholder="Invoice Number">
+        </mat-form-field>
+      </td>
+      <td>
+        <mat-form-field>
+          <input matInput [(ngModel)]="field.invoiceAmt" name="{{field.invoiceAmt}}" placeholder="Invoice Amount">
+        </mat-form-field>
+      </td>
+      <td>
+        <mat-form-field>
+          <input matInput [(ngModel)]="field.taxId" name="{{field.taxId}}" placeholder="Tax ID">
+        </mat-form-field>
+      </td>
+      <td>
+        <mat-icon class="remove-icon" (click)="deleteInvoice(i)" matSuffix>delete</mat-icon>
+      </td>
+    </table>
+    <button mat-raised-button color="primary" type="submit" (click)="saveInvoices()">Save Invoices</button>
+  </mat-card>
+</main>

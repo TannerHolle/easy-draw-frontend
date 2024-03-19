@@ -1,12 +1,11 @@
-import { Injectable, ViewChild } from '@angular/core';
+import { Injectable, ViewChild, Directive } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Subject } from 'rxjs';
-
 import { Company } from './company.model';
 import { WebRequestService } from '../services/web-request.service';
 import { Router } from '@angular/router';
-import { debug } from 'console';
 
+@Directive()
 @Injectable({providedIn: 'root'})
 export class CompanyService {
   public companies: Company[] = [];
@@ -15,6 +14,7 @@ export class CompanyService {
   public categories: {} = [];
   public records: any[] = [];
   public vendorArray: any[] = [];
+  public drawInvoicesArray: any[] = [];
 
   @ViewChild('csvReader') csvReader: any;
   jsondatadisplay:any;
@@ -34,7 +34,6 @@ export class CompanyService {
   }
 
   uploadCompanies(vendorArray: Array<any> = [], id: String){
-    debugger;
     return this.webReqService.post(`company/upload`, vendorArray);
   }
 
@@ -112,14 +111,14 @@ export class CompanyService {
     let csvArr = [];
 
     for (let i = 1; i < csvRecordsArray.length; i++) {
-      let curruntRecord = (csvRecordsArray[i]).split(',');
-      if (curruntRecord.length == headerLength) {
+      let currentRecord = (csvRecordsArray[i]).split(/,(?=(?:(?:[^"]*"){2})*[^"]*$)/);
+      if (currentRecord.length == headerLength) {
         let csvRecord= {};
-        csvRecord["Name"] = curruntRecord[0].trim().replace(/["]+/g, '');
-        csvRecord["Address"] = curruntRecord[1].trim().replace(/["]+/g, '');
-        csvRecord["Email"] = curruntRecord[2].trim().replace(/["]+/g, '');
-        csvRecord["Phone"] = curruntRecord[3].trim().replace(/["]+/g, '');
-        csvRecord["Taxid"] = curruntRecord[4].trim().replace(/["]+/g, '');
+        csvRecord["Name"] = currentRecord[0].trim().replace(/["]+/g, '');
+        csvRecord["Address"] = currentRecord[1].trim().replace(/["]+/g, '');
+        csvRecord["Email"] = currentRecord[2].trim().replace(/["]+/g, '');
+        csvRecord["Phone"] = currentRecord[3].trim().replace(/["]+/g, '');
+        csvRecord["Taxid"] = currentRecord[4].trim().replace(/["]+/g, '');
         csvArr.push(csvRecord);
       }
     }

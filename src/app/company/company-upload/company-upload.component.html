@@ -1,67 +1,66 @@
-
 <main>
   <mat-card>
     <table *ngFor="let field of vendorArray; let i = index">
       <td>
         <mat-form-field>
-          <input matInput [(ngModel)]="field.name" name="{{field.name}}" placeholder="Name" readonly [ngModelOptions]="{standalone: true}">
+          <input matInput [(ngModel)]="field.name" name="{{field.name}}" placeholder="Name"
+            [ngModelOptions]="{standalone: true}">
         </mat-form-field>
       </td>
       <td>
-        <mat-form-field >
-          <input matInput [(ngModel)]="field.address" name="{{field.address}}" placeholder="Address" readonly>
-        </mat-form-field>
-      <td>
-        <mat-form-field >
-          <input matInput [(ngModel)]="field.email" name="{{field.email}}" placeholder="Email" readonly>
+        <mat-form-field>
+          <input matInput [(ngModel)]="field.address" name="{{field.address}}" placeholder="Address">
         </mat-form-field>
       </td>
       <td>
-        <mat-form-field >
-          <input matInput [(ngModel)]="field.phone" name="{{field.phone}}" placeholder="Phone" readonly>
+        <mat-form-field>
+          <input matInput [(ngModel)]="field.email" name="{{field.email}}" placeholder="Email">
         </mat-form-field>
+      </td>
       <td>
-        <mat-form-field >
-          <input matInput [(ngModel)]="field.taxId" name="{{field.taxId}}" placeholder="Tax ID" readonly>
+        <mat-form-field>
+          <input matInput [(ngModel)]="field.phone" name="{{field.phone}}" placeholder="Phone">
+        </mat-form-field>
+      </td>
+      <td>
+        <mat-form-field>
+          <input matInput [(ngModel)]="field.taxId" name="{{field.taxId}}" placeholder="Tax ID">
         </mat-form-field>
       </td>
       <td>
         <mat-icon class="remove-icon" (click)="deleteVendor(i)" matSuffix>delete</mat-icon>
       </td>
     </table>
-  <table *ngIf="add == true">
-    <tr><td>
-      <mat-form-field >
-        <input matInput id="name" [(ngModel)]="newVendor.name" name="category"  placeholder="Name">
-      </mat-form-field>
-    </td>
-    <td>
-      <mat-form-field >
-        <input matInput id="address" [(ngModel)]="newVendor.address" name="costCode" placeholder="Address">
-      </mat-form-field>
-    </td>
-    <td>
-      <mat-form-field >
-        <input matInput id="email" [(ngModel)]="newVendor.email" name="Email" placeholder="Email">
-      </mat-form-field>
-    </td>
-    <td>
-      <mat-form-field >
-        <input matInput id="phone" [(ngModel)]="newVendor.phone" name="Phone" placeholder="Phone">
-      </mat-form-field>
-    </td>
-    <td>
-      <mat-form-field >
-        <input matInput id="taxId" [(ngModel)]="newVendor.taxId" name="Taxid" placeholder="Tax ID">
-      </mat-form-field>
-    </td>
-  </tr>
-  </table>
-  <a mat-raised-button (click)="addVendor()">Add Another Vendor</a>
-  <button
-  mat-raised-button
-  color="primary"
-  type="submit"
-  (click)="onAddVendors()">Save Vendors</button>
+    <table *ngIf="add == true">
+      <tr>
+        <td>
+          <mat-form-field>
+            <input matInput id="name" [(ngModel)]="newVendor.name" name="category" placeholder="Name">
+          </mat-form-field>
+        </td>
+        <td>
+          <mat-form-field>
+            <input matInput id="address" [(ngModel)]="newVendor.address" name="costCode" placeholder="Address">
+          </mat-form-field>
+        </td>
+        <td>
+          <mat-form-field>
+            <input matInput id="email" [(ngModel)]="newVendor.email" name="Email" placeholder="Email">
+          </mat-form-field>
+        </td>
+        <td>
+          <mat-form-field>
+            <input matInput id="phone" [(ngModel)]="newVendor.phone" name="Phone" placeholder="Phone">
+          </mat-form-field>
+        </td>
+        <td>
+          <mat-form-field>
+            <input matInput id="taxId" [(ngModel)]="newVendor.taxId" name="Taxid" placeholder="Tax ID">
+          </mat-form-field>
+        </td>
+      </tr>
+    </table>
+    <a mat-raised-button (click)="addVendor()">Add Another Vendor</a>
+    <button mat-raised-button color="primary" type="submit" (click)="onAddVendors()">Save Vendors</button>
   </mat-card>
-  </main>
+</main>

@@ -38,11 +38,11 @@
           </td>
           <td>
             <mat-form-field >
-              <input matInput [(ngModel)]="field.costCode" name="{{field.costCode}}" placeholder="Cost Code" readonly>
+              <input matInput [(ngModel)]="field.costCode" name="{{field.costCode}}" placeholder="Cost Code" readonly [ngModelOptions]="{standalone: true}">
             </mat-form-field>
           <td>
             <mat-form-field >
-              <input matInput [(ngModel)]="field.budget" name="{{field.budget}}" placeholder="Budget" readonly>
+              <input matInput [(ngModel)]="field.budget" name="{{field.budget}}" placeholder="Budget" readonly [ngModelOptions]="{standalone: true}">
             </mat-form-field>
           </td>
           <td>

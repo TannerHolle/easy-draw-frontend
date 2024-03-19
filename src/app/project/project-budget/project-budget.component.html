@@ -29,7 +29,7 @@
             <div class="action-buttons">
               <button mat-button class="add-project" (click)="openDialog()">Add Category</button>
               <!-- <button mat-raised-button class="add-project" [routerLink]="['/project/category', id]">Add Single Category</button> -->
-              <button mat-button class="add-project" (click)="filePicker.click()">Upload CSV of Categories</button> 
+              <button mat-button class="add-project" (click)="filePicker.click()">Upload Project Budget</button> 
               <!-- <span *ngIf="categoryService.showUpload == true" style="padding: 10px">{{categoryService.fileName}} </span>     -->
               <input type="file" class="upload" (change)="categoryService.changeListener($event.target.files)" #filePicker>
               <!-- <mat-icon *ngIf="categoryService.showUpload == true" (click)="categoryService.upload(id)" matTooltip="Upload CSV" class="material-icons-outlined" style="font-size: 24px" matTooltipClass="tooltip">file_upload</mat-icon>  -->

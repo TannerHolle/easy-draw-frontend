@@ -2,7 +2,8 @@ import { BreakpointObserver } from '@angular/cdk/layout';
 import { Component, ViewChild, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { jsPDF } from 'jspdf'
-import { MatDialog, MatSidenav } from '@angular/material';
+import { MatDialog } from '@angular/material/dialog';
+import { MatSidenav } from '@angular/material/sidenav';
 import { ProjectService } from '../project.service';
 import { AuthService } from 'src/app/auth/auth.service';
 import { DrawNameDialogComponent } from './draw-name-dialog/draw-name-dialog.component';
@@ -11,6 +12,8 @@ import { environment } from 'src/environments/environment';
 import { PDFService } from 'src/app/services/pdf.service';
 import { PDFDocument } from 'pdf-lib';
 import { debug } from 'console';
+import { DomSanitizer } from '@angular/platform-browser';
+import { CompanyService } from 'src/app/company/company.service';
 
 @Component({
   selector: 'app-project-detail',
@@ -30,16 +33,23 @@ export class ProjectDetailComponent implements OnInit, OnDestroy {
   name: string;
   imgUrls = []
   isChecked = false;
+  fileName;
+  checkFile;
+  records = [];
+  showUpload = false;
 
 
-  @ViewChild(MatSidenav)
+  @ViewChild(MatSidenav, { static: true })
   sidenav!: MatSidenav;
+
+  @ViewChild('csvReader') csvReader: any;
+  jsondatadisplay:any;
 
 
   displayedColumns: string[] = ['company', 'category', 'address', 'invoiceNum', 'amount', 'taxId', 'invoicePath', 'isPaid', '_id'];
   dataSource = [];
 
-  constructor(private route: ActivatedRoute, private http: HttpClient, public dialog: MatDialog, public projectService: ProjectService, private observer: BreakpointObserver, private authService: AuthService, private router: Router, private pdfService: PDFService) { }
+  constructor(private route: ActivatedRoute, private http: HttpClient, public dialog: MatDialog, public projectService: ProjectService, private observer: BreakpointObserver, private authService: AuthService, private router: Router, private domSanitizer: DomSanitizer, private pdfService: PDFService, private companyService: CompanyService) { }
 
   ngOnInit() {
     this.route.params.subscribe(routeParams => {
@@ -68,6 +78,7 @@ export class ProjectDetailComponent implements OnInit, OnDestroy {
         this.draws = this.getDrawInfo();
       });
     });
+    this.showUpload = false;
   }
 
   ngAfterViewInit() {
@@ -137,6 +148,9 @@ export class ProjectDetailComponent implements OnInit, OnDestroy {
     console.log(JSON.stringify(dataSource))
 
     dataSource.forEach(invoice => {
+      if (invoice.invoicePath == '') {
+        return;
+      }
       const splitPath = invoice.invoicePath.split('/');
       const fileName = splitPath[splitPath.length - 1];
       const nameSplit = fileName.split('.');
@@ -177,11 +191,11 @@ export class ProjectDetailComponent implements OnInit, OnDestroy {
     let totalType;
     this.draw;
     if (this.isChecked) {
-      items = JSON.parse(JSON.stringify(this.drawChangeOrders)) 
+      items = JSON.parse(JSON.stringify(this.drawChangeOrders))
       title = this.project[0].name + ' ChangeOrders.csv'
       totalType = 'Change Orders'
-    }else {
-      items = JSON.parse(JSON.stringify(this.drawInvoices)) 
+    } else {
+      items = JSON.parse(JSON.stringify(this.drawInvoices))
       title = this.project[0].name + '-' + this.draw['name'] + ' Invoices.csv'
       totalType = 'Invoices'
     }
@@ -194,7 +208,7 @@ export class ProjectDetailComponent implements OnInit, OnDestroy {
     const mappingHeader = Object.keys(items[0])
     const prettyHeader = Object.keys(items[0])
     for (let i = 0; i < prettyHeader.length; i++) {
-      switch(prettyHeader[i]) {
+      switch (prettyHeader[i]) {
         case 'company':
           prettyHeader[i] = 'Company'
           break;
@@ -292,13 +306,10 @@ export class ProjectDetailComponent implements OnInit, OnDestroy {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      const isAlphaNumeric = /^[a-z0-9]+$/gi.test(result)
       if (result) {
         this.projectService.openNewDraw(this.id, result).subscribe((res: any) => {
           this.router.navigate(['/projects', this.id, 'draws', result]);
         });
-      } else {
-        alert("Please only use AlphaNumeric Characters (Letters, Numbers, and Spaces")
       }
     });
   };
@@ -309,13 +320,116 @@ export class ProjectDetailComponent implements OnInit, OnDestroy {
     });
   }
 
-  deleteInvoice() {
+  attachInvoice() {
+    window.alert('this would allow you to attach an invoice')
+  }
+
+  deleteInvoice(invoice) {
     var result = confirm("Are you sure you want to delete this In? THIS CANNOT BE UNDONE");
     if (result) {
-      window.alert("the invoice would've been deleted")
+      this.projectService.deleteInvoice(this.project[0]._id, this.draw["name"], invoice).subscribe((res: any) => {
+        console.log(res)
+      });
+      window.location.reload();
     }
   }
-  
+
+  addDrawFiles(event: Event, type) {
+    const file = (event.target as HTMLInputElement).files[0];
+    this.checkFile = file.name
+    const reader = new FileReader();
+    reader.onload = () => {
+      this.domSanitizer.bypassSecurityTrustUrl(reader.result as string)
+    };
+    reader.readAsDataURL(file)
+    if (type == 'checks') {
+      this.projectService.addCheckFile(this.project[0]._id, this.draw["name"], file)
+    }
+    if (type == 'signedDraw') {
+      this.projectService.addSignedDraw(this.project[0]._id, this.draw["name"], file)
+    }
+    window.location.reload();
+  }
+
+  //view draw
+  viewDrawFiles(type) {
+    if (type =='checks') {
+      this.openInvoiceFile(this.draw['checks'])
+    }
+    if (type =='signedDraw') {
+      this.openInvoiceFile(this.draw['signedDraw'])
+    }
+
+  }
+
+  addSignedDrawForm() {
+    window.alert("you will be able to attach signed Draw form here")
+  }
+
+  uploadInvoices() {
+    this.companyService.drawInvoicesArray = this.records;
+    this.router.navigate([`projects/${this.project[0]._id}/draws/${this.draw["name"]}/upload`])
+  }
+
+  changeListener(files: FileList) {
+    this.fileName = files.item(0).name
+    if (files && files.length > 0 && files.item(0).name.endsWith(".csv")) {
+      let file: File = files.item(0);
+      let reader: FileReader = new FileReader();
+      reader.readAsText(file);
+
+      reader.onload = (e) => {
+        let csvData = reader.result;
+        let csvRecordsArray = (<string>csvData).split(/\r\n|\n/);
+        let headersRow = this.getHeaderArray(csvRecordsArray);
+
+        this.records = this.getDataRecordsArrayFromCSVFile(csvRecordsArray, headersRow.length);
+      };
+      this.showUpload = true;
+
+      reader.onerror = function () {
+        console.log('error is occured while reading file!');
+      };
+    } else {
+      alert("Please import valid draw file. Download template if needed.");
+      this.csvReader.nativeElement.value = "";
+      this.records = [];
+      this.jsondatadisplay = '';
+    }
+  }
+
+  getDataRecordsArrayFromCSVFile(csvRecordsArray: any, headerLength: any) {
+    let csvArr = [];
+
+    for (let i = 1; i < csvRecordsArray.length; i++) {
+      let currentRecord = (csvRecordsArray[i]).split(/,(?=(?:(?:[^"]*"){2})*[^"]*$)/);
+      if (currentRecord.length == headerLength) {
+        let csvRecord = {};
+        csvRecord["company"] = currentRecord[0].trim().replace(/["]+/g, '');
+        csvRecord["address"] = currentRecord[1].trim().replace(/["]+/g, '');
+        csvRecord["costCode"] = currentRecord[2].trim().replace(/["]+/g, '');
+        csvRecord["category"] = currentRecord[3].trim().replace(/["]+/g, '');
+        csvRecord["invoiceNum"] = currentRecord[4].trim().replace(/["]+/g, '');
+        csvRecord["invoiceAmt"] = Number(currentRecord[5].trim());
+        csvRecord["taxId"] = currentRecord[6].trim().replace(/["]+/g, '');
+        csvRecord["invoicePath"] = '';
+        csvRecord["isPaid"] = false;
+        csvArr.push(csvRecord);
+      }
+    }
+    return csvArr;
+  }
+
+  getHeaderArray(csvRecordsArr: any) {
+    let headers = (csvRecordsArr[0]).split(',');
+    let headerArray = [];
+    for (let j = 0; j < headers.length; j++) {
+      headerArray.push(headers[j]);
+    }
+    return headerArray;
+  }
+
+
   ngOnDestroy(): void {
     this.authService.addInvoiceRouterSubject.next(['/project/invoices'])
   }

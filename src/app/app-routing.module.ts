@@ -19,6 +19,7 @@ import { ProjectDashboardComponent } from './project/project-dashboard/project-d
 import { EditInvoiceComponent } from './project/project-invoices/edit-invoice/edit-invoice.component';
 import { CompanyUploadComponent } from './company/company-upload/company-upload.component';
 import { ForgotPasswordComponent } from './auth/forgot-password/forgot-password.component';
+import { DrawInvoicesUploadComponent } from './project/project-detail/draw-invoices-upload/draw-invoices-upload.component';
 
 const routes: Routes = [
   {path: '', component: HomeComponent},
@@ -28,12 +29,13 @@ const routes: Routes = [
   // {path: 'project-list', component: ProjectListComponent},
   {path: 'projects/:id', component: ProjectBudgetComponent},
   {path: 'projects/:id/draws/:drawid', component: ProjectDetailComponent},
+  {path: 'projects/:id/draws/:drawid/upload', component: DrawInvoicesUploadComponent},
   {path: 'project/invoices', component: ProjectInvoicesComponent},
   {path: 'project/edit-invoice/:projectId/:drawId/:invoiceId', component: EditInvoiceComponent},
   {path: 'project/invoices/:id', component: ProjectInvoicesComponent},
   {path: 'project/invoices/:id/:drawId', component: ProjectInvoicesComponent},
-  {path: 'project/create', component: ProjectCreateComponent},
-  {path: 'company/create', component: CompanyCreateComponent, canActivate: [AuthGuard]},
+  // {path: 'project/create', component: ProjectCreateComponent},
+  // {path: 'company/create', component: CompanyCreateComponent, canActivate: [AuthGuard]},
   {path: 'company/create/:id', component: CompanyCreateComponent},
   // {path: 'project/category/:id', component: ProjectCategoryComponent},
   {path: 'project/category-upload/:id', component: CategoryUploadComponent},
@@ -42,10 +44,20 @@ const routes: Routes = [
   {path: 'login', component: LoginComponent},
   {path: 'sign-up', component: SignUpComponent},
   {path: 'forgot-password', component: ForgotPasswordComponent},
+
+  {
+    path: 'reset-password/verify',
+    loadChildren: () => import('./auth/reset-password/reset-password.module').then(m => m.ResetPasswordModule)
+  },
+  {
+    path: 'sign-up/verify',
+    loadChildren: () => import('./auth/verify-user/verify-user.module').then(m => m.VerifyUserModule)
+  },
+
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
+  imports: [RouterModule.forRoot(routes, { relativeLinkResolution: 'legacy' })],
   exports: [RouterModule],
   providers: [AuthGuard]
 })

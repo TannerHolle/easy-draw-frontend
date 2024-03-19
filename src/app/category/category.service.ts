@@ -1,4 +1,4 @@
-import { Injectable, ViewChild } from '@angular/core';
+import { Injectable, ViewChild, Directive } from '@angular/core';
 import { Subject } from 'rxjs';
 import { WebRequestService } from '../services/web-request.service';
 import { environment } from "../../environments/environment";
@@ -9,6 +9,7 @@ import {ActivatedRoute, Router} from '@angular/router';
 import { Project } from '../models/project.model';
 
 
+@Directive()
 @Injectable({providedIn: 'root'})
 export class CategoryService {
   public projects: Project[] = [];
@@ -47,7 +48,6 @@ export class CategoryService {
   }
 
   changeListener(files: FileList) {
-    debugger;
     this.fileName = files.item(0).name
     if(files && files.length > 0  && files.item(0).name.endsWith(".csv")) {
       let file : File = files.item(0);
@@ -80,12 +80,12 @@ export class CategoryService {
     let csvArr = [];
 
     for (let i = 1; i < csvRecordsArray.length; i++) {
-      let curruntRecord = (csvRecordsArray[i]).split(',');
-      if (curruntRecord.length == headerLength) {
+      let currentRecord = (csvRecordsArray[i]).split(/,(?=(?:(?:[^"]*"){2})*[^"]*$)/);
+      if (currentRecord.length == headerLength) {
         let csvRecord= {};
-        csvRecord["costCode"] = curruntRecord[0].trim().replace(/["]+/g, '');
-        csvRecord["category"] = curruntRecord[1].trim().replace(/["]+/g, '');
-        csvRecord["budget"] = Number(curruntRecord[2].trim());
+        csvRecord["costCode"] = currentRecord[0].trim().replace(/["]+/g, '');
+        csvRecord["category"] = currentRecord[1].trim().replace(/["]+/g, '');
+        csvRecord["budget"] = Number(currentRecord[2].trim());
         csvArr.push(csvRecord);
       }
     }

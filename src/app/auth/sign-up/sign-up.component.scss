@@ -7,3 +7,14 @@ main {
 mat-form-field {
   width: 100%;
 }
+.valid {
+  color: green;
+}
+
+.custom-validation-text {
+  font-size: 13px;
+}
+
+#password-validation-box {
+  margin-bottom: 10px;
+}
