@@ -44,8 +44,8 @@ export class AuthService {
     return this.authStatusListener.asObservable();
   }
 
-  createUser(name: string, company: string, email: string, password: string) {
-    const authData = { "name": name, "company": company, "email": email, "password": password }
+  createUser(name: string, email: string, password: string) {
+    const authData = { "name": name, "email": email, "password": password }
     this.http.post(environment.apiUrl + '/user/sign-up', authData)
       .subscribe((response: any) => {
         alert(response.message)

@@ -23,7 +23,7 @@ export class WebRequestService {
    }
 
    post(uri: string, payload: Object) {
-     return this.http.post(`${this.ROOT_URL}/${uri}`, payload, {responseType: 'text'});
+     return this.http.post(`${this.ROOT_URL}/${uri}`, payload, {responseType: 'json'});
    }
 
    postImages(uri: string, payload: Object) {
