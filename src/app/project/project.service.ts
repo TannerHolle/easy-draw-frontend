@@ -9,7 +9,7 @@ import { HttpClient } from '@angular/common/http';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CompanyService } from '../company/company.service';
 
-@Injectable({providedIn: 'root'})
+@Injectable({ providedIn: 'root' })
 export class ProjectService {
   public projects: Project[] = [];
   public categories: {} = [];
@@ -18,14 +18,15 @@ export class ProjectService {
 
   private projectsUpdated = new Subject<Project[]>();
 
-  constructor(private webReqService: WebRequestService, public http: HttpClient, public router: Router, public CompanyService: CompanyService) {}
+  constructor(private webReqService: WebRequestService, public http: HttpClient, public router: Router, public CompanyService: CompanyService) { }
 
-  createProject(name: string, draw: string, address: string, client: string, phone: string, email: string, budget: number, categoryArray: any[]) {
+  createProject(name: string, draw: string, address: string, borrower: string, lender: string, phone: string, email: string, budget: number, categoryArray: any[]) {
     const currentDateTime = new Date().toISOString();
     return this.webReqService.post('project/create/', {
       "name": name,
       "address": address,
-      "client": client,
+      "borrower": borrower,
+      "lender": lender,
       "phone": phone,
       "email": email,
       "budget": budget,
@@ -91,9 +92,9 @@ export class ProjectService {
     return this.webReqService.get(`project/convert-images`);
   };
 
-  download(filename){
+  download(filename) {
     const fileObj = {
-      filename : filename
+      filename: filename
     };
     console.log(fileObj);
     return this.webReqService.postImages(`project/download`, fileObj);
@@ -105,7 +106,7 @@ export class ProjectService {
     return this.webReqService.delete(`project/delete/${projectId}`)
   }
 
-  deleteInvoice(projectId, draw, invoice) {    
+  deleteInvoice(projectId, draw, invoice) {
     return this.webReqService.post(`invoice/delete/${projectId}/${draw}`, invoice)
   }
 
@@ -171,7 +172,7 @@ export class ProjectService {
     }
   }
 
-  addCategory(category: String, costCode: String, budget: Number, id: String){
+  addCategory(category: String, costCode: String, budget: Number, id: String) {
     return this.webReqService.post('category/create', {
       "costCode": costCode,
       "category": category,
@@ -180,11 +181,11 @@ export class ProjectService {
     });
   }
 
-  uploadCategories(categoryArray: Array<any> = [], id: String){
+  uploadCategories(categoryArray: Array<any> = [], id: String) {
     return this.webReqService.post(`category/upload/${id}`, categoryArray);
   }
 
-  uploadInvoicesOnDraw(projectId, draw, invoicesArray: Array<any> = []){
+  uploadInvoicesOnDraw(projectId, draw, invoicesArray: Array<any> = []) {
     return this.webReqService.post(`invoice/upload/${projectId}/${draw}`, invoicesArray);
   }
 
@@ -193,7 +194,7 @@ export class ProjectService {
   }
 
   openNewDraw(projectId, drawId) {
-    return this.webReqService.post(`project/open-new-draw/${projectId}`, {"drawId": drawId});
+    return this.webReqService.post(`project/open-new-draw/${projectId}`, { "drawId": drawId });
   }
 
   addCheckFile(projectId, draw, image) {
@@ -219,7 +220,17 @@ export class ProjectService {
     return this.projectsUpdated.asObservable();
   }
 
+  findUsers(query) {
+    return this.webReqService.post('user/findAll/', {
+      "email": query
+    });
+  }
 
+  findLenders(query) {
+    return this.webReqService.post('lender/findAll/', {
+      "name": query
+    });
+  }
 }
 
 

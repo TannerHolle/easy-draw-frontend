@@ -2,11 +2,12 @@
   <mat-card>
     <form (submit)="onAddProject(projectForm)" #projectForm="ngForm">
       <mat-form-field>
-        <input matInput placeholder="Project Name" name="name" ngModel required #name = 'ngModel'>
+        <input matInput placeholder="Project Name" name="name" ngModel required #name='ngModel'>
         <mat-error *ngIf="name.invalid">Please Enter Project Name</mat-error>
       </mat-form-field>
       <mat-form-field>
-        <input matInput placeholder="First Draw Name (Examples: Draw 1, March 1-31, etc)" name="draw" ngModel required #draw = 'ngModel'>
+        <input matInput placeholder="First Draw Name (Examples: Draw 1, March 1-31, etc)" name="draw" ngModel required
+          #draw='ngModel'>
         <mat-error *ngIf="draw.invalid">Please Enter Draw Name</mat-error>
       </mat-form-field>
       <mat-form-field>
@@ -14,11 +15,27 @@
         <mat-error *ngIf="address.invalid">Please Enter Project Address</mat-error>
       </mat-form-field>
       <mat-form-field>
-        <input matInput placeholder="Client" name="client" ngModel required #client='ngModel'>
-        <mat-error *ngIf="client.invalid">Please Enter Client</mat-error>
+        <mat-label>Lender</mat-label>
+        <mat-select name="lender" ngModel required #lender='ngModel'>
+          <input matInput placeholder="Search Lender with Name" (keyup)="onLenderKey($event.target.value)"
+            class="custom-user-search-input">
+          <mat-option>None</mat-option>
+          <mat-option *ngFor="let lender of filteredLenders | async" [value]="lender._id">{{lender.name}}</mat-option>
+        </mat-select>
+        <mat-error *ngIf="lender.invalid">Please Select a Lender</mat-error>
       </mat-form-field>
       <mat-form-field>
-        <input matInput type="number" placeholder="Budget" name="budget" ngModel required #budget= 'ngModel'>
+        <mat-label>Borrower</mat-label>
+        <mat-select name="borrower" ngModel required #borrower='ngModel'>
+          <input matInput placeholder="Search User with Email" (keyup)="onUserKey($event.target.value)"
+            class="custom-user-search-input">
+          <mat-option>None</mat-option>
+          <mat-option *ngFor="let user of filteredUsers | async" [value]="user._id">{{user.name}}</mat-option>
+        </mat-select>
+        <mat-error *ngIf="borrower.invalid">Please Select a Borrower</mat-error>
+      </mat-form-field>
+      <mat-form-field>
+        <input matInput type="number" placeholder="Budget" name="budget" ngModel required #budget='ngModel'>
         <mat-error *ngIf="budget.invalid">Please Enter Budget</mat-error>
       </mat-form-field>
       <mat-form-field>
@@ -33,49 +50,50 @@
         <table *ngFor="let field of categoryArray; let i = index">
           <td>
             <mat-form-field>
-              <input matInput [(ngModel)]="field.category" name="{{field.category}}" placeholder="Category" readonly [ngModelOptions]="{standalone: true}">
+              <input matInput [(ngModel)]="field.category" name="{{field.category}}" placeholder="Category" readonly
+                [ngModelOptions]="{standalone: true}">
             </mat-form-field>
           </td>
           <td>
-            <mat-form-field >
-              <input matInput [(ngModel)]="field.costCode" name="{{field.costCode}}" placeholder="Cost Code" readonly [ngModelOptions]="{standalone: true}">
+            <mat-form-field>
+              <input matInput [(ngModel)]="field.costCode" name="{{field.costCode}}" placeholder="Cost Code" readonly
+                [ngModelOptions]="{standalone: true}">
             </mat-form-field>
           <td>
-            <mat-form-field >
-              <input matInput [(ngModel)]="field.budget" name="{{field.budget}}" placeholder="Budget" readonly [ngModelOptions]="{standalone: true}">
+            <mat-form-field>
+              <input matInput [(ngModel)]="field.budget" name="{{field.budget}}" placeholder="Budget" readonly
+                [ngModelOptions]="{standalone: true}">
             </mat-form-field>
           </td>
           <td>
             <mat-icon class="remove-icon" (click)="deleteCategory(i)" matSuffix>delete</mat-icon>
           </td>
         </table>
-      <table *ngIf="add == true">
-        <tr><td>
-          <mat-form-field >
-            <input matInput id="category" [(ngModel)]="newCategory.category" name="category"  placeholder="Category">
-          </mat-form-field>
-        </td>
-        <td>
-          <mat-form-field >
-            <input matInput id="costCode" [(ngModel)]="newCategory.costCode" name="costCode" placeholder="Cost Code">
-          </mat-form-field>
-        </td>
-        <td>
-          <mat-form-field >
-            <input matInput id="categoryBudget" [(ngModel)]="newCategory.budget" name="categoryBudget" placeholder="Budget" type="number">
-          </mat-form-field>
-        </td>
-      </tr>
-      </table>
-      <a mat-raised-button (click)="addCategory()">Add Category</a>
-    </mat-card>
-      <button
-        (click)="addCategoryOnSave()"
-        mat-raised-button
-        class="submit-button"
-        color="primary"
-        type="submit">Save Project</button>
+        <table *ngIf="add == true">
+          <tr>
+            <td>
+              <mat-form-field>
+                <input matInput id="category" [(ngModel)]="newCategory.category" name="category" placeholder="Category">
+              </mat-form-field>
+            </td>
+            <td>
+              <mat-form-field>
+                <input matInput id="costCode" [(ngModel)]="newCategory.costCode" name="costCode"
+                  placeholder="Cost Code">
+              </mat-form-field>
+            </td>
+            <td>
+              <mat-form-field>
+                <input matInput id="categoryBudget" [(ngModel)]="newCategory.budget" name="categoryBudget"
+                  placeholder="Budget" type="number">
+              </mat-form-field>
+            </td>
+          </tr>
+        </table>
+        <a mat-raised-button (click)="addCategory()">Add Category</a>
+      </mat-card>
+      <button (click)="addCategoryOnSave()" mat-raised-button class="submit-button" color="primary" type="submit">Save
+        Project</button>
     </form>
   </mat-card>
 </main>
-

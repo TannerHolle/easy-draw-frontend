@@ -26,7 +26,7 @@ export class ProjectDashboardComponent implements OnInit {
   userId: string;
   userName: string;
 
-  displayedColumns: string[] = ['name', 'client', 'budget', 'spent', 'status', 'changeOrder', '_id'];
+  displayedColumns: string[] = ['name', 'lender', 'borrower', 'budget', 'spent', 'status', 'changeOrder', '_id'];
   dataSource = [];
 
   ngOnInit() {
@@ -65,7 +65,8 @@ export class ProjectDashboardComponent implements OnInit {
       var projectObj = {};
       projectObj["_id"] = project._id
       projectObj["name"] = project.name
-      projectObj["client"] = project.client
+      projectObj["lender"] = project.lender
+      projectObj["borrower"] = project.borrower
       projectObj["budget"] = project.budget
       for (let draw of project.draws) {
         for (let invoice of draw.invoices) {

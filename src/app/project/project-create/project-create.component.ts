@@ -2,6 +2,7 @@ import { Component, DebugElement, EventEmitter, Input, OnInit, Output } from '@a
 import { NgForm } from '@angular/forms';
 import { ProjectService } from '../project.service';
 import { Router } from '@angular/router';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-project-create',
@@ -15,8 +16,19 @@ export class ProjectCreateComponent implements OnInit {
   public newCategory: any = {};
   public add = false;
 
+  filteredUsers: Observable<any>;
+  filteredLenders: Observable<any>;
+
   constructor(public projectService: ProjectService, private router: Router) { }
   ngOnInit() {
+  }
+
+  onUserKey(value) {
+    this.filteredUsers = this.projectService.findUsers(value);
+  }
+
+  onLenderKey(value) {
+    this.filteredLenders = this.projectService.findLenders(value);
   }
 
   onAddProject(form: NgForm) {
@@ -24,7 +36,7 @@ export class ProjectCreateComponent implements OnInit {
     if (form.invalid) {
       return;
     }
-    this.projectService.createProject(form.value.name, form.value.draw, form.value.address, form.value.client, form.value.phone, form.value.email, form.value.budget, this.categoryArray).subscribe((response: any) => {
+    this.projectService.createProject(form.value.name, form.value.draw, form.value.address, form.value.borrower, form.value.lender, form.value.phone, form.value.email, form.value.budget, this.categoryArray).subscribe((response: any) => {
       if (this.isDialogOpen) {
         this.onProjectCreate.emit(JSON.parse(response));
       } else {
